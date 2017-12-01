@@ -4,12 +4,16 @@ import LoadingDots from './LoadingDots';
 
 const Header = ({loading}) => {
   return (
-    <nav>
-      <IndexLink to="/" activeClassName="active">Home</IndexLink>
-      {"  |  "}
-      <Link to="/collectedData" activeClassName="active">Collected Data</Link>
-      {"  |  "}
-      <Link to="/chart" activeClassName="active">Chart</Link>
+    <nav style={{textAlign: 'right'}}>
+      <IndexLink to="/" activeClassName="active">Aspire</IndexLink>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <Link to="/businessLoans" activeClassName="active">Business Loans    </Link>
+      &nbsp;&nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;&nbsp;
+      <Link to="/howItWorks" activeClassName="active">How it works    </Link>
+      &nbsp;&nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;&nbsp;
+      <Link to="/useCases" activeClassName="active">Use Cases    </Link>
+      &nbsp;&nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;&nbsp;
+      <Link to="/whyAspire" activeClassName="active">Why Aspire</Link>
       {loading && <LoadingDots interval={100} dots={10}/>}
     </nav>
   );

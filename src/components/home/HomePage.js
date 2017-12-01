@@ -15,7 +15,7 @@ class HomePage extends React.Component {
         </div>
         <div className="panel-body"  >
           <div className="row" >
-            <img src={require("../../assets/images/logo.jpg")}
+            <img src={require("../../assets/images/logo.png")}
                  className="img-responsive center-block"
                  style={{maxHeight:'300px', paddingBottom:'50px'}}/>
           </div>
