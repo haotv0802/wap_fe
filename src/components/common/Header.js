@@ -7,13 +7,14 @@ const Header = ({loading}) => {
     <div className="container-fluid" style={{width: '820px'}}>
       <div className="row" >
         <div className="col-md-2">
-          <img src={require("../../assets/images/logo.png")}
-               className="img-responsive center-block"
-               style={{maxHeight: '54px', maxWidth: '188px'}}/>
+          <IndexLink to="/" activeClassName="active">
+            <img src={require("../../assets/images/logo.png")}
+                 className="img-responsive center-block"
+                 style={{maxHeight: '54px', maxWidth: '188px'}}/>
+          </IndexLink>
         </div>
         <div className="col-md-10" style={{textAlign: 'left', textIndent: '150px'}}>
           <nav>
-            <IndexLink to="/" activeClassName="active"/>
             &nbsp;&nbsp;&nbsp;
             <Link to="/businessLoans" activeClassName="active">Business Loans</Link>
             &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
