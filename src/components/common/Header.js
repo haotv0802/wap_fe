@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Link, IndexLink} from 'react-router';
 import LoadingDots from './LoadingDots';
 
@@ -13,7 +13,7 @@ const Header = ({loading}) => {
         </div>
         <div className="col-md-8" style={{textAlign: 'right'}}>
           <nav>
-            <IndexLink to="/" activeClassName="active">  </IndexLink>
+            <IndexLink to="/" activeClassName="active"/>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/businessLoans" activeClassName="active">Business Loans    </Link>
             &nbsp;&nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;&nbsp;
@@ -25,9 +25,15 @@ const Header = ({loading}) => {
           </nav>
         </div>
       </div>
+      {loading && <LoadingDots interval={100} dots={10}/>}
       <div style={{border: '1px solid black'}} />
     </div>
   );
+};
+
+
+Header.propTypes = {
+  loading: PropTypes.boolean.isRequired
 };
 
 export default Header;
