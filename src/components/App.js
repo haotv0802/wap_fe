@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <Favicon url={require("../assets/images/logo.png")} />
+        <Favicon url={require("../assets/images/ico.png")} />
         <Header loading={this.props.loading}/>
         <br/>
         {this.props.children}
