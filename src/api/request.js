@@ -4,7 +4,7 @@ import axios     from 'axios';
  * Create an Axios Client with defaults
  */
 const client = axios.create({
-  baseURL: 'http://localhost:9000/crwlr_be'
+  baseURL: 'http://localhost:9000/wap_fe'
 });
 
 
