@@ -10,9 +10,6 @@ class HomePage extends React.Component {
   render() {
     return (
       <div className="panel panel-info">
-        <div className="panel-heading">
-          {this.props.pageTitle}
-        </div>
         <div className="panel-body"  >
           <div className="row" >
             <img src={require("../../assets/images/logo.png")}
