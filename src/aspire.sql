@@ -130,15 +130,21 @@ CREATE TABLE `aspire_lazada_sellers` (
   `size`              TINYINT(4)    NULL,
   `location`          VARCHAR(30)   NULL,
   `timeInBusiness`    TINYINT       NULL,
+  `shipOnTime`        DECIMAL(9, 2) NULL,
   `rating`            DECIMAL(4, 2) NULL,
+  `pendingOrders`     DECIMAL(4, 2) NULL,
+  `url`               VARCHAR(100)  NULL,
+  `positive`          TINYINT       NULL,
+  `negative`          TINYINT       NULL,
+  `neutral`           TINYINT       NULL,
   `refund_rate`       DECIMAL(4, 2) NULL,
   `cancellation_rate` DECIMAL(4, 2) NULL,
   `created_on`        DATETIME      NULL,
   `updated_on`        DATETIME      NULL,
   `user_id`           BIGINT        NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `aspire_credit_scores_history` (`id`),
-  CONSTRAINT `aspire_credit_scores_history_user_id` FOREIGN KEY (`user_id`) REFERENCES `aspire_users` (`id`)
+  UNIQUE KEY `aspire_lazada_sellers` (`id`),
+  CONSTRAINT `aspire_lazada_sellers_user_id` FOREIGN KEY (`user_id`) REFERENCES `aspire_users` (`id`)
 )
   ENGINE = INNODB
   DEFAULT CHARSET = UTF8;
@@ -146,19 +152,19 @@ CREATE TABLE `aspire_lazada_sellers` (
 
 DROP TABLE IF EXISTS `aspire_lazada_transactions`;
 CREATE TABLE `aspire_lazada_transactions` (
-  `id`                BIGINT AUTO_INCREMENT,
-  `rating`            DECIMAL(4, 2) NULL,
-  `refund_rate`       DECIMAL(4, 2) NULL,
-  `cancellation_rate` DECIMAL(4, 2) NULL,
-  `seller_size`       TINYINT(4)    NULL,
-  `seller_location`   VARCHAR(30)   NULL,
-  `created_on`        DATETIME      NULL,
-  `updated_on`        DATETIME      NULL,
-  `user_id`           BIGINT        NOT NULL,
+  `id`         BIGINT AUTO_INCREMENT,
+  `name`       VARCHAR(100)  NULL,
+  `price`      DECIMAL(9, 2) NULL,
+  `currency`   VARCHAR(3)    NULL,
+  `category`   VARCHAR(50)   NULL,
+  `rating`     DECIMAL(4, 2) NULL,
+  `url`        TEXT          NULL,
+  `created_on` DATETIME      NULL,
+  `updated_on` DATETIME      NULL,
+  `seller_id`  BIGINT        NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `aspire_credit_scores_history` (`id`),
-  CONSTRAINT `aspire_credit_scores_history_user_id` FOREIGN KEY (`user_id`) REFERENCES `aspire_users` (`id`)
+  UNIQUE KEY `aspire_lazada_transactions` (`id`),
+  CONSTRAINT `aspire_lazada_transactions_seller_id` FOREIGN KEY (`seller_id`) REFERENCES `aspire_lazada_sellers` (`id`)
 )
   ENGINE = INNODB
   DEFAULT CHARSET = UTF8;
-
