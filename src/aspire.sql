@@ -168,3 +168,45 @@ CREATE TABLE `aspire_lazada_transactions` (
 )
   ENGINE = INNODB
   DEFAULT CHARSET = UTF8;
+
+
+DROP TABLE IF EXISTS `aspire_shopee_sellers`;
+CREATE TABLE `aspire_shopee_sellers` (
+  `id`               BIGINT AUTO_INCREMENT,
+  `name`             VARCHAR(30)   NULL,
+  `timeInBusiness`   TINYINT       NULL,
+  `rating`           DECIMAL(4, 2) NULL,
+  `responseRate`     DECIMAL(4, 2) NULL,
+  `pendingOrders`    DECIMAL(4, 2) NULL,
+  `numberOfProducts` INT           NULL,
+  `followers`        INT           NULL,
+  `url`              VARCHAR(100)  NULL,
+  `created_on`       DATETIME      NULL,
+  `updated_on`       DATETIME      NULL,
+  `user_id`          BIGINT        NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `aspire_shopee_sellers` (`id`),
+  CONSTRAINT `aspire_shopee_sellers_seller_id` FOREIGN KEY (`user_id`) REFERENCES `aspire_users` (`id`)
+)
+  ENGINE = INNODB
+  DEFAULT CHARSET = UTF8;
+
+
+DROP TABLE IF EXISTS `aspire_shopee_transactions`;
+CREATE TABLE `aspire_shopee_transactions` (
+  `id`         BIGINT AUTO_INCREMENT,
+  `name`       VARCHAR(100)  NULL,
+  `price`      DECIMAL(9, 2) NULL,
+  `currency`   VARCHAR(3)    NULL,
+  `category`   VARCHAR(50)   NULL,
+  `rating`     DECIMAL(4, 2) NULL,
+  `url`        TEXT          NULL,
+  `created_on` DATETIME      NULL,
+  `updated_on` DATETIME      NULL,
+  `seller_id`  BIGINT        NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `aspire_shopee_transactions` (`id`),
+  CONSTRAINT `aspire_shopee_transactions_seller_id` FOREIGN KEY (`seller_id`) REFERENCES `aspire_shopee_sellers` (`id`)
+)
+  ENGINE = INNODB
+  DEFAULT CHARSET = UTF8;
