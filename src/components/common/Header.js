@@ -4,7 +4,7 @@ import LoadingDots from './LoadingDots';
 
 const Header = ({loading}) => {
   return (
-    <div className="container-fluid" style={{width: '850px'}}>
+    <div className="container-fluid" style={{width: '820px'}}>
       <div className="row" >
         <div className="col-md-2">
           <img src={require("../../assets/images/logo.png")}
@@ -15,14 +15,15 @@ const Header = ({loading}) => {
           <nav>
             <IndexLink to="/" activeClassName="active"/>
             &nbsp;&nbsp;&nbsp;
-            <Link to="/businessLoans" activeClassName="active">Business Loans    </Link>
+            <Link to="/businessLoans" activeClassName="active">Business Loans</Link>
             &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-            <Link to="/howItWorks" activeClassName="active">How it works    </Link>
+            <Link to="/howItWorks" activeClassName="active">How it works</Link>
             &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-            <Link to="/useCases" activeClassName="active">Use Cases    </Link>
+            <Link to="/useCases" activeClassName="active">Use Cases</Link>
             &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
             <Link to="/whyAspire" activeClassName="active">Why Aspire</Link>
-            &nbsp;&nbsp;&nbsp;<LoadingDots interval={100} dots={10}/>
+            &nbsp;&nbsp;&nbsp;
+            {loading && <LoadingDots interval={100} dots={10}/>}
           </nav>
         </div>
       </div>
@@ -33,6 +34,7 @@ const Header = ({loading}) => {
 
 
 Header.propTypes = {
+  loading: PropTypes.boolean
 };
 
 export default Header;
