@@ -1,11 +1,13 @@
 import React, {PropTypes} from 'react';
 import Header from "./common/Header";
 import {connect} from 'react-redux';
+import Favicon from 'react-favicon';
 
 class App extends React.Component {
   render() {
     return (
       <div className="container-fluid">
+        <Favicon url={require("../assets/images/ico.png")} />
         <Header loading={this.props.loading}/>
         <br/>
         {this.props.children}
