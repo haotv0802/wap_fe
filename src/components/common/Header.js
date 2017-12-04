@@ -4,7 +4,7 @@ import LoadingDots from './LoadingDots';
 
 const Header = ({loading}) => {
   return (
-    <div className="container-fluid" style={{width: '820px'}}>
+    <div className="container-fluid" style={{width: '100%', height: '100%'}}>
       <div className="row" >
         <div className="col-md-2">
           <IndexLink to="/" activeClassName="active">
@@ -28,7 +28,7 @@ const Header = ({loading}) => {
           </nav>
         </div>
       </div>
-      <div style={{border: '1px solid black'}} />
+      <div style={{border: '1px solid gray'}} />
     </div>
   );
 };
