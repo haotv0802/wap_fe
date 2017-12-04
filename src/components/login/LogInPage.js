@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
-import SignInForm from './SignInForm';
+import SignInForm from './LogInForm';
 
-class SignInPage extends React.Component {
+class LogInPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -26,8 +26,8 @@ class SignInPage extends React.Component {
 
   render() {
     return (
-      <div className="panel panel-info">
-        <div className="panel-body" style={{width: "640px"}}>
+      <div className="panel panel-info" style={{textAlign: "center"}}>
+        <div className="panel-body" style={{width: "340px", textAlign: "center", display: "inline-block"}}>
           <SignInForm
             onChange={this.updateSignInFormState}
             onSubmit={this.signIn}
@@ -38,4 +38,4 @@ class SignInPage extends React.Component {
   }
 }
 
-export default SignInPage;
+export default LogInPage;

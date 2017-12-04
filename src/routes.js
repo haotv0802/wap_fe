@@ -6,7 +6,7 @@ import BusinessLoansPage from './components/businessLoans/BusinessLoansPage';
 import HowItWorksPage from './components/howItWorks/HowItWorksPage';
 import UseCasesPage from './components/useCases/UseCasesPage';
 import WhyAspirePage from './components/whyAspire/WhyAspirePage';
-import SignInPage from './components/sign-in/SignInPage';
+import LogInPage from './components/login/LogInPage';
 
 export default (
   <Route path="/" component={App}>
@@ -15,6 +15,6 @@ export default (
     <Route path="howItWorks" component={HowItWorksPage}/>
     <Route path="useCases" component={UseCasesPage}/>
     <Route path="whyAspire" component={WhyAspirePage}/>
-    <Route path="signIn" component={SignInPage}/>
+    <Route path="signIn" component={LogInPage}/>
   </Route>
 );
