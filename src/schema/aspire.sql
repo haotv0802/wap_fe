@@ -81,6 +81,17 @@ CREATE TABLE `aspire_personal_info` (
   ENGINE = INNODB
   DEFAULT CHARSET = UTF8;
 
+DROP TABLE IF EXISTS `aspire_statuses`;
+## statuses: draft, pending approval, approved, declined, paid, paid-back, un-paid, closed
+CREATE TABLE `aspire_statuses` (
+  `id`   BIGINT AUTO_INCREMENT,
+  `name` VARCHAR(30) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `aspire_statuses` (`id`)
+)
+  ENGINE = INNODB
+  DEFAULT CHARSET = UTF8;
+
 DROP TABLE IF EXISTS `aspire_loans`;
 CREATE TABLE `aspire_loans` (
   `id`                 BIGINT AUTO_INCREMENT,
@@ -97,9 +108,11 @@ CREATE TABLE `aspire_loans` (
   `duration`           SMALLINT       NULL,
   `created_on`         DATETIME       NULL,
   `user_id`            BIGINT         NOT NULL,
+  `status_id`          BIGINT         NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `aspire_loans` (`id`),
-  CONSTRAINT `aspire_loans_user_id` FOREIGN KEY (`user_id`) REFERENCES `aspire_users` (`id`)
+  CONSTRAINT `aspire_loans_user_id` FOREIGN KEY (`user_id`) REFERENCES `aspire_users` (`id`),
+  CONSTRAINT `aspire_loans_status_id` FOREIGN KEY (`status_id`) REFERENCES `aspire_statuses` (`id`)
 )
   ENGINE = INNODB
   DEFAULT CHARSET = UTF8;
