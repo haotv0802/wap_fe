@@ -7,10 +7,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <Favicon url={require("../assets/images/ico.png")} />
-        <Header loading={this.props.loading}/>
-        <br/>
-        {this.props.children}
+        <div style={{fontSize: "20px", height: "100px"}}>
+          <Header loading={this.props.loading}/>
+        </div>
+        <div style={{overflow: "auto"}}>
+          <div style={{height: "1000px"}}>
+            {this.props.children}
+          </div>
+        </div>
       </div>
     );
   }
