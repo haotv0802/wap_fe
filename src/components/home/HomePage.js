@@ -16,6 +16,31 @@ class HomePage extends React.Component {
                  className="img-responsive center-block"
                  style={{maxHeight:'300px', paddingBottom:'50px'}}/>
           </div>
+          <div className="row" >
+            <img src={require("../../assets/images/logo.png")}
+                 className="img-responsive center-block"
+                 style={{maxHeight:'300px', paddingBottom:'50px'}}/>
+          </div>
+          <div className="row" >
+            <img src={require("../../assets/images/logo.png")}
+                 className="img-responsive center-block"
+                 style={{maxHeight:'300px', paddingBottom:'50px'}}/>
+          </div>
+          <div className="row" >
+            <img src={require("../../assets/images/logo.png")}
+                 className="img-responsive center-block"
+                 style={{maxHeight:'300px', paddingBottom:'50px'}}/>
+          </div>
+          <div className="row" >
+            <img src={require("../../assets/images/logo.png")}
+                 className="img-responsive center-block"
+                 style={{maxHeight:'300px', paddingBottom:'50px'}}/>
+          </div>
+          <div className="row" >
+            <img src={require("../../assets/images/logo.png")}
+                 className="img-responsive center-block"
+                 style={{maxHeight:'300px', paddingBottom:'50px'}}/>
+          </div>
         </div>
         <div className="bubblingG">
           <span id="bubblingG_1">
