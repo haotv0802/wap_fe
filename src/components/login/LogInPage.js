@@ -8,7 +8,7 @@ class LogInPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      login: Object.assign({}, this.props.login), errors: {}
+      credentials: Object.assign({}, this.props.credentials), errors: {}
     };
     this.updateSignInFormState = this.updateSignInFormState.bind(this);
     this.signIn = this.signIn.bind(this);
@@ -16,10 +16,10 @@ class LogInPage extends React.Component {
 
   updateSignInFormState(event) {
     const field = event.target.name;
-    let login = this.state.login;
-    login[field] = event.target.value;
-    console.log(login);
-    return this.setState({login: login});
+    let credentials = this.state.credentials;
+    credentials[field] = event.target.value;
+    console.log(credentials);
+    return this.setState({credentials: credentials});
   }
 
   signIn(event) {
@@ -36,7 +36,7 @@ class LogInPage extends React.Component {
           <LogInForm
             onChange={this.updateSignInFormState}
             onSubmit={this.signIn}
-            login={this.state.login}
+            credentials={this.state.credentials}
           />
         </div>
       </div>
@@ -45,7 +45,7 @@ class LogInPage extends React.Component {
 }
 
 LogInPage.propTypes = {
-  login: PropTypes.object
+  credentials: PropTypes.object
 };
 
 LogInPage.defaultProps = {
@@ -66,7 +66,7 @@ function mapStateToProps(state, ownProps) {
   // });
 
   return {
-    login: state.credentials
+    credentials: state.credentials
   };
 }
 

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import TextInput from '../common/TextInput';
 import PasswordInput from '../common/PasswordInput';
 
-const LogInForm = ({login, onChange, onSubmit}) => {
+const LogInForm = ({credentials, onChange, onSubmit}) => {
   return (
     <form>
       <TextInput
@@ -10,14 +10,14 @@ const LogInForm = ({login, onChange, onSubmit}) => {
         placeholder="Email"
         label=""
         onChange={onChange}
-        value={login.email}
+        value={credentials.email}
         width="200px"
       />
       <PasswordInput
         name="password"
         placeholder="Password"
         label=""
-        value={login.password}
+        value={credentials.password}
         onChange={onChange}
         width="200px"
       />
@@ -25,7 +25,7 @@ const LogInForm = ({login, onChange, onSubmit}) => {
         name="otp"
         placeholder="Insert Phone OTP"
         label=""
-        value={login.otp}
+        value={credentials.otp}
         onChange={onChange}
         width="200px"
       />
@@ -43,7 +43,7 @@ const LogInForm = ({login, onChange, onSubmit}) => {
 LogInForm.propTypes = {
   onSubmit: React.PropTypes.func,
   onChange: React.PropTypes.func,
-  login: React.PropTypes.object.isRequired
+  credentials: React.PropTypes.object.isRequired
 };
 
 export default LogInForm;
