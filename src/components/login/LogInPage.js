@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import SignInForm from './LogInForm';
+import LogInForm from './LogInForm';
 
 class LogInPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      login: Object.assign({}, this.props.loginValues), errors: {}
     };
     this.updateSignInFormState = this.updateSignInFormState.bind(this);
     this.signIn = this.signIn.bind(this);
@@ -12,9 +13,10 @@ class LogInPage extends React.Component {
 
   updateSignInFormState(event) {
     const field = event.target.name;
-    let course = this.state.course;
-    course[field] = event.target.value;
-    return this.setState({course: course});
+    let login = this.state.login;
+    login[field] = event.target.value;
+    console.log(login);
+    return this.setState({login: login});
   }
 
   signIn(event) {
@@ -28,14 +30,25 @@ class LogInPage extends React.Component {
     return (
       <div className="panel panel-info" style={{textAlign: "center"}}>
         <div className="panel-body" style={{width: "340px", textAlign: "center", display: "inline-block"}}>
-          <SignInForm
+          <LogInForm
             onChange={this.updateSignInFormState}
             onSubmit={this.signIn}
+            login={this.state.login}
           />
         </div>
       </div>
     );
   }
 }
+
+
+LogInPage.propTypes = {
+  login: PropTypes.object
+};
+
+LogInPage.defaultProps = {
+  loginValues: {email: '', password: '', otp: ''}
+};
+
 
 export default LogInPage;
