@@ -54,19 +54,6 @@ LogInPage.defaultProps = {
 
 
 function mapStateToProps(state, ownProps) {
-  console.log("state: ");
-  console.log(state);
-  console.log(state.credentials);
-  // if (courseId && state.courses.length > 0) {
-  //   course = getCourseById(state.courses, courseId);
-  // }
-  // const authorsFormattedForDropdown = state.authors.map(author => {
-  //   return {
-  //     value: author.id,
-  //     text: author.firstName + ' ' + author.lastName
-  //   };
-  // });
-
   return {
     credentials: state.credentials
   };

@@ -4,8 +4,6 @@ import {beginAjaxCall, ajaxCallError} from "./ajaxStatusActions";
 import toastr from 'toastr';
 
 export function loginSuccess(credentials) {
-  console.log("login success: ");
-  console.log(credentials);
   return {type: types.LOGIN_SUCCESS, credentials};
 }
 
@@ -16,6 +14,7 @@ export function login(credentials) {
       dispatch(loginSuccess(credentials));
       toastr.success("Login success!");
     } else {
+      dispatch(ajaxCallError());
       toastr.error("Username or password is incorrect!");
     }
   };
