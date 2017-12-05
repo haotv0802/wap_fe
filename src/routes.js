@@ -10,7 +10,7 @@ import LogInPage from './components/login/LogInPage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={HomePage}/>
+    <IndexRoute component={LogInPage}/>
     <Route path="businessLoans" component={BusinessLoansPage}/>
     <Route path="howItWorks" component={HowItWorksPage}/>
     <Route path="useCases" component={UseCasesPage}/>

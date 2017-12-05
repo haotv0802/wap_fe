@@ -4,7 +4,7 @@ import initialState from './initialState';
 export default function loginReducer(state = initialState.login, action) {
   switch(action.type) {
     case types.LOGIN_SUCCESS:
-      return [...state];
+      return [...state, Object.assign({}, action.login)];
     default:
       return state;
   }
