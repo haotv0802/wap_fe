@@ -54,6 +54,7 @@ LogInPage.defaultProps = {
 
 
 function mapStateToProps(state, ownProps) {
+  console.log(state);
   // if (courseId && state.courses.length > 0) {
   //   course = getCourseById(state.courses, courseId);
   // }
@@ -65,7 +66,7 @@ function mapStateToProps(state, ownProps) {
   // });
 
   return {
-    login: state.login
+    login: state.credentials
   };
 }
 
