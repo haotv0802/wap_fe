@@ -16,8 +16,8 @@ CREATE TABLE `aspire_users` (
   `email_verified_at` DATETIME     NULL,
   `phone_verified_at` DATETIME     NULL,
   `last_login_at`     DATETIME     NULL,
-  `created_on`        DATETIME DEFAULT NOW(),
-  `updated_on`        DATETIME     NULL,
+  `created_at`        DATETIME DEFAULT NOW(),
+  `updated_at`        DATETIME     NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `aspire_users_id` (`id`)
   #   CONSTRAINT `aspire_user_referred_by` FOREIGN KEY (`referred_by`) REFERENCES `aspire_users` (`referral_code`)
@@ -102,11 +102,11 @@ CREATE TABLE `aspire_loans` (
   `payment_method`     VARCHAR(30)    NULL,
   `approved_on`        DATETIME       NULL,
   `rejected_on`        DATETIME       NULL,
-  `contract_signed_on` DATETIME       NULL,
-  `cash_sent_on`       DATETIME       NULL,
-  `next_repayment_on`  DATETIME       NULL,
+  `contract_signed_at` DATETIME       NULL,
+  `cash_sent_at`       DATETIME       NULL,
+  `next_repayment_at`  DATETIME       NULL,
   `duration`           SMALLINT       NULL,
-  `created_on`         DATETIME       NULL,
+  `created_at`         DATETIME       NULL,
   `user_id`            BIGINT         NOT NULL,
   `status_id`          BIGINT         NOT NULL,
   PRIMARY KEY (`id`),
@@ -127,11 +127,27 @@ CREATE TABLE `aspire_payments` (
   `payment_method`   VARCHAR(30)    NULL,
   `fine`             DECIMAL(13, 4) NULL,
   `fine_description` VARCHAR(30)    NULL,
-  `created_on`       DATETIME       NULL,
-  `load_id`          BIGINT         NOT NULL,
+  `created_at`       DATETIME       NULL,
+  `loan_id`          BIGINT         NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `aspire_payments` (`id`),
-  CONSTRAINT `aspire_payments_loan_id` FOREIGN KEY (`load_id`) REFERENCES `aspire_loans` (`id`)
+  CONSTRAINT `aspire_payments_loan_id` FOREIGN KEY (`loan_id`) REFERENCES `aspire_loans` (`id`)
+)
+  ENGINE = INNODB
+  DEFAULT CHARSET = UTF8;
+
+
+DROP TABLE IF EXISTS `aspire_notifications`;
+CREATE TABLE `aspire_notifications` (
+  `id`          BIGINT AUTO_INCREMENT,
+  `name`        VARCHAR(50)  NULL,
+  `description` VARCHAR(200) NULL,
+  `notified_on` DATE         NULL,
+  `created_at`  DATETIME     NULL,
+  `user_id`     BIGINT       NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `aspire_notifications` (`id`),
+  CONSTRAINT `aspire_notifications_user_id` FOREIGN KEY (`user_id`) REFERENCES `aspire_users` (`id`)
 )
   ENGINE = INNODB
   DEFAULT CHARSET = UTF8;
@@ -143,8 +159,8 @@ CREATE TABLE `aspire_credit_scores_history` (
   `source`      VARCHAR(30) NULL,
   `description` VARCHAR(30) NULL,
   `score`       TINYINT DEFAULT 1,
-  `created_on`  DATETIME    NULL,
-  `updated_on`  DATETIME    NULL,
+  `created_at`  DATETIME    NULL,
+  `updated_at`  DATETIME    NULL,
   `user_id`     BIGINT      NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `aspire_credit_scores_history` (`id`),
@@ -171,8 +187,8 @@ CREATE TABLE `aspire_lazada_sellers` (
   `neutral`           TINYINT       NULL,
   `refund_rate`       DECIMAL(4, 2) NULL,
   `cancellation_rate` DECIMAL(4, 2) NULL,
-  `created_on`        DATETIME      NULL,
-  `updated_on`        DATETIME      NULL,
+  `created_at`        DATETIME      NULL,
+  `updated_at`        DATETIME      NULL,
   `user_id`           BIGINT        NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `aspire_lazada_sellers` (`id`),
@@ -191,8 +207,8 @@ CREATE TABLE `aspire_lazada_transactions` (
   `category`   VARCHAR(50)    NULL,
   `rating`     DECIMAL(4, 2)  NULL,
   `url`        TEXT           NULL,
-  `created_on` DATETIME       NULL,
-  `updated_on` DATETIME       NULL,
+  `created_at` DATETIME       NULL,
+  `updated_at` DATETIME       NULL,
   `seller_id`  BIGINT         NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `aspire_lazada_transactions` (`id`),
@@ -213,8 +229,8 @@ CREATE TABLE `aspire_shopee_sellers` (
   `numberOfProducts` INT           NULL,
   `followers`        INT           NULL,
   `url`              VARCHAR(100)  NULL,
-  `created_on`       DATETIME      NULL,
-  `updated_on`       DATETIME      NULL,
+  `created_at`       DATETIME      NULL,
+  `updated_at`       DATETIME      NULL,
   `user_id`          BIGINT        NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `aspire_shopee_sellers` (`id`),
@@ -233,8 +249,8 @@ CREATE TABLE `aspire_shopee_transactions` (
   `category`   VARCHAR(50)    NULL,
   `rating`     DECIMAL(4, 2)  NULL,
   `url`        TEXT           NULL,
-  `created_on` DATETIME       NULL,
-  `updated_on` DATETIME       NULL,
+  `created_at` DATETIME       NULL,
+  `updated_at` DATETIME       NULL,
   `seller_id`  BIGINT         NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `aspire_shopee_transactions` (`id`),
