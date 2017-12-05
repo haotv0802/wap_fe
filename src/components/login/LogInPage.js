@@ -11,21 +11,20 @@ class LogInPage extends React.Component {
       credentials: Object.assign({}, this.props.credentials), errors: {}
     };
     this.updateSignInFormState = this.updateSignInFormState.bind(this);
-    this.signIn = this.signIn.bind(this);
+    this.login = this.login.bind(this);
   }
 
   updateSignInFormState(event) {
     const field = event.target.name;
     let credentials = this.state.credentials;
     credentials[field] = event.target.value;
-    console.log(credentials);
+    // console.log(credentials);
     return this.setState({credentials: credentials});
   }
 
-  signIn(event) {
+  login(event) {
     event.preventDefault();
-    console.log("On Sign In");
-    // this.props.actions.signIn(this.state.course);
+    this.props.actions.login(this.state.credentials);
     // this.context.router.push('/homepage');
   }
 
@@ -35,7 +34,7 @@ class LogInPage extends React.Component {
         <div className="panel-body" style={{width: "340px", textAlign: "center", display: "inline-block"}}>
           <LogInForm
             onChange={this.updateSignInFormState}
-            onSubmit={this.signIn}
+            onSubmit={this.login}
             credentials={this.state.credentials}
           />
         </div>
@@ -45,7 +44,8 @@ class LogInPage extends React.Component {
 }
 
 LogInPage.propTypes = {
-  credentials: PropTypes.object
+  credentials: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 LogInPage.defaultProps = {
@@ -55,6 +55,7 @@ LogInPage.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
   console.log(state);
+  console.log(state.credentials);
   // if (courseId && state.courses.length > 0) {
   //   course = getCourseById(state.courses, courseId);
   // }

@@ -1,6 +1,6 @@
 export default {
   crawledData: [],
   courses: [],
-  credentials: {email: 'Andrea', password: '', otp: 'OTP'},
+  credentials: {email: 'andrea', password: '', otp: 'OTP'},
   ajaxCallsInProgress: 0
 };

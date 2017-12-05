@@ -3,25 +3,20 @@ import loginApi from '../api/mockLoginApi';
 import {beginAjaxCall, ajaxCallError} from "./ajaxStatusActions";
 import toastr from 'toastr';
 
-export function loginSuccess(data) {
-  return {type: types.LOGIN_SUCCESS, data};
+export function loginSuccess(credentials) {
+  console.log("login success: ");
+  console.log(credentials);
+  return {type: types.LOGIN_SUCCESS, credentials};
 }
 
-export function login() {
+export function login(credentials) {
   return dispatch => {
     dispatch(beginAjaxCall());
-    return loginApi.login (
-      res => {
-        setTimeout(() =>{
-          dispatch(loginSuccess(res.data));
-          toastr.success("Login success!");
-        }, 3000);
-      }
-    ).catch(
-      error => {
-        dispatch(ajaxCallError(error));
-        throw(error);
-      }
-    );
+    if (credentials.email === "andrea") {
+      dispatch(loginSuccess(credentials));
+      toastr.success("Login success!");
+    } else {
+      toastr.error("Username or password is incorrect!");
+    }
   };
 }

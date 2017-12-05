@@ -41,9 +41,9 @@ const LogInForm = ({credentials, onChange, onSubmit}) => {
 };
 
 LogInForm.propTypes = {
-  onSubmit: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  credentials: React.PropTypes.object.isRequired
+  onSubmit: PropTypes.func,
+  onChange: PropTypes.func,
+  credentials: PropTypes.object.isRequired
 };
 
 export default LogInForm;
