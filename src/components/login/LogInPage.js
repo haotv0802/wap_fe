@@ -49,7 +49,7 @@ LogInPage.propTypes = {
 };
 
 LogInPage.defaultProps = {
-  // loginValues: {email: '', password: '', otp: ''}
+  // loginValues: {username: '', password: '', otp: ''}
 };
 
 

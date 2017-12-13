@@ -6,11 +6,11 @@ const LogInForm = ({credentials, onChange, onSubmit}) => {
   return (
     <form>
       <TextInput
-        name="email"
-        placeholder="Email"
+        name="username"
+        placeholder="User name"
         label=""
         onChange={onChange}
-        value={credentials.email}
+        value={credentials.username}
         width="200px"
       />
       <PasswordInput

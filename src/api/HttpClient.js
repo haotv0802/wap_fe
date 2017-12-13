@@ -10,7 +10,8 @@ class HttpClient {
 
   static post(url, data) {
     return axios.post(url, data)
-      .catch(onError)
+      // .then(onSuccess)
+      // .catch(onError)
       ;
   }
 }

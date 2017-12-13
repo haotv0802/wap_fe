@@ -1,4 +1,4 @@
 export default {
-  credentials: {email: 'haoho', password: ''},
+  credentials: {username: 'haoho', password: ''},
   ajaxCallsInProgress: 0
 };
