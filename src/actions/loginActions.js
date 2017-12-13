@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import loginApi from '../api/mockLoginApi';
+import loginApi from '../api/loginApi';
 import {beginAjaxCall, ajaxCallError} from "./ajaxStatusActions";
 import toastr from 'toastr';
 
@@ -10,12 +10,17 @@ export function loginSuccess(credentials) {
 export function login(credentials) {
   return dispatch => {
     dispatch(beginAjaxCall());
-    if (credentials.email === "haoho" && credentials.password === "123") {
-      dispatch(loginSuccess(credentials));
-      toastr.success("Login success!");
-    } else {
-      dispatch(ajaxCallError());
-      toastr.error("Username or password is incorrect!");
-    }
+    loginApi.login(credentials).then (
+      resp => {
+        dispatch(loginSuccess(credentials));
+        toastr.success("Login success!");
+      }
+    ).catch(
+      error => {
+        dispatch(ajaxCallError());
+        toastr.error("Username or password is incorrect!");
+        throw (error);
+      }
+    );
   };
 }

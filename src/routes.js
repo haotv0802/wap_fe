@@ -10,11 +10,11 @@ import LogInPage from './components/login/LogInPage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={LogInPage}/>
+    <IndexRoute component={HomePage}/>
     <Route path="businessLoans" component={BusinessLoansPage}/>
     <Route path="howItWorks" component={HowItWorksPage}/>
     <Route path="useCases" component={UseCasesPage}/>
     <Route path="whyAspire" component={WhyAspirePage}/>
-    <Route path="signIn" component={LogInPage}/>
+    <Route path="login" component={LogInPage}/>
   </Route>
 );
