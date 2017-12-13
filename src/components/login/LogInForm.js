@@ -21,14 +21,6 @@ const LogInForm = ({credentials, onChange, onSubmit}) => {
         onChange={onChange}
         width="200px"
       />
-      <TextInput
-        name="otp"
-        placeholder="Insert Phone OTP"
-        label=""
-        value={credentials.otp}
-        onChange={onChange}
-        width="200px"
-      />
       <br/>
       <input
         type="submit"

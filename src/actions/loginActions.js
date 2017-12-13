@@ -10,7 +10,7 @@ export function loginSuccess(credentials) {
 export function login(credentials) {
   return dispatch => {
     dispatch(beginAjaxCall());
-    if (credentials.email === "andrea") {
+    if (credentials.email === "haoho" && credentials.password === "123") {
       dispatch(loginSuccess(credentials));
       toastr.success("Login success!");
     } else {
