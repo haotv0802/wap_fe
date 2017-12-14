@@ -26,7 +26,7 @@ const Header = ({loading}) => {
             &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
             <Link to="/login" activeClassName="active">Login</Link>
             &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-            <Link to="/createAccount" activeClassName="active">Create Account</Link>
+            <Link to="/signup" activeClassName="active">Create Account</Link>
             &nbsp;&nbsp;&nbsp;
             {loading && <LoadingDots interval={100} dots={10}/>}
           </nav>

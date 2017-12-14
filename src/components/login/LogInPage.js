@@ -10,11 +10,11 @@ class LogInPage extends React.Component {
     this.state = {
       credentials: Object.assign({}, this.props.credentials), errors: {}
     };
-    this.updateSignInFormState = this.updateSignInFormState.bind(this);
+    this.updateLoginFormState = this.updateLoginFormState.bind(this);
     this.login = this.login.bind(this);
   }
 
-  updateSignInFormState(event) {
+  updateLoginFormState(event) {
     const field = event.target.name;
     let credentials = this.state.credentials;
     credentials[field] = event.target.value;
@@ -33,7 +33,7 @@ class LogInPage extends React.Component {
       <div className="panel panel-info" style={{textAlign: "center"}}>
         <div className="panel-body" style={{width: "340px", textAlign: "center", display: "inline-block"}}>
           <LogInForm
-            onChange={this.updateSignInFormState}
+            onChange={this.updateLoginFormState}
             onSubmit={this.login}
             credentials={this.state.credentials}
           />

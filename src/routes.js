@@ -7,6 +7,7 @@ import HowItWorksPage from './components/howItWorks/HowItWorksPage';
 import UseCasesPage from './components/useCases/UseCasesPage';
 import WhyAspirePage from './components/whyAspire/WhyAspirePage';
 import LogInPage from './components/login/LogInPage';
+import SignupPage from './components/createAccount/SignupPage';
 
 export default (
   <Route path="/" component={App}>
@@ -16,5 +17,6 @@ export default (
     <Route path="useCases" component={UseCasesPage}/>
     <Route path="whyAspire" component={WhyAspirePage}/>
     <Route path="login" component={LogInPage}/>
+    <Route path="signup" component={SignupPage}/>
   </Route>
 );

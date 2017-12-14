@@ -1,6 +1,3 @@
-import delay from './delay';
-import axios from "axios";
-import request from "./request";
 import HttpClient from "./HttpClient";
 
 class LoginApi {
