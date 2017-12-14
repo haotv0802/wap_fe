@@ -12,7 +12,9 @@ export function signup(signupUser) {
     dispatch(beginAjaxCall());
     signupApi.signup(signupUser).then (
       resp => {
-        dispatch(loginSuccess(signupUser));
+        console.log("response: ");
+        console.log(resp);
+        dispatch(signupSuccess(signupUser));
         toastr.success("Sign-up success!");
       }
     ).catch(

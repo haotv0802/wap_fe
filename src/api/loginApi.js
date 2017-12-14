@@ -1,8 +1,9 @@
 import HttpClient from "./HttpClient";
+import {LOGIN_URL} from "./constants";
 
 class LoginApi {
   static login(credentails) {
-      return HttpClient.post("http://localhost:8888/wap_be/svc/login", credentails);
+      return HttpClient.post(LOGIN_URL, credentails);
   }
 }
 

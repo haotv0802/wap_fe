@@ -1,8 +1,9 @@
 import HttpClient from "./HttpClient";
+import {SIGNUP_URL} from "./constants";
 
 class signupApi {
   static signup(user) {
-      return HttpClient.post("http://localhost:8888/wap_be/svc/signup", user);
+      return HttpClient.post(SIGNUP_URL, user);
   }
 }
 
