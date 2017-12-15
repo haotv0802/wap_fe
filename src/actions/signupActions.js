@@ -12,8 +12,6 @@ export function signup(signupUser) {
     dispatch(beginAjaxCall());
     signupApi.signup(signupUser).then (
       resp => {
-        console.log("response: ");
-        console.log(resp);
         dispatch(signupSuccess(signupUser));
         toastr.success("Sign-up success!");
       }

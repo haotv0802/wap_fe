@@ -36,7 +36,7 @@ export default {
         loader: "babel-loader",
 
         include: [
-          path.resolve(__dirname, "src"),
+          path.resolve(__dirname, "src")
         ],
         test: /\.js?$/,
         // Options to configure babel with
