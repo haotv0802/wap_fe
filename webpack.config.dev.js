@@ -33,11 +33,16 @@ export default {
       {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
       {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'},
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
+
+        include: [
+          path.resolve(__dirname, "src"),
+        ],
+        test: /\.js?$/,
+        // Options to configure babel with
         query: {
-          presets:[ 'es2015', 'react', 'stage-2' ]
+          presets: ['es2015'],
+          plugins: ['transform-object-rest-spread']
         }
       }
     ]
