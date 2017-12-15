@@ -12,12 +12,14 @@ export function login(credentials) {
     dispatch(beginAjaxCall());
     loginApi.login(credentials).then (
       resp => {
+        credentials.isAuthorized = true;
         dispatch(loginSuccess(credentials));
         toastr.success("Login success!");
       }
     ).catch(
       error => {
         dispatch(ajaxCallError());
+        credentials.isAuthorized = false;
         toastr.error("Username or password is incorrect!");
         throw (error);
       }
