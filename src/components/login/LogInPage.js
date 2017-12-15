@@ -54,6 +54,8 @@ LogInPage.defaultProps = {
 
 
 function mapStateToProps(state, ownProps) {
+  console.log("state: ");
+  console.log(state);
   return {
     credentials: state.credentials
   };
