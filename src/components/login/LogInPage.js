@@ -25,7 +25,7 @@ class LogInPage extends React.Component {
   login(event) {
     event.preventDefault();
     this.props.actions.login(this.state.credentials);
-    // this.context.router.push('/homepage');
+    this.context.router.push('/');
   }
 
   render() {
@@ -52,6 +52,9 @@ LogInPage.defaultProps = {
   // loginValues: {username: '', password: '', otp: ''}
 };
 
+LogInPage.contextTypes = {
+  router: PropTypes.object
+};
 
 function mapStateToProps(state, ownProps) {
   console.log("state: ");

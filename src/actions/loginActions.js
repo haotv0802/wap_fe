@@ -7,6 +7,10 @@ export function loginSuccess(credentials) {
   return {type: types.LOGIN_SUCCESS, credentials};
 }
 
+export function logoutSuccess(credentials) {
+  return {type: types.LOGOUT_SUCCESS, credentials};
+}
+
 export function login(credentials) {
   return dispatch => {
     dispatch(beginAjaxCall());
@@ -24,5 +28,14 @@ export function login(credentials) {
         throw (error);
       }
     );
+  };
+}
+
+export function logout(credentials) {
+  return dispatch => {
+    dispatch(beginAjaxCall());
+    credentials.isAuthorized = false;
+    dispatch(logoutSuccess(credentials));
+    toastr.success("Logout success!");
   };
 }

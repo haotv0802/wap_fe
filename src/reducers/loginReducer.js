@@ -5,6 +5,8 @@ export default function loginReducer(state = initialState.credentials, action) {
   switch(action.type) {
     case types.LOGIN_SUCCESS:
       return Object.assign({}, state, action.credentials);
+    case types.LOGOUT_SUCCESS:
+      return Object.assign({}, state, action.credentials);
     default:
       return state;
   }

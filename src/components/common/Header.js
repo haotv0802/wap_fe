@@ -2,10 +2,22 @@ import React, {PropTypes} from 'react';
 import {Link, IndexLink} from 'react-router';
 import LoadingDots from './LoadingDots';
 import {connect} from 'react-redux';
+import * as loginActions from '../../actions/loginActions';
+import {bindActionCreators} from 'redux';
 
 class Header extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      credentials: Object.assign({}, this.props.credentials)
+    };
+    this.logout = this.logout.bind(this);
+  }
+
+  logout(event) {
+    event.preventDefault();
+    this.props.actions.logout(this.state.credentials);
+    this.context.router.push('/login');
   }
 
   render() {
@@ -30,14 +42,15 @@ class Header extends React.Component {
               &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
               <Link to="/whyAspire" activeClassName="active">Why Aspire</Link>
               {
-                this.props.isAuthorized === false ?
+                this.props.credentials.isAuthorized === false ?
                   <span>
                     &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
                     <Link to="/login" activeClassName="active">Login</Link>
                     &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
                     <Link to="/signup" activeClassName="active">Create Account</Link>
                   </span> : <span>
-
+                    &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
+                    <Link to="/#" activeClassName="" onClick={this.logout}>Logout</Link>
                   </span>
               }
               &nbsp;&nbsp;&nbsp;
@@ -53,14 +66,24 @@ class Header extends React.Component {
 
 Header.propTypes = {
   loading: PropTypes.bool.isRequired,
-  isAuthorized: PropTypes.bool.isRequired
+  credentials: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
+Header.contextTypes = {
+  router: PropTypes.object
+};
 
 function mapStateToProps(state, ownProps) {
   return {
-    isAuthorized: state.credentials.isAuthorized
+    credentials: state.credentials
   };
 }
 
-export default connect(mapStateToProps)(Header);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(loginActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
