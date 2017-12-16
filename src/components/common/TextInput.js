@@ -9,6 +9,7 @@ const TextInput = ({name, label, width, onChange, placeholder, value, error}) =>
   return (
     <div className={wrapperClass} style={{display: "inline-block"}}>
       <label htmlFor={name}>{label}</label>
+      <div className="col-sm-10">
         <input
           type="text"
           name={name}
@@ -18,7 +19,9 @@ const TextInput = ({name, label, width, onChange, placeholder, value, error}) =>
           onChange={onChange}
           style={{width: width}}
         />
-        {error & <div className="alert alert-danger">{error}</div>}
+        {error && <span className="glyphicon glyphicon-remove form-control-feedback"/>}
+        {error && <div className="alert alert-danger">{error}</div>}
+      </div>
     </div>
   );
 };

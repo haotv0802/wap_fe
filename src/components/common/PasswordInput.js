@@ -18,7 +18,7 @@ const PasswordInput = ({name, label, width, onChange, placeholder, value, error}
           onChange={onChange}
           style={{width: width}}
         />
-        {/*{error & <div className="alert alert-danger">{error}</div>}*/}
+      {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
 };

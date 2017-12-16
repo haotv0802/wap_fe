@@ -9,7 +9,7 @@ class LogInPage extends React.Component {
     super(props, context);
     this.state = {
       credentials: Object.assign({}, this.props.credentials),
-      errors: {username: "Username must be not null", password: "Password mus be not null"}
+      errors: {}
     };
     this.updateLoginFormState = this.updateLoginFormState.bind(this);
     this.login = this.login.bind(this);
@@ -26,20 +26,34 @@ class LogInPage extends React.Component {
   login(event) {
     event.preventDefault();
     let crd = this.state.credentials;
-    console.log("credentials: ");
-    console.log(crd);
+    let errorsChanged = this.state.errors;
     if (!crd.username) {
-      let errorsChanged = this.state.errors;
-      errorsChanged.username = "Username must be not nullzzzzz.";
+      errorsChanged.username = "Username must be not null.";
       this.setState({
         errors : errorsChanged
       });
-      console.log("errors: ");
-      console.log(this.state);
       return;
+    } else {
+      errorsChanged.username = "";
+      this.setState({
+        errors : errorsChanged
+      });
     }
-    this.props.actions.login(crd);
-    this.context.router.push('/');
+
+    if (!crd.password) {
+      errorsChanged.password = "Password must be not null.";
+      this.setState({
+        errors : errorsChanged
+      });
+    } else {
+      errorsChanged.password = "";
+      this.setState({
+        errors : errorsChanged
+      });
+    }
+    return;
+    // this.props.actions.login(crd);
+    // this.context.router.push('/');
   }
 
   render() {
