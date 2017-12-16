@@ -8,7 +8,8 @@ class LogInPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      credentials: Object.assign({}, this.props.credentials), errors: {}
+      credentials: Object.assign({}, this.props.credentials),
+      errors: {username: "Username must be not null", password: "Password mus be not null"}
     };
     this.updateLoginFormState = this.updateLoginFormState.bind(this);
     this.login = this.login.bind(this);
@@ -24,7 +25,20 @@ class LogInPage extends React.Component {
 
   login(event) {
     event.preventDefault();
-    this.props.actions.login(this.state.credentials);
+    let crd = this.state.credentials;
+    console.log("credentials: ");
+    console.log(crd);
+    if (!crd.username) {
+      let errorsChanged = this.state.errors;
+      errorsChanged.username = "Username must be not nullzzzzz.";
+      this.setState({
+        errors : errorsChanged
+      });
+      console.log("errors: ");
+      console.log(this.state);
+      return;
+    }
+    this.props.actions.login(crd);
     this.context.router.push('/');
   }
 
@@ -36,6 +50,7 @@ class LogInPage extends React.Component {
             onChange={this.updateLoginFormState}
             onSubmit={this.login}
             credentials={this.state.credentials}
+            errors={this.state.errors}
           />
         </div>
       </div>
