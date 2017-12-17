@@ -25,35 +25,39 @@ class LogInPage extends React.Component {
 
   login(event) {
     event.preventDefault();
+
+    if (!this.validateLoginForm()) {
+      return;
+    }
+    // this.props.actions.login(crd);
+    // this.context.router.push('/');
+  }
+
+  validateLoginForm() {
+    let success = true;
     let crd = this.state.credentials;
     let errorsChanged = this.state.errors;
     if (!crd.username) {
       errorsChanged.username = "Username must be not null.";
-      this.setState({
-        errors : errorsChanged
-      });
-      return;
+      success = false;
     } else {
       errorsChanged.username = "";
-      this.setState({
-        errors : errorsChanged
-      });
     }
 
     if (!crd.password) {
       errorsChanged.password = "Password must be not null.";
-      this.setState({
-        errors : errorsChanged
-      });
+      success = false;
     } else {
       errorsChanged.password = "";
-      this.setState({
-        errors : errorsChanged
-      });
     }
-    return;
-    // this.props.actions.login(crd);
-    // this.context.router.push('/');
+    if (success) {
+      errorsChanged = {};
+    }
+    this.setState({
+      errors : errorsChanged
+    });
+
+    return success;
   }
 
   render() {
