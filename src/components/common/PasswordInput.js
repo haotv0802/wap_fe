@@ -3,12 +3,13 @@ import React, {PropTypes} from 'react';
 const PasswordInput = ({name, label, width, onChange, placeholder, value, error}) => {
   let wrapperClass = 'form-group';
   if (error !== undefined && error.length > 0) {
-    wrapperClass += " " + 'has-error';
+    wrapperClass += " " + 'has-error has-feedback';
   }
 
   return (
     <div className={wrapperClass} style={{display: "inline-block"}}>
       <label htmlFor={name}>{label}</label>
+      <div className="col-sm-11">
         <input
           type="password"
           name={name}
@@ -18,7 +19,9 @@ const PasswordInput = ({name, label, width, onChange, placeholder, value, error}
           onChange={onChange}
           style={{width: width}}
         />
-      {error && <div className="alert alert-danger">{error}</div>}
+        {error && <span className="glyphicon glyphicon-remove form-control-feedback"/>}
+        {error && <div className="alert alert-danger" style={{width: width}}>{error}</div>}
+      </div>
     </div>
   );
 };

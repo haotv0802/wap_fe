@@ -3,13 +3,13 @@ import React, {PropTypes} from 'react';
 const TextInput = ({name, label, width, onChange, placeholder, value, error}) => {
   let wrapperClass = 'form-group';
   if (error !== undefined && error.length > 0) {
-    wrapperClass += " " + 'has-error';
+    wrapperClass += ' ' + 'has-error has-feedback';
   }
 
   return (
     <div className={wrapperClass} style={{display: "inline-block"}}>
       <label htmlFor={name}>{label}</label>
-      <div className="col-sm-10">
+      <div className="col-sm-11">
         <input
           type="text"
           name={name}
@@ -20,7 +20,7 @@ const TextInput = ({name, label, width, onChange, placeholder, value, error}) =>
           style={{width: width}}
         />
         {error && <span className="glyphicon glyphicon-remove form-control-feedback"/>}
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="alert alert-danger" style={{width: width}}>{error}</div>}
       </div>
     </div>
   );
