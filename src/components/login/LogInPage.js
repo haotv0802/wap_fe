@@ -19,7 +19,6 @@ class LogInPage extends React.Component {
     const field = event.target.name;
     let credentials = this.state.credentials;
     credentials[field] = event.target.value;
-    // console.log(credentials);
     this.validateLoginForm();
     return this.setState({credentials: credentials});
   }
@@ -30,7 +29,7 @@ class LogInPage extends React.Component {
     if (!this.validateLoginForm()) {
       return;
     }
-    // this.props.actions.login(crd);
+    this.props.actions.login(this.state.credentials);
     // this.context.router.push('/');
   }
 

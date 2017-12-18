@@ -2,6 +2,7 @@ import * as types from './actionTypes';
 import loginApi from '../api/loginApi';
 import {beginAjaxCall, ajaxCallError} from "./ajaxStatusActions";
 import toastr from 'toastr';
+import { browserHistory } from 'react-router'
 
 export function loginSuccess(credentials) {
   return {type: types.LOGIN_SUCCESS, credentials};
@@ -18,7 +19,9 @@ export function login(credentials) {
       resp => {
         credentials.isAuthorized = true;
         dispatch(loginSuccess(credentials));
+        console.log(credentials);
         toastr.success("Login success!");
+        browserHistory.push('/');
       }
     ).catch(
       error => {
