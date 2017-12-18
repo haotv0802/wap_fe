@@ -9,7 +9,7 @@ class LogInPage extends React.Component {
     super(props, context);
     this.state = {
       credentials: Object.assign({}, this.props.credentials),
-      errors: {}
+      errors: {submitEnabled: true}
     };
     this.updateLoginFormState = this.updateLoginFormState.bind(this);
     this.login = this.login.bind(this);
@@ -20,6 +20,7 @@ class LogInPage extends React.Component {
     let credentials = this.state.credentials;
     credentials[field] = event.target.value;
     // console.log(credentials);
+    this.validateLoginForm();
     return this.setState({credentials: credentials});
   }
 
@@ -53,6 +54,8 @@ class LogInPage extends React.Component {
     if (success) {
       errorsChanged = {};
     }
+
+    errorsChanged.submitEnabled = success;
     this.setState({
       errors : errorsChanged
     });
