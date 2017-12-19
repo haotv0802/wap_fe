@@ -87,6 +87,7 @@ class LogInPage extends React.Component {
             onSubmit={this.login}
             credentials={this.state.credentials}
             errors={this.state.errors}
+            serverError={this.props.serverError}
           />
         </div>
       </div>
@@ -96,7 +97,8 @@ class LogInPage extends React.Component {
 
 LogInPage.propTypes = {
   credentials: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  serverError: PropTypes.object
 };
 
 LogInPage.defaultProps = {
@@ -111,7 +113,8 @@ function mapStateToProps(state, ownProps) {
   console.log("state: ");
   console.log(state);
   return {
-    credentials: state.credentials
+    credentials: state.credentials,
+    serverError: state.credentials.serverError
   };
 }
 

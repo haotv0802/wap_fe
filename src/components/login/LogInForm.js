@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import TextInput from '../common/TextInput';
 import PasswordInput from '../common/PasswordInput';
 
-const LogInForm = ({credentials, onChange, onSubmit, errors}) => {
+const LogInForm = ({credentials, onChange, onSubmit, errors, serverError}) => {
   return (
     <form>
       <TextInput
@@ -29,7 +29,7 @@ const LogInForm = ({credentials, onChange, onSubmit, errors}) => {
         value="Log-in"
         className="btn btn-primary"
         onClick={onSubmit}
-        disabled={!errors.formValid}
+        disabled={!errors.formValid || serverError}
       />
     </form>
   );
@@ -39,7 +39,8 @@ LogInForm.propTypes = {
   onSubmit: PropTypes.func,
   onChange: PropTypes.func,
   credentials: PropTypes.object.isRequired,
-  errors: React.PropTypes.object
+  errors: React.PropTypes.object,
+  serverError: React.PropTypes.object
 };
 
 export default LogInForm;

@@ -8,6 +8,10 @@ export function loginSuccess(credentials) {
   return {type: types.LOGIN_SUCCESS, credentials};
 }
 
+export function loginFailure(credentials) {
+  return {type: types.LOGIN_FAILURE, credentials};
+}
+
 export function logoutSuccess(credentials) {
   return {type: types.LOGOUT_SUCCESS, credentials};
 }
@@ -27,6 +31,8 @@ export function login(credentials) {
       error => {
         dispatch(ajaxCallError());
         credentials.isAuthorized = false;
+        credentials.serverError = {status: error.status, statusText: error.statusText};
+        dispatch(loginFailure(credentials));
         toastr.error("Username or password is incorrect!");
         throw (error);
       }
