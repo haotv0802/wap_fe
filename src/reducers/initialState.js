@@ -1,5 +1,5 @@
 export default {
-  credentials: {username: 'haoho', password: '', isAuthorized: false},
+  credentials: {username: '', password: '', isAuthorized: false},
   signupUser: {username: '', password: ''},
   ajaxCallsInProgress: 0
 };
