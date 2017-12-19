@@ -42,30 +42,40 @@ class LogInPage extends React.Component {
   validateLoginFormControls(credentials, field) {
     let value = credentials[field];
     let errorsChanged = this.state.errors;
+
     if (!credentials.username) {
-      if (field === 'username') {
-        errorsChanged.username = "Username must be not null.";
-      }
+      errorsChanged.username = "Username must be not null.";
       errorsChanged.formValid = false;
-      return errorsChanged;
+    } else if (credentials.username.length > 20) {
+      errorsChanged.username = "Username's length must be less than 20";
+      errorsChanged.formValid = false;
     } else {
       errorsChanged.username = "";
+      errorsChanged.formValid = true;
+    }
+
+    if (field === 'username') {
+      return errorsChanged;
     }
 
     if (!credentials.password) {
-      if (field === 'password') {
-        errorsChanged.password = "Password must be not null.";
-      }
+      errorsChanged.password = "Password must be not null.";
       errorsChanged.formValid = false;
-      return errorsChanged;
-    } else {
+    } else if (credentials.password.length > 7) {
+      errorsChanged.password = "Password is too long";
+      errorsChanged.formValid = false;
+    }  else {
       errorsChanged.password = "";
+      errorsChanged.formValid = true;
     }
 
-    errorsChanged = {};
-    errorsChanged.formValid = true;
+    if (field === 'password') {
+      return errorsChanged;
+    }
+    // errorsChanged = {};
+    // errorsChanged.formValid = true;
 
-    return errorsChanged;
+    // return errorsChanged;
   }
 
   render() {

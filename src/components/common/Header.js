@@ -61,7 +61,7 @@ class Header extends React.Component {
         <div style={{border: '1px solid gray'}}/>
       </div>
     );
-  };
+  }
 }
 
 Header.propTypes = {

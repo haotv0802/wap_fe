@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 import loginApi from '../api/loginApi';
 import {beginAjaxCall, ajaxCallError} from "./ajaxStatusActions";
 import toastr from 'toastr';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
 
 export function loginSuccess(credentials) {
   return {type: types.LOGIN_SUCCESS, credentials};

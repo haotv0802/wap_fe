@@ -4,6 +4,8 @@ const TextInput = ({name, label, width, onChange, placeholder, value, error}) =>
   let wrapperClass = 'form-group';
   if (error !== undefined && error.length > 0) {
     wrapperClass += ' ' + 'has-error has-feedback';
+  } else if (error !== undefined && error.length === 0) {
+    wrapperClass += ' ' + 'has-success has-feedback';
   }
 
   return (
@@ -20,6 +22,7 @@ const TextInput = ({name, label, width, onChange, placeholder, value, error}) =>
           style={{width: width}}
         />
         {error && <span className="glyphicon glyphicon-remove form-control-feedback"/>}
+        {/*{!error && <span className="glyphicon glyphicon-ok form-control-feedback"/>}*/}
         {error && <div className="alert alert-danger" style={{width: width}}>{error}</div>}
       </div>
     </div>
