@@ -39,6 +39,18 @@ class LogInPage extends React.Component {
     // this.context.router.push('/');
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.credentials.serverError && nextProps.credentials.serverError.status === 401) {
+      let credentails = this.state.credentials;
+      credentails.username = "";
+      credentails.password = "";
+      this.setState({
+        credentails: credentails,
+        errors: {}
+      });
+    }
+  }
+
   validateLoginFormControls(credentials, field) {
     let value = credentials[field];
     let errorsChanged = this.state.errors;
@@ -87,7 +99,6 @@ class LogInPage extends React.Component {
             onSubmit={this.login}
             credentials={this.state.credentials}
             errors={this.state.errors}
-            serverError={this.props.serverError}
           />
         </div>
       </div>
@@ -97,8 +108,7 @@ class LogInPage extends React.Component {
 
 LogInPage.propTypes = {
   credentials: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
-  serverError: PropTypes.object
+  actions: PropTypes.object.isRequired
 };
 
 LogInPage.defaultProps = {
@@ -110,11 +120,10 @@ LogInPage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log("state: ");
-  console.log(state);
+  // console.log("state: ");
+  // console.log(state);
   return {
-    credentials: state.credentials,
-    serverError: state.credentials.serverError
+    credentials: state.credentials
   };
 }
 

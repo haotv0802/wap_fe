@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import TextInput from '../common/TextInput';
 import PasswordInput from '../common/PasswordInput';
 
-const LogInForm = ({credentials, onChange, onSubmit, errors, serverError}) => {
+const LogInForm = ({credentials, onChange, onSubmit, errors}) => {
   return (
     <form>
       <TextInput
@@ -29,7 +29,7 @@ const LogInForm = ({credentials, onChange, onSubmit, errors, serverError}) => {
         value="Log-in"
         className="btn btn-primary"
         onClick={onSubmit}
-        disabled={!errors.formValid || serverError}
+        disabled={!errors.formValid}
       />
     </form>
   );
