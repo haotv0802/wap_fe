@@ -42,40 +42,40 @@ class LogInPage extends React.Component {
   validateLoginFormControls(credentials, field) {
     let value = credentials[field];
     let errorsChanged = this.state.errors;
-
+    errorsChanged.formValid = true;
     if (!credentials.username) {
-      errorsChanged.username = "Username must be not null.";
       errorsChanged.formValid = false;
-    } else if (credentials.username.length > 20) {
-      errorsChanged.username = "Username's length must be less than 20";
+      if (field === 'username') {
+        errorsChanged.username = "Username must be not null.";
+        return errorsChanged;
+      }
+    } else if (credentials.username.length > 5) {
       errorsChanged.formValid = false;
+      if (field === 'username') {
+        errorsChanged.username = "Username is too long";
+        return errorsChanged;
+      }
     } else {
       errorsChanged.username = "";
-      errorsChanged.formValid = true;
-    }
-
-    if (field === 'username') {
-      return errorsChanged;
     }
 
     if (!credentials.password) {
-      errorsChanged.password = "Password must be not null.";
       errorsChanged.formValid = false;
-    } else if (credentials.password.length > 7) {
-      errorsChanged.password = "Password is too long";
+      if (field === 'password') {
+        errorsChanged.password = "Password must be not null.";
+        return errorsChanged;
+      }
+    } else if (credentials.password.length > 5) {
       errorsChanged.formValid = false;
+      if (field === 'password') {
+        errorsChanged.password = "Password is too long";
+        return errorsChanged;
+      }
     }  else {
       errorsChanged.password = "";
-      errorsChanged.formValid = true;
     }
 
-    if (field === 'password') {
-      return errorsChanged;
-    }
-    // errorsChanged = {};
-    // errorsChanged.formValid = true;
-
-    // return errorsChanged;
+    return errorsChanged;
   }
 
   render() {
