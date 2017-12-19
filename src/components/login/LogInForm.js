@@ -29,7 +29,7 @@ const LogInForm = ({credentials, onChange, onSubmit, errors}) => {
         value="Log-in"
         className="btn btn-primary"
         onClick={onSubmit}
-        disabled={!errors.submitEnabled}
+        disabled={!errors.formValid}
       />
     </form>
   );

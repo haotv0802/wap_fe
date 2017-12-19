@@ -9,7 +9,7 @@ class LogInPage extends React.Component {
     super(props, context);
     this.state = {
       credentials: Object.assign({}, this.props.credentials),
-      errors: {submitEnabled: true}
+      errors: {formValid: false}
     };
     this.updateLoginFormState = this.updateLoginFormState.bind(this);
     this.login = this.login.bind(this);
@@ -19,47 +19,53 @@ class LogInPage extends React.Component {
     const field = event.target.name;
     let credentials = this.state.credentials;
     credentials[field] = event.target.value;
-    this.validateLoginForm();
-    return this.setState({credentials: credentials});
+    let errorsChanged = this.validateLoginFormControls(credentials, field);
+    console.log("errorsChanged: ");
+    console.log(errorsChanged);
+    return this.setState({credentials: credentials, errors: errorsChanged});
   }
 
   login(event) {
     event.preventDefault();
 
-    if (!this.validateLoginForm()) {
+    let errorsChanged = this.validateLoginFormControls(this.state.credentials, null);
+    if (!errorsChanged.formValid) {
+      this.setState({
+        errors : errorsChanged
+      });
       return;
     }
     this.props.actions.login(this.state.credentials);
     // this.context.router.push('/');
   }
 
-  validateLoginForm() {
-    let success = true;
-    let crd = this.state.credentials;
+  validateLoginFormControls(credentials, field) {
+    let value = credentials[field];
     let errorsChanged = this.state.errors;
-    if (!crd.username) {
-      errorsChanged.username = "Username must be not null.";
-      success = false;
+    if (!credentials.username) {
+      if (field === 'username') {
+        errorsChanged.username = "Username must be not null.";
+      }
+      errorsChanged.formValid = false;
+      return errorsChanged;
     } else {
       errorsChanged.username = "";
     }
 
-    if (!crd.password) {
-      errorsChanged.password = "Password must be not null.";
-      success = false;
+    if (!credentials.password) {
+      if (field === 'password') {
+        errorsChanged.password = "Password must be not null.";
+      }
+      errorsChanged.formValid = false;
+      return errorsChanged;
     } else {
       errorsChanged.password = "";
     }
-    if (success) {
-      errorsChanged = {};
-    }
 
-    errorsChanged.submitEnabled = success;
-    this.setState({
-      errors : errorsChanged
-    });
+    errorsChanged = {};
+    errorsChanged.formValid = true;
 
-    return success;
+    return errorsChanged;
   }
 
   render() {
