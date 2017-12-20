@@ -37,6 +37,7 @@ const SignupForm = ({signupUser, onChange, onSubmit, onReset, errors}) => {
         value="Reset"
         className="btn btn-primary"
         onClick={onReset}
+        disabled={!signupUser.username && !signupUser.password}
       />
     </form>
   );
