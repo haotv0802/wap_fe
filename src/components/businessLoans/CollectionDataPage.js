@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
-class BusinessLoansPage extends React.Component {
+class CollectionDataPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -18,12 +18,12 @@ class BusinessLoansPage extends React.Component {
   }
 }
 
-BusinessLoansPage.propTypes = {
+CollectionDataPage.propTypes = {
   pageTitle: PropTypes.string.isRequired
 };
 
-BusinessLoansPage.defaultProps = {
+CollectionDataPage.defaultProps = {
   pageTitle: "Business Loans"
 };
 
-export default BusinessLoansPage;
+export default CollectionDataPage;
