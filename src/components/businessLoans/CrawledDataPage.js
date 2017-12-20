@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-class CollectionDataPage extends React.Component {
+class CrawledDataPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -62,12 +62,12 @@ class CollectionDataPage extends React.Component {
   }
 }
 
-CollectionDataPage.propTypes = {
+CrawledDataPage.propTypes = {
   pageTitle: PropTypes.string.isRequired
 };
 
-CollectionDataPage.defaultProps = {
+CrawledDataPage.defaultProps = {
   pageTitle: "Business Loans"
 };
 
-export default CollectionDataPage;
+export default CrawledDataPage;

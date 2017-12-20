@@ -34,7 +34,7 @@ class Header extends React.Component {
           <div className="col-md-10" style={{textAlign: 'left', textIndent: '150px'}}>
             <nav>
               &nbsp;&nbsp;&nbsp;
-              <Link to="/collectionData" activeClassName="active">Collection Data</Link>
+              <Link to="/crawledData" activeClassName="active">Crawled Data</Link>
               &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
               <Link to="/howItWorks" activeClassName="active">How it works</Link>
               &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
