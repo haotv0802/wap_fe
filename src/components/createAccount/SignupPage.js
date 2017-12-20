@@ -124,6 +124,8 @@ SignupPage.defaultProps = {};
 
 
 function mapStateToProps(state, ownProps) {
+  console.log("state: ");
+  console.log(state);
   return {
     signupUser: state.signupUser
   };

@@ -23,12 +23,12 @@ export function signup(signupUser) {
       error => {
         dispatch(ajaxCallError());
         signupUser.serverError = {status: error.status, statusText: error.statusText};
+        dispatch(signupFailure(signupUser));
         if (error.status === 403) {
           toastr.error("Username is already existing.");
         } else {
           toastr.error("Signup process unsuccessfully!");
         }
-        dispatch(signupFailure(signupUser));
         throw (error);
       }
     );
