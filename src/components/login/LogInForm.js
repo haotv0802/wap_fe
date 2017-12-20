@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import TextInput from '../common/TextInput';
 import PasswordInput from '../common/PasswordInput';
 
-const LogInForm = ({credentials, onChange, onSubmit, errors}) => {
+const LogInForm = ({credentials, onChange, onSubmit, onReset, errors}) => {
   return (
     <form>
       <TextInput
@@ -30,6 +30,14 @@ const LogInForm = ({credentials, onChange, onSubmit, errors}) => {
         className="btn btn-primary"
         onClick={onSubmit}
         disabled={!errors.formValid}
+      />
+      &nbsp;&nbsp;&nbsp;
+      <input
+        type="reset"
+        value="Reset"
+        className="btn btn-primary"
+        onClick={onReset}
+        disabled={!credentials.username && !credentials.password}
       />
     </form>
   );

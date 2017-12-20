@@ -13,6 +13,7 @@ class LogInPage extends React.Component {
     };
     this.updateLoginFormState = this.updateLoginFormState.bind(this);
     this.login = this.login.bind(this);
+    this.resetValues = this.resetValues.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,6 +40,13 @@ class LogInPage extends React.Component {
     }
     this.props.actions.login(this.state.credentials);
     // this.context.router.push('/');
+  }
+
+  resetValues() {
+    this.setState({
+      credentials: {username: '', password: ''},
+      errors: {formValid: false}
+    });
   }
 
   updateLoginFormState(event) {
@@ -99,6 +107,7 @@ class LogInPage extends React.Component {
             onSubmit={this.login}
             credentials={this.state.credentials}
             errors={this.state.errors}
+            onReset={this.resetValues}
           />
         </div>
       </div>
