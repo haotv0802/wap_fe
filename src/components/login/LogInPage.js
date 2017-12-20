@@ -15,14 +15,16 @@ class LogInPage extends React.Component {
     this.login = this.login.bind(this);
   }
 
-  updateLoginFormState(event) {
-    const field = event.target.name;
-    let credentials = this.state.credentials;
-    credentials[field] = event.target.value;
-    let errorsChanged = this.validateLoginFormControls(credentials, field);
-    console.log("errorsChanged: ");
-    console.log(errorsChanged);
-    return this.setState({credentials: credentials, errors: errorsChanged});
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.credentials.serverError && nextProps.credentials.serverError.status === 401) {
+      let credentials = this.state.credentials;
+      credentials.username = "";
+      credentials.password = "";
+      this.setState({
+        credentials: credentials,
+        errors: {}
+      });
+    }
   }
 
   login(event) {
@@ -39,16 +41,14 @@ class LogInPage extends React.Component {
     // this.context.router.push('/');
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.credentials.serverError && nextProps.credentials.serverError.status === 401) {
-      let credentails = this.state.credentials;
-      credentails.username = "";
-      credentails.password = "";
-      this.setState({
-        credentails: credentails,
-        errors: {}
-      });
-    }
+  updateLoginFormState(event) {
+    const field = event.target.name;
+    let credentials = this.state.credentials;
+    credentials[field] = event.target.value;
+    let errorsChanged = this.validateLoginFormControls(credentials, field);
+    console.log("errorsChanged: ");
+    console.log(errorsChanged);
+    return this.setState({credentials: credentials, errors: errorsChanged});
   }
 
   validateLoginFormControls(credentials, field) {
