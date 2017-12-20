@@ -5,6 +5,8 @@ export default function signupReducer(state = initialState.signupUser, action) {
   switch(action.type) {
     case types.SIGNUP_SUCCESS:
       return Object.assign(...state, action.signupUser);
+    case types.SIGNUP_FAILURE:
+      return Object.assign(...state, action.signupUser);
     default:
       return state;
   }

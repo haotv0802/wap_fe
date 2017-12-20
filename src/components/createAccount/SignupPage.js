@@ -16,6 +16,19 @@ class SignupPage extends React.Component {
     this.resetValues = this.resetValues.bind(this);
   }
 
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.signupUser.serverError && nextProps.signupUser.serverError.status === 403) {
+  //     let signupUser = this.state.signupUser;
+  //     signupUser.username = "";
+  //     signupUser.password = "";
+  //     this.setState({
+  //       signupUser: signupUser,
+  //       errors: {}
+  //     });
+  //   }
+  // }
+
   updateSignupFormState(event) {
     const field = event.target.name;
     let signupUser = this.state.signupUser;
@@ -36,7 +49,7 @@ class SignupPage extends React.Component {
         errorsChanged.username = "Username must be not null.";
         return errorsChanged;
       }
-    } else if (controls.username.length > 5) {
+    } else if (controls.username.length > 20) {
       errorsChanged.formValid = false;
       if (field === 'username') {
         errorsChanged.username = "Username is too long";
@@ -52,7 +65,7 @@ class SignupPage extends React.Component {
         errorsChanged.password = "Password must be not null.";
         return errorsChanged;
       }
-    } else if (controls.password.length > 5) {
+    } else if (controls.password.length > 20) {
       errorsChanged.formValid = false;
       if (field === 'password') {
         errorsChanged.password = "Password is too long";

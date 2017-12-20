@@ -69,7 +69,7 @@ class LogInPage extends React.Component {
         errorsChanged.username = "Username must be not null.";
         return errorsChanged;
       }
-    } else if (credentials.username.length > 5) {
+    } else if (credentials.username.length > 20) {
       errorsChanged.formValid = false;
       if (field === 'username') {
         errorsChanged.username = "Username is too long";
@@ -85,7 +85,7 @@ class LogInPage extends React.Component {
         errorsChanged.password = "Password must be not null.";
         return errorsChanged;
       }
-    } else if (credentials.password.length > 5) {
+    } else if (credentials.password.length > 20) {
       errorsChanged.formValid = false;
       if (field === 'password') {
         errorsChanged.password = "Password is too long";

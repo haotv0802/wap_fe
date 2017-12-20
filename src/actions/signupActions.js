@@ -7,6 +7,10 @@ export function signupSuccess(signupUser) {
   return {type: types.SIGNUP_SUCCESS, signupUser};
 }
 
+export function signupFailure(signupUser) {
+  return {type: types.SIGNUP_FAILURE, signupUser};
+}
+
 export function signup(signupUser) {
   return dispatch => {
     dispatch(beginAjaxCall());
@@ -18,7 +22,13 @@ export function signup(signupUser) {
     ).catch(
       error => {
         dispatch(ajaxCallError());
-        toastr.error("Signup process unsuccessfully!");
+        signupUser.serverError = {status: error.status, statusText: error.statusText};
+        if (error.status === 403) {
+          toastr.error("Username is already existing.");
+        } else {
+          toastr.error("Signup process unsuccessfully!");
+        }
+        dispatch(signupFailure(signupUser));
         throw (error);
       }
     );
