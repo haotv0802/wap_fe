@@ -9,6 +9,10 @@ class CrawledDataPage extends React.Component {
     super(props, context);
   }
 
+  componentWillMount() {
+    this.props.actions.getCrawledData();
+  }
+
   render() {
     const {crawledData} = this.props;
     return (
@@ -58,7 +62,8 @@ class CrawledDataPage extends React.Component {
 
 CrawledDataPage.propTypes = {
   pageTitle: PropTypes.string.isRequired,
-  crawledData: PropTypes.array.isRequired
+  crawledData: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 CrawledDataPage.defaultProps = {
@@ -67,8 +72,8 @@ CrawledDataPage.defaultProps = {
 
 
 function mapStateToProps(state, ownProps) {
-  console.log("state: ");
-  console.log(state);
+  // console.log("state: ");
+  // console.log(state);
   return {
     crawledData: state.crawledData
   };

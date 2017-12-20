@@ -11,7 +11,7 @@ import '../node_modules/toastr/build/toastr.min.css';
 import {getCrawledData} from "./actions/crawledDataActions";
 
 const store = configureStore();
-store.dispatch(getCrawledData());
+// store.dispatch(getCrawledData());
 
 render(
   <Provider store={store}>
