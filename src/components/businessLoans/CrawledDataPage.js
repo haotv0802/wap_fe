@@ -1,4 +1,7 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as crawledDataActions from '../../actions/crawledDataActions';
 
 class CrawledDataPage extends React.Component {
 
@@ -7,13 +10,15 @@ class CrawledDataPage extends React.Component {
   }
 
   render() {
+    const {crawledData} = this.props;
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
             <table className="table table-bordered table-hover" style={{width: "1200px"}}>
               <thead style={{color: "#337AB7"}}>
-                <th className="col-sm-2">Name</th>
-                <th className="col-sm-1">Category</th>
+              <tr>
+                <th className="col-sm-3">Name</th>
+                <th className="col-sm-3">Category</th>
                 <th className="col-sm-2">Vendor Name</th>
                 <th className="col-sm-1">Location</th>
                 <th className="col-sm-1">Ship on time</th>
@@ -24,36 +29,25 @@ class CrawledDataPage extends React.Component {
                 <th className="col-sm-1">Time on lazada</th>
                 <th className="col-sm-1">Rating</th>
                 <th className="col-sm-1">Size</th>
+              </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>Name</td>
-                <td>Category</td>
-                <td>Vendor Name</td>
-                <td>Location</td>
-                <td>Shipping</td>
-                <td>Positive</td>
-                <td>Neutral</td>
-                <td>Negative</td>
-                <td>Link</td>
-                <td>Time on lazada</td>
-                <td>Rating</td>
-                <td>Size</td>
-              </tr>
-              <tr>
-                <td>Name</td>
-                <td>Category</td>
-                <td>Vendor Name</td>
-                <td>Location</td>
-                <td>Shipping</td>
-                <td>Positive</td>
-                <td>Neutral</td>
-                <td>Negative</td>
-                <td>Link</td>
-                <td>Time on lazada</td>
-                <td>Rating</td>
-                <td>Size</td>
-              </tr>
+              {crawledData.map((data, key) =>
+                <tr key={key}>
+                  <td>{data.name}</td>
+                  <td>{data.category}</td>
+                  <td>{data.vendorName}</td>
+                  <td>{data.vendorLocation}</td>
+                  <td>{data.vendorShipOnTime}</td>
+                  <td>{data.vendorPositive}</td>
+                  <td>{data.vendorNeutral}</td>
+                  <td>{data.vendorNegative}</td>
+                  <td>{data.vendorLink}</td>
+                  <td>{data.vendorTimeOnLazada}</td>
+                  <td>{data.vendorRating}</td>
+                  <td>{data.vendorSize}</td>
+                </tr>
+              )}
               </tbody>
             </table>
           </div>
@@ -63,11 +57,26 @@ class CrawledDataPage extends React.Component {
 }
 
 CrawledDataPage.propTypes = {
-  pageTitle: PropTypes.string.isRequired
+  pageTitle: PropTypes.string.isRequired,
+  crawledData: PropTypes.array.isRequired
 };
 
 CrawledDataPage.defaultProps = {
   pageTitle: "Business Loans"
 };
 
-export default CrawledDataPage;
+
+function mapStateToProps(state, ownProps) {
+  console.log("state: ");
+  console.log(state);
+  return {
+    crawledData: state.crawledData
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(crawledDataActions, dispatch)
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CrawledDataPage);
