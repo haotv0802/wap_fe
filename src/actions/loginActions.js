@@ -22,6 +22,7 @@ export function login(credentials) {
     loginApi.login(credentials).then (
       resp => {
         credentials.isAuthorized = true;
+        credentials.serverError = null;
         dispatch(loginSuccess(credentials));
         console.log(credentials);
         toastr.success("Login success!");

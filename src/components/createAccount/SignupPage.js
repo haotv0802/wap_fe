@@ -17,17 +17,17 @@ class SignupPage extends React.Component {
   }
 
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.signupUser.serverError && nextProps.signupUser.serverError.status === 403) {
-  //     let signupUser = this.state.signupUser;
-  //     signupUser.username = "";
-  //     signupUser.password = "";
-  //     this.setState({
-  //       signupUser: signupUser,
-  //       errors: {}
-  //     });
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.signupUser.serverError && nextProps.signupUser.serverError.status === 403) {
+      let signupUser = this.state.signupUser;
+      signupUser.username = "";
+      signupUser.password = "";
+      this.setState({
+        signupUser: signupUser,
+        errors: {}
+      });
+    }
+  }
 
   updateSignupFormState(event) {
     const field = event.target.name;
