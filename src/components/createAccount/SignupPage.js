@@ -9,12 +9,11 @@ class SignupPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      signupUser: Object.assign({}, this.props.signupUser), errors: {}
+      signupUser: Object.assign({}, this.props.signupUser), errors: {formValid: false}
     };
     this.updateSignupFormState = this.updateSignupFormState.bind(this);
     this.signup = this.signup.bind(this);
     this.resetValues = this.resetValues.bind(this);
-
   }
 
   updateSignupFormState(event) {
@@ -45,6 +44,7 @@ class SignupPage extends React.Component {
             onSubmit={this.signup}
             onReset={this.resetValues}
             signupUser={this.state.signupUser}
+            errors={this.state.errors}
           />
         </div>
       </div>

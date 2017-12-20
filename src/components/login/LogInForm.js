@@ -11,7 +11,7 @@ const LogInForm = ({credentials, onChange, onSubmit, errors}) => {
         label=""
         onChange={onChange}
         value={credentials.username}
-        width="300px"
+        width="250px"
         error={errors.username}
       />
       <PasswordInput
@@ -20,7 +20,7 @@ const LogInForm = ({credentials, onChange, onSubmit, errors}) => {
         label=""
         value={credentials.password}
         onChange={onChange}
-        width="300px"
+        width="250px"
         error={errors.password}
       />
       <br/>
