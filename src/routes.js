@@ -2,7 +2,7 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 import App from './components/App';
 import HomePage from './components/home/HomePage';
-import CrawledDataPage from './components/businessLoans/CrawledDataPage';
+import CrawledDataPage from './components/crawledData/CrawledDataPage';
 import HowItWorksPage from './components/howItWorks/HowItWorksPage';
 import UseCasesPage from './components/useCases/UseCasesPage';
 import WhyAspirePage from './components/whyAspire/WhyAspirePage';

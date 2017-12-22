@@ -13,7 +13,7 @@ export function getCrawledData() {
     crawledDataApi.getCrawledData().then (
       resp => {
         console.log("Response from getCrawledData:");
-        console.log(resp)
+        console.log(resp);
         dispatch(getCrawledDataSuccess(resp.data));
         toastr.success("Data loaded successfully!");
       }

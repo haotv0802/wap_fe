@@ -21,35 +21,27 @@ class CrawledDataPage extends React.Component {
             <table className="table table-bordered table-hover" style={{width: "1200px"}}>
               <thead style={{color: "#337AB7"}}>
               <tr>
-                <th className="col-sm-3">Name</th>
-                <th className="col-sm-3">Category</th>
-                <th className="col-sm-2">Vendor Name</th>
-                <th className="col-sm-1">Location</th>
-                <th className="col-sm-1">Ship on time</th>
-                <th className="col-sm-1">Positive</th>
-                <th className="col-sm-1">Neutral</th>
-                <th className="col-sm-1">Negative</th>
-                <th className="col-sm-1">Link</th>
-                <th className="col-sm-1">Time on lazada</th>
-                <th className="col-sm-1">Rating</th>
-                <th className="col-sm-1">Size</th>
+                <th className="col-sm-3">Title</th>
+                <th className="col-sm-3">Address</th>
+                <th className="col-sm-1">Name</th>
+                <th className="col-sm-1">Number</th>
+                <th className="col-sm-1">Email</th>
+                <th className="col-sm-1">Publish date</th>
+                <th className="col-sm-1">End date</th>
+                <th className="col-sm-2">Category</th>
               </tr>
               </thead>
               <tbody>
               {crawledData.map((data, key) =>
                 <tr key={key}>
-                  <td>{data.name}</td>
-                  <td>{data.category}</td>
-                  <td>{data.vendorName}</td>
-                  <td>{data.vendorLocation}</td>
-                  <td>{data.vendorShipOnTime}</td>
-                  <td>{data.vendorPositive}</td>
-                  <td>{data.vendorNeutral}</td>
-                  <td>{data.vendorNegative}</td>
-                  <td>{data.vendorLink}</td>
-                  <td>{data.vendorTimeOnLazada}</td>
-                  <td>{data.vendorRating}</td>
-                  <td>{data.vendorSize}</td>
+                  <td><a href={data.url}>{data.title}</a></td>
+                  <td>{data.address}</td>
+                  <td>{data.contactName}</td>
+                  <td>{data.contactNumber}</td>
+                  <td>{data.contactEmail}</td>
+                  <td>{data.publishDate}</td>
+                  <td>{data.endDate}</td>
+                  <td><a href={data.categoryUrl}>{data.categoryName}</a></td>
                 </tr>
               )}
               </tbody>
