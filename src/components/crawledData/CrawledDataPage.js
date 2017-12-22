@@ -18,17 +18,27 @@ class CrawledDataPage extends React.Component {
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
+
+            {/*<div class="container-fluid">*/}
+              {/*{crawledData.map((data, key) =>*/}
+              {/*<div className="row">*/}
+                {/*<div className="col-md-2"><a href={data.url}>{data.title}</a></div>*/}
+                {/*<div className="col-md-3">{data.address}</div>*/}
+              {/*</div>*/}
+              {/*)}*/}
+            {/*</div>*/}
+
             <table className="table table-bordered table-hover" style={{width: "1200px"}}>
               <thead style={{color: "#337AB7"}}>
               <tr>
-                <th className="col-sm-3">Title</th>
-                <th className="col-sm-3">Address</th>
-                <th className="col-sm-1">Name</th>
-                <th className="col-sm-1">Number</th>
-                <th className="col-sm-1">Email</th>
-                <th className="col-sm-1">Publish date</th>
-                <th className="col-sm-1">End date</th>
-                <th className="col-sm-2">Category</th>
+                <th className="col-md-1" style={{width: "400px"}}>Title</th>
+                <th className="col-md-1">Address</th>
+                <th className="col-md-1">Name</th>
+                <th className="col-md-1">Number</th>
+                <th className="col-md-1">Email</th>
+                <th className="col-md-1">Publish date</th>
+                <th className="col-md-1">End date</th>
+                <th className="col-md-2">Category</th>
               </tr>
               </thead>
               <tbody>
