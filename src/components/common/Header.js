@@ -36,6 +36,8 @@ class Header extends React.Component {
               &nbsp;&nbsp;&nbsp;
               <Link to="/crawledData" activeClassName="active">Crawled Data</Link>
               &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
+              <Link to="/crawling" activeClassName="active">Crawling</Link>
+              &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
               <Link to="/howItWorks" activeClassName="active">How it works</Link>
               &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
               <Link to="/useCases" activeClassName="active">Use Cases</Link>
