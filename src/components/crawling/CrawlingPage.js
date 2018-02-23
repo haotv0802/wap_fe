@@ -1,16 +1,21 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
+import * as crawlingActions from "../../actions/crawlingActions";
 
 class CrawlingPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
+    this.actions
   }
 
   componentWillMount() {
   }
 
   render() {
+    console.log("crawling info");
+    console.log(this.props.crawlingInfo);
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
@@ -22,7 +27,9 @@ class CrawlingPage extends React.Component {
 }
 
 CrawlingPage.propTypes = {
-  pageTitle: PropTypes.string.isRequired
+  pageTitle: PropTypes.string.isRequired,
+  crawlingInfo: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 CrawlingPage.defaultProps = {
@@ -30,9 +37,14 @@ CrawlingPage.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-
+  return {
+    crawlingInfo: state.crawlingInfo
+  };
 }
 
 function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(crawlingActions, dispatch)
+  };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CrawlingPage);
