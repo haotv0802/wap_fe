@@ -11,7 +11,7 @@ class CrawlingPage extends React.Component {
 
   componentWillMount() {
     console.log("crawling info");
-    // this.props.actions.getURLList();
+    this.props.actions.getURLList();
     console.log(this.props.crawlingInfo);
   }
 
