@@ -13,6 +13,8 @@ class CrawlingPage extends React.Component {
     console.log("crawling info");
     this.props.actions.getURLList();
     console.log(this.props.crawlingInfo);
+    this.props.actions.getCities();
+    console.log(this.props.crawlingInfo);
   }
 
   render() {
