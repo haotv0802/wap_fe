@@ -7,15 +7,15 @@ class CrawlingPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    this.actions
   }
 
   componentWillMount() {
+    console.log("crawling info");
+    // this.props.actions.getURLList();
+    console.log(this.props.crawlingInfo);
   }
 
   render() {
-    console.log("crawling info");
-    console.log(this.props.crawlingInfo);
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
