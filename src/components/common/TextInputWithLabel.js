@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const TextInput = ({name, label, width, onChange, placeholder, value, error}) => {
+const TextInputWithLabel = ({name, label, width, onChange, placeholder, value, error}) => {
   let wrapperClass = 'form-group';
   if (error !== undefined && error.length > 0) {
     wrapperClass += ' ' + 'has-error has-feedback';
@@ -9,7 +9,10 @@ const TextInput = ({name, label, width, onChange, placeholder, value, error}) =>
   }
 
   return (
-    <div className={wrapperClass} style={{display: "inline-block"}}>
+    <div className={wrapperClass} style={{display: "inline"}}>
+      <div className="col-sm-1">
+        <label htmlFor={name}>{label}</label>
+      </div>
       <div className="col-sm-11">
         <input
           type="text"
@@ -28,7 +31,7 @@ const TextInput = ({name, label, width, onChange, placeholder, value, error}) =>
   );
 };
 
-TextInput.propTypes = {
+TextInputWithLabel.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -38,4 +41,4 @@ TextInput.propTypes = {
   width: PropTypes.string
 };
 
-export default TextInput;
+export default TextInputWithLabel;
