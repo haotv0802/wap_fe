@@ -68,6 +68,7 @@ class CrawlingPage extends React.Component {
 
   crawlData() {
     console.log(this.state.crawlingForm);
+    this.props.actions.crawlData(this.state.crawlingForm);
   }
 
   render() {
@@ -98,7 +99,7 @@ CrawlingPage.propTypes = {
 
 CrawlingPage.defaultProps = {
   pageTitle: "ABC DEF",
-  crawlingForm: {url : '', limit : ''}
+  crawlingForm: {url : 'https://batdongsan.com.vn/ban-nha-rieng-tp-hcm/p885', limit : ''}
 };
 
 function mapStateToProps(state, ownProps) {

@@ -7,6 +7,10 @@ export default function crawlingReducer(state = initialState.crawlingInfo, actio
       return Object.assign({}, state, action.sites);
     case types.CRAWLING_CITIES_SUCCESS:
       return Object.assign({}, state, action.cities);
+    case types.CRAWLING_DATA_SUCCESS:
+      return state;
+    case types.CRAWLING_DATA_FAILURE:
+      return state;
     default:
       return state;
   }
