@@ -54,6 +54,18 @@ class Header extends React.Component {
             </nav>
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-2">
+
+          </div>
+          <div className="col-md-10" style={{textAlign: 'left', textIndent: '150px'}}>
+            <nav>
+              &nbsp;&nbsp;&nbsp;
+              <Link to="/crawledData" activeClassName="active">Crawled Data</Link>
+              &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
+            </nav>
+          </div>
+        </div>
         <div style={{border: '1px solid gray'}}/>
       </div>
     );
