@@ -37,12 +37,6 @@ class Header extends React.Component {
               <Link to="/crawledData" activeClassName="active">Crawled Data</Link>
               &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
               <Link to="/crawling" activeClassName="active">Crawling</Link>
-              &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-              <Link to="/howItWorks" activeClassName="active">How it works</Link>
-              &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-              <Link to="/useCases" activeClassName="active">Use Cases</Link>
-              &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-              <Link to="/whyAspire" activeClassName="active">Why Aspire</Link>
               {
                 this.props.credentials.isAuthorized === false ?
                   <span>

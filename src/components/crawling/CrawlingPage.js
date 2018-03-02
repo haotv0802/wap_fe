@@ -59,7 +59,7 @@ class CrawlingPage extends React.Component {
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
-            <div className="panel-body" style={{width: "800px", textAlign: "center"}}>
+            <div className="panel-body" style={{width: "500px", height: "500px", textAlign: "center"}}>
               <CrawlingForm
                 onChange={this.updateFormState}
                 onReset={this.resetValues}
