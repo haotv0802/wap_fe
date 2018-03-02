@@ -13,6 +13,7 @@ class CrawlingPage extends React.Component {
     };
     this.updateFormState = this.updateFormState.bind(this);
     this.resetValues = this.resetValues.bind(this);
+    this.crawlData = this.crawlData.bind(this);
   }
 
   componentWillMount() {
@@ -41,7 +42,17 @@ class CrawlingPage extends React.Component {
         return errorsChanged;
       }
     } else {
-      errorsChanged.username = "";
+      errorsChanged.url = "";
+    }
+
+    if (!controls.limit) {
+      errorsChanged.formValid = false;
+      if (field === 'limit') {
+        errorsChanged.limit = "Limit must be not null.";
+        return errorsChanged;
+      }
+    } else {
+      errorsChanged.limit = "";
     }
 
     return errorsChanged;
@@ -55,6 +66,10 @@ class CrawlingPage extends React.Component {
     });
   }
 
+  crawlData() {
+    console.log(this.state.crawlingForm);
+  }
+
   render() {
     return (
       <div className="panel panel-primary">
@@ -65,6 +80,7 @@ class CrawlingPage extends React.Component {
                 onReset={this.resetValues}
                 errors={this.state.errors}
                 crawling={this.state.crawlingForm}
+                onSubmit={this.crawlData}
               />
             </div>
           </div>
@@ -82,7 +98,7 @@ CrawlingPage.propTypes = {
 
 CrawlingPage.defaultProps = {
   pageTitle: "ABC DEF",
-  crawlingForm: {url : 'unknown', link : 'unknown'}
+  crawlingForm: {url : '', limit : ''}
 };
 
 function mapStateToProps(state, ownProps) {

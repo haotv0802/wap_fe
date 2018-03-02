@@ -8,7 +8,7 @@ const CrawlingForm = ({crawling, onChange, onSubmit, onReset, errors}) => {
         name="url"
         placeholder="Input link here"
         label="URL"
-        width="150px"
+        width="300px"
         onChange={onChange}
         value={crawling.url}
       />
@@ -16,14 +16,14 @@ const CrawlingForm = ({crawling, onChange, onSubmit, onReset, errors}) => {
         name="limit"
         placeholder="Input limit number here"
         label="Limit"
-        width="150px"
+        width="300px"
         onChange={onChange}
-        value={crawling.link}
+        value={crawling.limit}
       />
       <br/>
       <div style={{display: "inline", width: "400px"}}>
         <input
-          type="submit"
+          type="button"
           value="Crawling"
           className="btn btn-primary"
           onClick={onSubmit}
