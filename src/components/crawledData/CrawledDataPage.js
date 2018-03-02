@@ -28,17 +28,18 @@ class CrawledDataPage extends React.Component {
               {/*)}*/}
             {/*</div>*/}
 
-            <table className="table table-bordered table-hover" style={{width: "1200px"}}>
+            <table className="table table-bordered table-hover" style={{width: "1600px"}}>
               <thead style={{color: "#337AB7"}}>
               <tr>
-                <th className="col-md-1" style={{width: "400px"}}>Title</th>
+                <th className="col-md-1">Title</th>
                 <th className="col-md-1">Address</th>
                 <th className="col-md-1">Name</th>
                 <th className="col-md-1">Number</th>
                 <th className="col-md-1">Email</th>
+                <th className="col-md-1">Acreage</th>
+                <th className="col-md-1">Price</th>
                 <th className="col-md-1">Publish date</th>
                 <th className="col-md-1">End date</th>
-                <th className="col-md-2">Category</th>
               </tr>
               </thead>
               <tbody>
@@ -49,9 +50,10 @@ class CrawledDataPage extends React.Component {
                   <td>{data.contactName}</td>
                   <td>{data.contactNumber}</td>
                   <td>{data.contactEmail}</td>
+                  <td>{data.acreage}</td>
+                  <td>{data.price}</td>
                   <td>{data.publishDate}</td>
                   <td>{data.endDate}</td>
-                  <td><a href={data.categoryUrl}>{data.categoryName}</a></td>
                 </tr>
               )}
               </tbody>
