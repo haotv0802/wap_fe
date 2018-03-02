@@ -9,11 +9,11 @@ const TextInputWithLabel = ({name, label, width, onChange, placeholder, value, e
   }
 
   return (
-    <div className={wrapperClass} style={{display: "inline", width: width, textAlign: "center"}}>
-      <div className="col-sm-1">
+    <div className={wrapperClass} style={{display: "inline-block", width: "auto", textAlign: "center"}}>
+      <div className="col-sm-2">
         <label htmlFor={name}>{label}</label>
       </div>
-      <div className="col-sm-11" style={{height: "40px"}}>
+      <div className="col-sm-9" style={{height: "auto"}}>
         <input
           type="text"
           name={name}

@@ -8,17 +8,19 @@ const CrawlingForm = ({crawling, onChange, onSubmit, onReset, errors}) => {
         name="url"
         placeholder="Input link here"
         label="URL"
-        width="300px"
+        width="320px"
         onChange={onChange}
         value={crawling.url}
+        error={errors.url}
       />
       <TextInputWithLabel
         name="limit"
         placeholder="Input limit number here"
         label="Limit"
-        width="300px"
+        width="320px"
         onChange={onChange}
         value={crawling.limit}
+        error={errors.limit}
       />
       <br/>
       <div style={{display: "inline", width: "400px"}}>
