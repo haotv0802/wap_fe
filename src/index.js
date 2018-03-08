@@ -8,10 +8,11 @@ import routes from './routes';
 import './styles/styles.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
-import {getCrawledData} from "./actions/crawledDataActions";
+import {getCrawledData, getCitiesAndDistrict} from "./actions/crawledDataActions";
 // import {getURLList} from "./actions/crawlingActions";
 
 const store = configureStore();
+// store.dispatch(getCitiesAndDistrict());
 // store.dispatch(getCrawledData());
 
 render(

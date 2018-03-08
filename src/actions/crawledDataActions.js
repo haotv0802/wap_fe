@@ -3,8 +3,8 @@ import {beginAjaxCall, ajaxCallError} from "./ajaxStatusActions";
 import toastr from 'toastr';
 import crawledDataApi from "../api/crawledDataApi";
 
-export function getCrawledDataSuccess(crawledData) {
-  return {type: types.CRAWLED_DATA_SUCCESS, crawledData};
+export function getCrawledDataSuccess(posts) {
+  return {type: types.CRAWLED_DATA_SUCCESS, posts};
 }
 
 export function getCrawledData() {
@@ -21,6 +21,29 @@ export function getCrawledData() {
       error => {
         dispatch(ajaxCallError());
         toastr.error("Failed loading crawled data.");
+        throw (error);
+      }
+    );
+  };
+}
+
+export function getCitiesAndDistrictSuccess(citiesAndDistricts) {
+  return {type: types.CITIES_DISTRICTS_SUCCESS, citiesAndDistricts};
+}
+
+export function getCitiesAndDistrict() {
+  return dispatch => {
+    dispatch(beginAjaxCall());
+    crawledDataApi.getCitiesAndDistrict().then (
+      resp => {
+        console.log("getCitiesAndDistrict");
+        console.log(resp);
+        dispatch(getCitiesAndDistrictSuccess(resp.data));
+      }
+    ).catch(
+      error => {
+        dispatch(ajaxCallError());
+        toastr.error("Failed loading cities and districts.");
         throw (error);
       }
     );

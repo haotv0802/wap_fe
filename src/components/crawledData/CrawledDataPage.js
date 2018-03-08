@@ -11,10 +11,11 @@ class CrawledDataPage extends React.Component {
 
   componentWillMount() {
     this.props.actions.getCrawledData();
+    this.props.actions.getCitiesAndDistrict();
   }
 
   render() {
-    const {crawledData} = this.props;
+    const {posts} = this.props;
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
@@ -38,12 +39,41 @@ class CrawledDataPage extends React.Component {
                 <th className="col-md-1">Email</th>
                 <th className="col-md-1">Acreage</th>
                 <th className="col-md-1">Price</th>
+                <th className="col-md-1">City</th>
+                <th className="col-md-1">District</th>
                 <th className="col-md-1">Publish date</th>
                 <th className="col-md-1">End date</th>
               </tr>
               </thead>
               <tbody>
-              {crawledData.map((data, key) =>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <select>
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                  </select>
+                </td>
+                <td>
+                  <select>
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                  </select>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+              {posts.map((data, key) =>
                 <tr key={key}>
                   <td><a href={data.url}>{data.title}</a></td>
                   <td>{data.address}</td>
@@ -52,6 +82,8 @@ class CrawledDataPage extends React.Component {
                   <td>{data.contactEmail}</td>
                   <td>{data.acreage}</td>
                   <td>{data.price}</td>
+                  <td>{data.city}</td>
+                  <td>{data.district}</td>
                   <td>{data.publishDate}</td>
                   <td>{data.endDate}</td>
                 </tr>
@@ -66,7 +98,8 @@ class CrawledDataPage extends React.Component {
 
 CrawledDataPage.propTypes = {
   pageTitle: PropTypes.string.isRequired,
-  crawledData: PropTypes.array.isRequired,
+  posts: PropTypes.array.isRequired,
+  citiesAndDistricts: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
 
@@ -74,12 +107,12 @@ CrawledDataPage.defaultProps = {
   pageTitle: "Business Loans"
 };
 
-
 function mapStateToProps(state, ownProps) {
-  // console.log("state: ");
-  // console.log(state);
+  console.log("state: ");
+  console.log(state);
   return {
-    crawledData: state.crawledData
+    posts: state.crawledData.posts,
+    citiesAndDistricts: state.crawledData.citiesAndDistricts
   };
 }
 
