@@ -12,8 +12,6 @@ export function getCrawledData() {
     dispatch(beginAjaxCall());
     crawledDataApi.getCrawledData().then (
       resp => {
-        console.log("Response from getCrawledData:");
-        console.log(resp);
         dispatch(getCrawledDataSuccess(resp.data));
         toastr.success("Data loaded successfully!");
       }
@@ -36,8 +34,6 @@ export function getCitiesAndDistrict() {
     dispatch(beginAjaxCall());
     crawledDataApi.getCitiesAndDistrict().then (
       resp => {
-        console.log("getCitiesAndDistrict");
-        console.log(resp);
         dispatch(getCitiesAndDistrictSuccess(resp.data));
       }
     ).catch(
