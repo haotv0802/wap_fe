@@ -125,7 +125,7 @@ class CrawledDataPage extends React.Component {
                   <td>{data.price}</td>
                   <td>{data.city}</td>
                   <td>{data.district}</td>
-                  <td>{data.publishDate}</td>
+                  <td>{(new Date(data.publishDate)).toDateString()}</td>
                   <td>{data.endDate}</td>
                 </tr>
               )}
