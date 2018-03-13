@@ -7,19 +7,62 @@ class CrawledDataPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      districts: Object.assign([], this.props.districts),
+      city: Object.assign(this.props.city)
+    };
+    this.onChangeCity = this.onChangeCity.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.city !== nextProps.city) {
+      this.setState({
+        districts: Object.assign([], nextProps.districts),
+        city: Object.assign(nextProps.city)
+      });
+    }
   }
 
   componentWillMount() {
     this.props.actions.getCrawledData();
     this.props.actions.getCitiesAndDistrict();
+    this.setState({
+      districts: Object.assign([], this.props.districts),
+      city: Object.assign(this.props.city)
+    });
+
+    // this.props.citiesAndDistricts.map(data => {
+    //     console.log("city: ");
+    //     console.log(data.city);
+    //     if (data.city === 'Ho Chi Minh') {
+    //       console.log(data);
+    //       this.setState({
+    //         districts: data.districts
+    //       });
+    //     }
+    //   });
+    // console.log(this.state.districts);
+  }
+
+  onChangeCity(event) {
+    let city = event.target.value;
+    let data = this.props.citiesAndDistricts.find(data => {
+      if (data.city === city) {
+        return data.districts;
+      }
+    });
+    this.setState({
+      districts: Object.assign([], data.districts),
+      city: Object.assign(data.city)
+    });
   }
 
   render() {
-    const {posts} = this.props;
+    const {posts, citiesAndDistricts} = this.props;
+    const {city, districts} = this.state;
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
-
             {/*<div class="container-fluid">*/}
               {/*{crawledData.map((data, key) =>*/}
               {/*<div className="row">*/}
@@ -55,19 +98,17 @@ class CrawledDataPage extends React.Component {
                 <td></td>
                 <td></td>
                 <td>
-                  <select>
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
+                  <select value={city} onChange={this.onChangeCity}>
+                    {citiesAndDistricts.map((data, key) =>
+                      <option key={key} value={data.city}>{data.city}</option>
+                    )}
                   </select>
                 </td>
                 <td>
                   <select>
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
+                    {districts.map((data, key) =>
+                      <option key={key} value={data.district}>{data.district}</option>
+                    )}
                   </select>
                 </td>
                 <td></td>
@@ -100,6 +141,8 @@ CrawledDataPage.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   posts: PropTypes.array.isRequired,
   citiesAndDistricts: PropTypes.array.isRequired,
+  districts: PropTypes.array.isRequired,
+  city: PropTypes.string.isRequired,
   actions: PropTypes.object.isRequired
 };
 
@@ -108,11 +151,27 @@ CrawledDataPage.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log("state: ");
-  console.log(state);
+  let districts = [];
+  let city = "";
+  let location;
+  if (state.crawledData.citiesAndDistricts.length > 0) {
+    location = state.crawledData.citiesAndDistricts.find(data => {
+      if (data.city === "Ho Chi Minh") {
+        return data;
+      }
+    });
+    districts = location.districts;
+    city = location.city;
+    // console.log("districts mapStateToProps: ");
+    // console.log(districts);
+    // console.log("city mapStateToProps: ");
+    // console.log(city);
+  }
   return {
     posts: state.crawledData.posts,
-    citiesAndDistricts: state.crawledData.citiesAndDistricts
+    citiesAndDistricts: state.crawledData.citiesAndDistricts,
+    districts: districts,
+    city: city
   };
 }
 
