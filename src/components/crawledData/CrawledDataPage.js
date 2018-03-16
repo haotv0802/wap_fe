@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as crawledDataActions from '../../actions/crawledDataActions';
+import moment from "moment";
 
 class CrawledDataPage extends React.Component {
 
@@ -114,8 +115,10 @@ class CrawledDataPage extends React.Component {
                 <td></td>
                 <td></td>
               </tr>
-              {posts.map((data, key) =>
-                <tr key={key}>
+              {posts.map((data, key) => {
+                let endDate = moment(data.endDate).format("DD-MM-YYYY");
+                let publishDate = moment(data.publishDate).format("DD-MM-YYYY");
+                return <tr key={key}>
                   <td><a href={data.url}>{data.title}</a></td>
                   <td>{data.address}</td>
                   <td>{data.contactName}</td>
@@ -125,9 +128,11 @@ class CrawledDataPage extends React.Component {
                   <td>{data.price}</td>
                   <td>{data.city}</td>
                   <td>{data.district}</td>
-                  <td>{(new Date(data.publishDate)).toDateString()}</td>
-                  <td>{data.endDate}</td>
-                </tr>
+                  <td>{publishDate}</td>
+                  <td>{endDate}</td>
+                </tr>;
+              }
+
               )}
               </tbody>
             </table>
