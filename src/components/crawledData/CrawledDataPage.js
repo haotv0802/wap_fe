@@ -1,8 +1,11 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as crawledDataActions from '../../actions/crawledDataActions';
 import moment from "moment";
+import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class CrawledDataPage extends React.Component {
 
@@ -62,6 +65,7 @@ class CrawledDataPage extends React.Component {
     const {posts, citiesAndDistricts} = this.props;
     const {city, districts} = this.state;
     return (
+      <MuiThemeProvider>
       <div className="panel panel-primary">
           <div className="table-responsive">
             {/*<div class="container-fluid">*/}
@@ -72,7 +76,7 @@ class CrawledDataPage extends React.Component {
               {/*</div>*/}
               {/*)}*/}
             {/*</div>*/}
-
+            <RaisedButton label="Default" primary={true} />
             <table className="table table-bordered table-hover" style={{width: "1600px"}}>
               <thead style={{color: "#337AB7"}}>
               <tr>
@@ -138,6 +142,7 @@ class CrawledDataPage extends React.Component {
             </table>
           </div>
       </div>
+      </MuiThemeProvider>
     );
   }
 }
