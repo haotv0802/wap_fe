@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import TextInputWithLabel from '../common/TextInputWithLabel';
 
 const CrawlingForm = ({crawling, onChange, onSubmit, onReset, errors}) => {

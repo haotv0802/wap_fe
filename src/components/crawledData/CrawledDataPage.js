@@ -1,8 +1,10 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as crawledDataActions from '../../actions/crawledDataActions';
 import moment from "moment";
+import RaisedButton from 'material-ui/RaisedButton';
 
 class CrawledDataPage extends React.Component {
 
@@ -72,7 +74,6 @@ class CrawledDataPage extends React.Component {
               {/*</div>*/}
               {/*)}*/}
             {/*</div>*/}
-
             <table className="table table-bordered table-hover" style={{width: "1600px"}}>
               <thead style={{color: "#337AB7"}}>
               <tr>
