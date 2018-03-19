@@ -15,6 +15,7 @@ class CrawledDataPage extends React.Component {
       city: Object.assign(this.props.city)
     };
     this.onChangeCity = this.onChangeCity.bind(this);
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,6 +64,7 @@ class CrawledDataPage extends React.Component {
   render() {
     const {posts, citiesAndDistricts} = this.props;
     const {city, districts} = this.state;
+
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
@@ -74,6 +76,7 @@ class CrawledDataPage extends React.Component {
               {/*</div>*/}
               {/*)}*/}
             {/*</div>*/}
+            <RaisedButton label="Primary" primary={true}/>
             <table className="table table-bordered table-hover" style={{width: "1600px"}}>
               <thead style={{color: "#337AB7"}}>
               <tr>
