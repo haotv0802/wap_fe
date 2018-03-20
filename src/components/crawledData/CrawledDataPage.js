@@ -5,6 +5,8 @@ import {bindActionCreators} from 'redux';
 import * as crawledDataActions from '../../actions/crawledDataActions';
 import moment from "moment";
 import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 class CrawledDataPage extends React.Component {
 
@@ -12,10 +14,11 @@ class CrawledDataPage extends React.Component {
     super(props, context);
     this.state = {
       districts: Object.assign([], this.props.districts),
-      city: Object.assign(this.props.city)
+      city: Object.assign(this.props.city),
+      district: ""
     };
     this.onChangeCity = this.onChangeCity.bind(this);
-
+    this.onChangeDistrict = this.onChangeDistrict.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -48,23 +51,28 @@ class CrawledDataPage extends React.Component {
     // console.log(this.state.districts);
   }
 
-  onChangeCity(event) {
-    let city = event.target.value;
+  onChangeCity(event, index, value) {
+    let city = value;
     let data = this.props.citiesAndDistricts.find(data => {
       if (data.city === city) {
         return data.districts;
       }
     });
     this.setState({
-      districts: Object.assign([], data.districts),
-      city: Object.assign(data.city)
+      districts: data.districts,
+      city: data.city
+    });
+  }
+
+  onChangeDistrict(event, index, value) {
+    this.setState({
+      district: value
     });
   }
 
   render() {
     const {posts, citiesAndDistricts} = this.props;
-    const {city, districts} = this.state;
-
+    const {city, districts, district} = this.state;
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
@@ -103,18 +111,30 @@ class CrawledDataPage extends React.Component {
                 <td></td>
                 <td></td>
                 <td>
-                  <select value={city} onChange={this.onChangeCity}>
+                  <SelectField
+                    value={city}
+                    onChange={this.onChangeCity}
+                    maxHeight={200}
+                    autoWidth={false}
+                    style={{width: "200px"}}
+                  >
                     {citiesAndDistricts.map((data, key) =>
-                      <option key={key} value={data.city}>{data.city}</option>
+                      <MenuItem key={key} value={data.city} primaryText={data.city} />
                     )}
-                  </select>
+                  </SelectField>
                 </td>
                 <td>
-                  <select>
+                  <SelectField
+                    value={district}
+                    onChange={this.onChangeDistrict}
+                    maxHeight={200}
+                    autoWidth={false}
+                    style={{width: "200px"}}
+                  >
                     {districts.map((data, key) =>
-                      <option key={key} value={data.district}>{data.district}</option>
+                      <MenuItem key={key} value={data.district} primaryText={data.district} />
                     )}
-                  </select>
+                  </SelectField>
                 </td>
                 <td></td>
                 <td></td>
