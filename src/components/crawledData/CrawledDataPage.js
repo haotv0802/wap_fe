@@ -16,7 +16,6 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 
-
 class CrawledDataPage extends React.Component {
 
   constructor(props, context) {
@@ -85,37 +84,40 @@ class CrawledDataPage extends React.Component {
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
-
-            <Table>
-              <TableHeader>
+            <Table
+              selectable={false}
+            >
+              <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                 <TableRow>
                   <TableHeaderColumn>Title</TableHeaderColumn>
                   <TableHeaderColumn>Address</TableHeaderColumn>
                   <TableHeaderColumn>Name</TableHeaderColumn>
-                  <TableHeaderColumn>Number</TableHeaderColumn>
+                  <TableHeaderColumn style={phoneStyles}>Number</TableHeaderColumn>
                   <TableHeaderColumn>Email</TableHeaderColumn>
-                  <TableHeaderColumn>Acreage</TableHeaderColumn>
-                  <TableHeaderColumn>Price</TableHeaderColumn>
+                  <TableHeaderColumn style={acreageStyles}>Acreage</TableHeaderColumn>
+                  <TableHeaderColumn style={priceStyles}>Price</TableHeaderColumn>
                   <TableHeaderColumn>City</TableHeaderColumn>
                   <TableHeaderColumn>District</TableHeaderColumn>
                   <TableHeaderColumn>Publish date</TableHeaderColumn>
                   <TableHeaderColumn>End date</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
                 <TableRow>
                   <TableRowColumn></TableRowColumn>
                   <TableRowColumn></TableRowColumn>
                   <TableRowColumn></TableRowColumn>
+                  <TableRowColumn style={phoneStyles}></TableRowColumn>
                   <TableRowColumn></TableRowColumn>
-                  <TableRowColumn></TableRowColumn>
+                  <TableRowColumn style={acreageStyles}></TableRowColumn>
+                  <TableRowColumn style={priceStyles}></TableRowColumn>
                   <TableRowColumn>
                     <SelectField
                       value={city}
                       onChange={this.onChangeCity}
                       maxHeight={200}
                       autoWidth={false}
-                      style={{width: "200px"}}
+                      style={{width: "180px"}}
                     >
                       {citiesAndDistricts.map((data, key) =>
                         <MenuItem key={key} value={data.city} primaryText={data.city} />
@@ -128,7 +130,7 @@ class CrawledDataPage extends React.Component {
                       onChange={this.onChangeDistrict}
                       maxHeight={200}
                       autoWidth={false}
-                      style={{width: "200px"}}
+                      style={{width: "180px"}}
                     >
                       {districts.map((data, key) =>
                         <MenuItem key={key} value={data.district} primaryText={data.district} />
@@ -137,7 +139,6 @@ class CrawledDataPage extends React.Component {
                   </TableRowColumn>
                   <TableRowColumn></TableRowColumn>
                   <TableRowColumn></TableRowColumn>
-
                 </TableRow>
                 {posts.map((data, key) => {
                     let endDate = moment(data.endDate).format("DD-MM-YYYY");
@@ -146,10 +147,10 @@ class CrawledDataPage extends React.Component {
                       <TableRowColumn><a href={data.url}>{data.title}</a></TableRowColumn>
                       <TableRowColumn>{data.address}</TableRowColumn>
                       <TableRowColumn>{data.contactName}</TableRowColumn>
-                      <TableRowColumn>{data.contactNumber}</TableRowColumn>
+                      <TableRowColumn style={phoneStyles}>{data.contactNumber}</TableRowColumn>
                       <TableRowColumn>{data.contactEmail}</TableRowColumn>
-                      <TableRowColumn>{data.acreage}</TableRowColumn>
-                      <TableRowColumn>{data.price}</TableRowColumn>
+                      <TableRowColumn style={acreageStyles}>{data.acreage}</TableRowColumn>
+                      <TableRowColumn style={priceStyles}>{data.price}</TableRowColumn>
                       <TableRowColumn>{data.city}</TableRowColumn>
                       <TableRowColumn>{data.district}</TableRowColumn>
                       <TableRowColumn>{publishDate}</TableRowColumn>
@@ -161,81 +162,6 @@ class CrawledDataPage extends React.Component {
               </TableBody>
             </Table>
 
-            <table className="table table-bordered table-hover" style={{width: "1600px"}}>
-              <thead style={{color: "#337AB7"}}>
-              <tr>
-                <th className="col-md-1">Title</th>
-                <th className="col-md-1">Address</th>
-                <th className="col-md-1">Name</th>
-                <th className="col-md-1">Number</th>
-                <th className="col-md-1">Email</th>
-                <th className="col-md-1"></th>
-                <th className="col-md-1">Price</th>
-                <th className="col-md-1">City</th>
-                <th className="col-md-1">District</th>
-                <th className="col-md-1">Publish date</th>
-                <th className="col-md-1">End date</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <SelectField
-                    value={city}
-                    onChange={this.onChangeCity}
-                    maxHeight={200}
-                    autoWidth={false}
-                    style={{width: "200px"}}
-                  >
-                    {citiesAndDistricts.map((data, key) =>
-                      <MenuItem key={key} value={data.city} primaryText={data.city} />
-                    )}
-                  </SelectField>
-                </td>
-                <td>
-                  <SelectField
-                    value={district}
-                    onChange={this.onChangeDistrict}
-                    maxHeight={200}
-                    autoWidth={false}
-                    style={{width: "200px"}}
-                  >
-                    {districts.map((data, key) =>
-                      <MenuItem key={key} value={data.district} primaryText={data.district} />
-                    )}
-                  </SelectField>
-                </td>
-                <td></td>
-                <td></td>
-              </tr>
-              {posts.map((data, key) => {
-                let endDate = moment(data.endDate).format("DD-MM-YYYY");
-                let publishDate = moment(data.publishDate).format("DD-MM-YYYY");
-                return <tr key={key}>
-                  <td><a href={data.url}>{data.title}</a></td>
-                  <td>{data.address}</td>
-                  <td>{data.contactName}</td>
-                  <td>{data.contactNumber}</td>
-                  <td>{data.contactEmail}</td>
-                  <td>{data.acreage}</td>
-                  <td>{data.price}</td>
-                  <td>{data.city}</td>
-                  <td>{data.district}</td>
-                  <td>{publishDate}</td>
-                  <td>{endDate}</td>
-                </tr>;
-              }
-
-              )}
-              </tbody>
-            </table>
           </div>
       </div>
     );
@@ -281,4 +207,16 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(crawledDataActions, dispatch)
   };
 }
+
+const priceStyles = {
+  width: "100px"
+};
+
+const acreageStyles = {
+  width: "100px"
+};
+
+const phoneStyles = {
+  width: "150px"
+};
 export default connect(mapStateToProps, mapDispatchToProps)(CrawledDataPage);
