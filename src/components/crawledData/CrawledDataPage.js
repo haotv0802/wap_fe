@@ -88,6 +88,8 @@ class CrawledDataPage extends React.Component {
 
             <Table
               selectable={false}
+              fixedHeader={true}
+              height="800px"
             >
               <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                 <TableRow>
