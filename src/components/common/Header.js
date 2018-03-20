@@ -5,6 +5,21 @@ import LoadingDots from './LoadingDots';
 import {connect} from 'react-redux';
 import * as loginActions from '../../actions/loginActions';
 import {bindActionCreators} from 'redux';
+import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import Slider from 'material-ui/Slider';
+
+const styles = {
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400
+  }
+};
 
 class Header extends React.Component {
   constructor(props, context) {
@@ -13,6 +28,11 @@ class Header extends React.Component {
       credentials: Object.assign({}, this.props.credentials)
     };
     this.logout = this.logout.bind(this);
+    this.handleActive = this.handleActive.bind(this);
+  }
+
+  handleActive(tab) {
+    this.context.router.push(tab.props['data-route']);
   }
 
   logout(event) {
@@ -23,41 +43,21 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid" style={{width: '100%', height: '100%'}}>
-        <div className="row">
-          <div className="col-md-2">
-            <IndexLink to="/" activeClassName="active">
-              <img src={require("../../assets/images/logo.png")}
-                   className="img-responsive center-block"
-                   style={{maxHeight: '54px', maxWidth: '188px'}}/>
-            </IndexLink>
-          </div>
-          <div className="col-md-10" style={{textAlign: 'left', textIndent: '150px'}}>
-            <nav>
-              &nbsp;&nbsp;&nbsp;
-              <Link to="/crawledData" activeClassName="active">Crawled Data</Link>
-              &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-              <Link to="/crawling" activeClassName="active">Crawling</Link>
-              {
-                this.props.credentials.isAuthorized === false ?
-                  <span>
-                    &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-                    <Link to="/login" activeClassName="active">Login</Link>
-                    &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-                    <Link to="/signup" activeClassName="active">Create Account</Link>
-                  </span> : <span>
-                    &nbsp;&nbsp;&nbsp;{"  |  "}&nbsp;&nbsp;&nbsp;
-                    <Link to="/#" activeClassName="" onClick={this.logout}>Logout</Link>
-                  </span>
-              }
-              &nbsp;&nbsp;&nbsp;
-              {this.props.loading && <LoadingDots interval={100} dots={10}/>}
-            </nav>
-          </div>
-        </div>
-
-        <div style={{border: '1px solid gray'}}/>
-      </div>
+      <Tabs>
+        <Tab label="Home"
+             data-route="/"
+             onActive={this.handleActive}
+        />
+        <Tab label="Crawled Data"
+             data-route="/crawledData"
+             onActive={this.handleActive}
+        />
+        <Tab
+          label="Crawling"
+          data-route="/crawling"
+          onActive={this.handleActive}
+        />
+      </Tabs>
     );
   }
 }

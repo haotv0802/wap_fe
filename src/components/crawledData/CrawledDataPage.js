@@ -7,6 +7,7 @@ import moment from "moment";
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+
 import {
   Table,
   TableBody,
@@ -84,6 +85,7 @@ class CrawledDataPage extends React.Component {
     return (
       <div className="panel panel-primary">
           <div className="table-responsive">
+
             <Table
               selectable={false}
             >
