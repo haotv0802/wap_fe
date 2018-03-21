@@ -37,7 +37,7 @@ class Header extends React.Component {
     this.logout = this.logout.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleRequestChange = this.handleRequestChange.bind(this);
+    this.openOrCloseDrawer = this.openOrCloseDrawer.bind(this);
   }
 
   handleClick() {
@@ -48,7 +48,7 @@ class Header extends React.Component {
     this.setState({open: !this.state.open});
   }
 
-  handleRequestChange() {
+  openOrCloseDrawer() {
     this.setState({open: !this.state.open});
   }
 
@@ -75,7 +75,7 @@ class Header extends React.Component {
         />
         <Drawer
           open={this.state.open}
-          onRequestChange={this.handleRequestChange}
+          onRequestChange={this.openOrCloseDrawer}
           docked={false}
         >
           <List>
@@ -85,13 +85,14 @@ class Header extends React.Component {
               // leftIcon={<ContentSend />}
               disabled={true}
               nestedItems={[
-                <ListItem key={1} primaryText="All posts" containerElement={<Link to="/crawledData" />}/>
+                <ListItem key={1} primaryText="All posts" containerElement={<Link to="/crawledData" />} onClick={this.openOrCloseDrawer}/>
               ]}
             />
             <ListItem
               key={2}
               primaryText="Crawling"
               containerElement={<Link to="/crawling" />}
+              onClick={this.openOrCloseDrawer}
             />
           </List>
         </Drawer>
