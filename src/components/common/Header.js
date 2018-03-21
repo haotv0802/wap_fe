@@ -7,11 +7,11 @@ import {bindActionCreators} from 'redux';
 import AppBar from 'material-ui/AppBar';
 import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
-import {blue500, red500, greenA200} from 'material-ui/styles/colors';
-import FontIcon from 'material-ui/FontIcon';
-import RaisedButton from 'material-ui/RaisedButton';
-import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
+import {List, ListItem} from 'material-ui/List';
+import ContentDrafts from 'material-ui/svg-icons/content/drafts';
+import ContentSend from 'material-ui/svg-icons/content/send';
+import Subheader from 'material-ui/Subheader';
 
 const styles = {
   headline: {
@@ -62,8 +62,7 @@ class Header extends React.Component {
     return (
       <div>
         <AppBar
-          title={<span style={styles.title}>Title</span>}
-          onTitleClick={this.handleClick}
+          title={<span style={styles.title}>.......</span>}
           // iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonClick={this.handleToggle}
           iconElementRight={
@@ -79,8 +78,22 @@ class Header extends React.Component {
           onRequestChange={this.handleRequestChange}
           docked={false}
         >
-          <MenuItem containerElement={<Link to="/crawledData" />}>Crawled Data</MenuItem>
-          <MenuItem containerElement={<Link to="/crawling" />}>Crawling</MenuItem>
+          <List>
+            <ListItem
+              key={1}
+              primaryText="Crawled data"
+              // leftIcon={<ContentSend />}
+              disabled={true}
+              nestedItems={[
+                <ListItem key={1} primaryText="All posts" containerElement={<Link to="/crawledData" />}/>
+              ]}
+            />
+            <ListItem
+              key={2}
+              primaryText="Crawling"
+              containerElement={<Link to="/crawling" />}
+            />
+          </List>
         </Drawer>
       </div>
     );
