@@ -7,7 +7,11 @@ import {bindActionCreators} from 'redux';
 import AppBar from 'material-ui/AppBar';
 import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
-
+import {blue500, red500, greenA200} from 'material-ui/styles/colors';
+import FontIcon from 'material-ui/FontIcon';
+import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
   headline: {
@@ -17,6 +21,11 @@ const styles = {
     fontWeight: 400
   }
 };
+
+const iconStyles = {
+  marginRight: 24
+};
+
 
 class Header extends React.Component {
   constructor(props, context) {
@@ -55,8 +64,15 @@ class Header extends React.Component {
         <AppBar
           title={<span style={styles.title}>Title</span>}
           onTitleClick={this.handleClick}
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
+          // iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonClick={this.handleToggle}
+          iconElementRight={
+            <FlatButton href="https://github.com/callemall/material-ui"
+                        label="Home"
+                        secondary={false}
+                        containerElement={<Link to="/" />}
+            />
+          }
         />
         <Drawer
           open={this.state.open}
