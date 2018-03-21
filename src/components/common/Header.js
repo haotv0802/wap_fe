@@ -11,6 +11,12 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Slider from 'material-ui/Slider';
+import Drawer from 'material-ui/Drawer';
+import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import FlatButton from 'material-ui/FlatButton';
+
 
 const styles = {
   headline: {
@@ -25,14 +31,25 @@ class Header extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      credentials: Object.assign({}, this.props.credentials)
+      credentials: Object.assign({}, this.props.credentials),
+      open: false
     };
     this.logout = this.logout.bind(this);
     this.handleActive = this.handleActive.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleActive(tab) {
     this.context.router.push(tab.props['data-route']);
+  }
+
+  handleClick() {
+    alert('onClick triggered on the title component');
+  }
+
+  handleToggle() {
+    this.setState({open: !this.state.open})
   }
 
   logout(event) {
@@ -43,21 +60,22 @@ class Header extends React.Component {
 
   render() {
     return (
-      <Tabs>
-        <Tab label="Home"
-             data-route="/"
-             onActive={this.handleActive}
+      <div>
+        <AppBar
+          title={<span style={styles.title}>Title</span>}
+          onTitleClick={this.handleClick}
+          iconClassNameRight="muidocs-icon-navigation-expand-more"
+          iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+          iconElementRight={<RaisedButton
+            label="Toggle Drawer"
+            onClick={this.handleToggle}
+          />}
         />
-        <Tab label="Crawled Data"
-             data-route="/crawledData"
-             onActive={this.handleActive}
-        />
-        <Tab
-          label="Crawling"
-          data-route="/crawling"
-          onActive={this.handleActive}
-        />
-      </Tabs>
+        <Drawer open={this.state.open}>
+          <MenuItem>Menu Item</MenuItem>
+          <MenuItem>Menu Item 2</MenuItem>
+        </Drawer>
+      </div>
     );
   }
 }
