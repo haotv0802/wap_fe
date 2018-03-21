@@ -12,6 +12,7 @@ import {List, ListItem} from 'material-ui/List';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import Subheader from 'material-ui/Subheader';
+import LinearProgress from 'material-ui/LinearProgress';
 
 const styles = {
   headline: {
@@ -32,7 +33,8 @@ class Header extends React.Component {
     super(props, context);
     this.state = {
       credentials: Object.assign({}, this.props.credentials),
-      open: false
+      open: false,
+      completed: 0
     };
     this.logout = this.logout.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
@@ -50,6 +52,25 @@ class Header extends React.Component {
 
   openOrCloseDrawer() {
     this.setState({open: !this.state.open});
+  }
+
+  componentDidMount() {
+    this.timer = setTimeout(() => this.progress(5), 1000);
+    console.log("hello");
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  progress(completed) {
+    if (completed > 100) {
+      this.setState({completed: 100});
+    } else {
+      this.setState({completed});
+      const diff = Math.random() * 10;
+      this.timer = setTimeout(() => this.progress(completed + diff), 500);
+    }
   }
 
   logout(event) {
@@ -73,6 +94,7 @@ class Header extends React.Component {
             />
           }
         />
+        <LinearProgress mode="determinate" value={this.state.completed} />
         <Drawer
           open={this.state.open}
           onRequestChange={this.openOrCloseDrawer}
