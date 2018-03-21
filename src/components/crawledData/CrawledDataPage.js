@@ -97,7 +97,7 @@ class CrawledDataPage extends React.Component {
                   <TableHeaderColumn>Address</TableHeaderColumn>
                   <TableHeaderColumn>Name</TableHeaderColumn>
                   <TableHeaderColumn style={phoneStyles}>Number</TableHeaderColumn>
-                  <TableHeaderColumn>Email</TableHeaderColumn>
+                  <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
                   <TableHeaderColumn style={acreageStyles}>Acreage</TableHeaderColumn>
                   <TableHeaderColumn style={priceStyles}>Price</TableHeaderColumn>
                   <TableHeaderColumn>City</TableHeaderColumn>
@@ -112,7 +112,7 @@ class CrawledDataPage extends React.Component {
                   <TableRowColumn></TableRowColumn>
                   <TableRowColumn></TableRowColumn>
                   <TableRowColumn style={phoneStyles}></TableRowColumn>
-                  <TableRowColumn></TableRowColumn>
+                  <TableRowColumn style={emailStyles}></TableRowColumn>
                   <TableRowColumn style={acreageStyles}></TableRowColumn>
                   <TableRowColumn style={priceStyles}></TableRowColumn>
                   <TableRowColumn>
@@ -152,7 +152,7 @@ class CrawledDataPage extends React.Component {
                       <TableRowColumn>{data.address}</TableRowColumn>
                       <TableRowColumn>{data.contactName}</TableRowColumn>
                       <TableRowColumn style={phoneStyles}>{data.contactNumber}</TableRowColumn>
-                      <TableRowColumn>{data.contactEmail}</TableRowColumn>
+                      <TableRowColumn style={emailStyles}>{data.contactEmail}</TableRowColumn>
                       <TableRowColumn style={acreageStyles}>{data.acreage}</TableRowColumn>
                       <TableRowColumn style={priceStyles}>{data.price}</TableRowColumn>
                       <TableRowColumn>{data.city}</TableRowColumn>
@@ -220,7 +220,11 @@ const acreageStyles = {
   width: "100px"
 };
 
+const emailStyles = {
+  width: "130px"
+}
+
 const phoneStyles = {
-  width: "150px"
+  width: "130px"
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CrawledDataPage);
