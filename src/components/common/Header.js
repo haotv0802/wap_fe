@@ -5,14 +5,10 @@ import {connect} from 'react-redux';
 import * as loginActions from '../../actions/loginActions';
 import {bindActionCreators} from 'redux';
 import AppBar from 'material-ui/AppBar';
-import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
-import FlatButton from 'material-ui/FlatButton';
+import Button from 'material-ui/Button';
 import {List, ListItem} from 'material-ui/List';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import Subheader from 'material-ui/Subheader';
-import LinearProgress from 'material-ui/LinearProgress';
+import {LinearProgress} from 'material-ui/Progress';
 
 const styles = {
   headline: {
@@ -87,7 +83,7 @@ class Header extends React.Component {
           // iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonClick={this.handleToggle}
           iconElementRight={
-            <FlatButton href="https://github.com/callemall/material-ui"
+            <Button href="https://github.com/callemall/material-ui"
                         label="Home"
                         secondary={false}
                         containerElement={<Link to="/" />}

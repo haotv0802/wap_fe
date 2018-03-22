@@ -4,18 +4,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as crawledDataActions from '../../actions/crawledDataActions';
 import moment from "moment";
-import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import Select from 'material-ui/Select';
+import {MenuItem} from 'material-ui/Menu';
+import Tooltip from 'material-ui/Tooltip';
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
+import {Table, TableBody, TableHead, TableRow, TableCell} from 'material-ui/Table';
 
 class CrawledDataPage extends React.Component {
 
@@ -91,32 +84,32 @@ class CrawledDataPage extends React.Component {
               height="800px"
               bodyStyle={{overflow:'visible'}}
             >
-              <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+              <TableHead adjustForCheckbox={false} displaySelectAll={false}>
                 <TableRow>
-                  <TableHeaderColumn style={titleStyles}>Title</TableHeaderColumn>
-                  <TableHeaderColumn style={addressStyles}>Address</TableHeaderColumn>
-                  <TableHeaderColumn style={nameStyles}>Name</TableHeaderColumn>
-                  <TableHeaderColumn style={phoneStyles}>Number</TableHeaderColumn>
-                  <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
-                  <TableHeaderColumn style={acreageStyles}>Acreage</TableHeaderColumn>
-                  <TableHeaderColumn style={priceStyles}>Price</TableHeaderColumn>
-                  <TableHeaderColumn style={cityStyles}>City</TableHeaderColumn>
-                  <TableHeaderColumn style={districtStyles}>District</TableHeaderColumn>
-                  <TableHeaderColumn style={publishDateStyles}>Publish date</TableHeaderColumn>
-                  <TableHeaderColumn style={endDateStyles}>End date</TableHeaderColumn>
+                  <TableCell style={titleStyles}>Title</TableCell>
+                  <TableCell style={addressStyles}>Address</TableCell>
+                  <TableCell style={nameStyles}>Name</TableCell>
+                  <TableCell style={phoneStyles}>Number</TableCell>
+                  <TableCell style={emailStyles}>Email</TableCell>
+                  <TableCell style={acreageStyles}>Acreage</TableCell>
+                  <TableCell style={priceStyles}>Price</TableCell>
+                  <TableCell style={cityStyles}>City</TableCell>
+                  <TableCell style={districtStyles}>District</TableCell>
+                  <TableCell style={publishDateStyles}>Publish date</TableCell>
+                  <TableCell style={endDateStyles}>End date</TableCell>
                 </TableRow>
-              </TableHeader>
+              </TableHead>
               <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
                 <TableRow>
-                  <TableRowColumn style={titleStyles}></TableRowColumn>
-                  <TableRowColumn style={addressStyles}></TableRowColumn>
-                  <TableRowColumn style={nameStyles}></TableRowColumn>
-                  <TableRowColumn style={phoneStyles}></TableRowColumn>
-                  <TableRowColumn style={emailStyles}></TableRowColumn>
-                  <TableRowColumn style={acreageStyles}></TableRowColumn>
-                  <TableRowColumn style={priceStyles}></TableRowColumn>
-                  <TableRowColumn style={cityStyles}>
-                    <SelectField
+                  <TableCell style={titleStyles}></TableCell>
+                  <TableCell style={addressStyles}></TableCell>
+                  <TableCell style={nameStyles}></TableCell>
+                  <TableCell style={phoneStyles}></TableCell>
+                  <TableCell style={emailStyles}></TableCell>
+                  <TableCell style={acreageStyles}></TableCell>
+                  <TableCell style={priceStyles}></TableCell>
+                  <TableCell style={cityStyles}>
+                    <Select
                       value={city}
                       onChange={this.onChangeCity}
                       maxHeight={200}
@@ -126,10 +119,10 @@ class CrawledDataPage extends React.Component {
                       {citiesAndDistricts.map((data, key) =>
                         <MenuItem key={key} value={data.city} primaryText={data.city} />
                       )}
-                    </SelectField>
-                  </TableRowColumn>
+                    </Select>
+                  </TableCell>
                   <TableRowColumn style={districtStyles}>
-                    <SelectField
+                    <Select
                       value={district}
                       onChange={this.onChangeDistrict}
                       maxHeight={200}
@@ -139,7 +132,7 @@ class CrawledDataPage extends React.Component {
                       {districts.map((data, key) =>
                         <MenuItem key={key} value={data.district} primaryText={data.district} />
                       )}
-                    </SelectField>
+                    </Select>
                   </TableRowColumn>
                   <TableRowColumn style={publishDateStyles}></TableRowColumn>
                   <TableRowColumn style={endDateStyles}></TableRowColumn>
@@ -148,17 +141,21 @@ class CrawledDataPage extends React.Component {
                     let endDate = moment(data.endDate).format("DD-MM-YYYY");
                     let publishDate = moment(data.publishDate).format("DD-MM-YYYY");
                     return <TableRow key={key}>
-                      <TableRowColumn style={titleStyles}><a href={data.url}>{data.title}</a></TableRowColumn>
-                      <TableRowColumn style={addressStyles}>{data.address}</TableRowColumn>
-                      <TableRowColumn style={nameStyles}>{data.contactName}</TableRowColumn>
-                      <TableRowColumn style={phoneStyles}>{data.contactNumber}</TableRowColumn>
-                      <TableRowColumn style={emailStyles}>{data.contactEmail}</TableRowColumn>
-                      <TableRowColumn style={acreageStyles}>{data.acreage}</TableRowColumn>
-                      <TableRowColumn style={priceStyles}>{data.price}</TableRowColumn>
-                      <TableRowColumn style={cityStyles}>{data.city}</TableRowColumn>
-                      <TableRowColumn style={districtStyles}>{data.district}</TableRowColumn>
-                      <TableRowColumn style={publishDateStyles}>{publishDate}</TableRowColumn>
-                      <TableRowColumn style={endDateStyles}>{endDate}</TableRowColumn>
+                      <TableCell style={titleStyles}>
+                        <Tooltip id="tooltip-icon" title={data.title}>
+                          <a href={data.url}>{data.title}</a>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell style={addressStyles}>{data.address}</TableCell>
+                      <TableCell style={nameStyles}>{data.contactName}</TableCell>
+                      <TableCell style={phoneStyles}>{data.contactNumber}</TableCell>
+                      <TableCell style={emailStyles}>{data.contactEmail}</TableCell>
+                      <TableCell style={acreageStyles}>{data.acreage}</TableCell>
+                      <TableCell style={priceStyles}>{data.price}</TableCell>
+                      <TableCell style={cityStyles}>{data.city}</TableCell>
+                      <TableCell style={districtStyles}>{data.district}</TableCell>
+                      <TableCell style={publishDateStyles}>{publishDate}</TableCell>
+                      <TableCell style={endDateStyles}>{endDate}</TableCell>
                     </TableRow>
                     ;
                   }
