@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import * as loginActions from '../../actions/loginActions';
 import {bindActionCreators} from 'redux';
 import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
+import {Link} from 'react-router';
 import Button from 'material-ui/Button';
-import {List, ListItem} from 'material-ui/List';
 import {LinearProgress} from 'material-ui/Progress';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui-icons/Menu';
+import Drawer from 'material-ui/Drawer';
+import {List} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import InboxIcon from 'material-ui-icons/Inbox';
+import DraftsIcon from 'material-ui-icons/Drafts';
 
 const styles = {
   headline: {
@@ -21,6 +28,19 @@ const styles = {
 
 const iconStyles = {
   marginRight: 24
+};
+
+const muiStyles = {
+  root: {
+    flexGrow: 1
+  },
+  flex: {
+    flex: 1
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20
+  }
 };
 
 
@@ -36,6 +56,7 @@ class Header extends React.Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.openOrCloseDrawer = this.openOrCloseDrawer.bind(this);
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
   handleClick() {
@@ -69,6 +90,12 @@ class Header extends React.Component {
     }
   }
 
+  toggleDrawer(side, open) {
+    this.setState({
+      [side]: open
+    });
+  }
+
   logout(event) {
     event.preventDefault();
     this.props.actions.logout(this.state.credentials);
@@ -79,40 +106,26 @@ class Header extends React.Component {
     return (
       <div>
         <AppBar
-          title={<span style={styles.title}>.......</span>}
-          // iconClassNameRight="muidocs-icon-navigation-expand-more"
-          onLeftIconButtonClick={this.handleToggle}
-          iconElementRight={
-            <Button href="https://github.com/callemall/material-ui"
-                        label="Home"
-                        secondary={false}
-                        containerElement={<Link to="/" />}
-            />
-          }
-        />
+          position="static"
+        >
+          <Toolbar>
+            <IconButton style={{marginLeft: -12, marginRight: 20}} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" style={muiStyles.flex}>
+              Title
+            </Typography>
+          </Toolbar>
+        </AppBar>
         <LinearProgress mode="determinate" value={this.state.completed} />
         <Drawer
           open={this.state.open}
           onRequestChange={this.openOrCloseDrawer}
           docked={false}
         >
-          <List>
-            <ListItem
-              key={1}
-              primaryText="Crawled data"
-              // leftIcon={<ContentSend />}
-              disabled={true}
-              nestedItems={[
-                <ListItem key={1} primaryText="All posts" containerElement={<Link to="/crawledData" />} onClick={this.openOrCloseDrawer}/>
-              ]}
-            />
-            <ListItem
-              key={2}
-              primaryText="Crawling"
-              containerElement={<Link to="/crawling" />}
-              onClick={this.openOrCloseDrawer}
-            />
-          </List>
+            <List>
+
+            </List>
         </Drawer>
       </div>
     );
