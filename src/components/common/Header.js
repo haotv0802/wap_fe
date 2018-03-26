@@ -56,7 +56,6 @@ class Header extends React.Component {
 
   componentDidMount() {
     this.timer = setTimeout(() => this.progress(5), 1000);
-    console.log("hello");
   }
 
   componentWillUnmount() {

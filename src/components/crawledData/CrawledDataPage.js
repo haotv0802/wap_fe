@@ -7,6 +7,7 @@ import moment from "moment";
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import ReactTooltip from 'react-tooltip';
 
 import {
   Table,
@@ -148,7 +149,10 @@ class CrawledDataPage extends React.Component {
                     let endDate = moment(data.endDate).format("DD-MM-YYYY");
                     let publishDate = moment(data.publishDate).format("DD-MM-YYYY");
                     return <TableRow key={key}>
-                      <TableRowColumn style={titleStyles}><a href={data.url}>{data.title}</a></TableRowColumn>
+                      <TableRowColumn style={titleStyles} onMouseOver={() => { ReactTooltip.show(this.refs.foo); }}>
+                        <ReactTooltip place="right" type="dark" effect="float"/>
+                        <a ref="foo" href={data.url} data-tip={data.title}>{data.title}</a>
+                      </TableRowColumn>
                       <TableRowColumn style={addressStyles}>{data.address}</TableRowColumn>
                       <TableRowColumn style={nameStyles}>{data.contactName}</TableRowColumn>
                       <TableRowColumn style={phoneStyles}>{data.contactNumber}</TableRowColumn>
