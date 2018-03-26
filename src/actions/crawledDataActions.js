@@ -7,10 +7,10 @@ export function getCrawledDataSuccess(posts) {
   return {type: types.CRAWLED_DATA_SUCCESS, posts};
 }
 
-export function getCrawledData() {
+export function getCrawledData(pageNumber, pageSize) {
   return dispatch => {
     dispatch(beginAjaxCall());
-    crawledDataApi.getCrawledData().then (
+    crawledDataApi.getCrawledData(pageNumber, pageSize).then (
       resp => {
         dispatch(getCrawledDataSuccess(resp.data));
         toastr.success("Data loaded successfully!");

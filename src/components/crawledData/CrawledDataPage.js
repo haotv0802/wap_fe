@@ -61,7 +61,7 @@ class CrawledDataPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.getCrawledData();
+    this.props.actions.getCrawledData(1, 4);
     this.props.actions.getCitiesAndDistrict();
     this.setState({
       districts: Object.assign([], this.props.districts),
