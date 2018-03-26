@@ -7,7 +7,6 @@ import moment from "moment";
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import ReactTooltip from 'react-tooltip';
 
 import {
   Table,
@@ -85,92 +84,89 @@ class CrawledDataPage extends React.Component {
     const {city, districts, district} = this.state;
     return (
       <div className="panel panel-primary">
-          <div className="table-responsive">
-            <Table
-              selectable={false}
-              fixedHeader={true}
-              height="800px"
-              bodyStyle={{overflow:'visible'}}
-            >
-              <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-                <TableRow>
-                  <TableHeaderColumn style={titleStyles}>Title</TableHeaderColumn>
-                  <TableHeaderColumn style={addressStyles}>Address</TableHeaderColumn>
-                  <TableHeaderColumn style={nameStyles}>Name</TableHeaderColumn>
-                  <TableHeaderColumn style={phoneStyles}>Number</TableHeaderColumn>
-                  <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
-                  <TableHeaderColumn style={acreageStyles}>Acreage</TableHeaderColumn>
-                  <TableHeaderColumn style={priceStyles}>Price</TableHeaderColumn>
-                  <TableHeaderColumn style={cityStyles}>City</TableHeaderColumn>
-                  <TableHeaderColumn style={districtStyles}>District</TableHeaderColumn>
-                  <TableHeaderColumn style={publishDateStyles}>Publish date</TableHeaderColumn>
-                  <TableHeaderColumn style={endDateStyles}>End date</TableHeaderColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
-                <TableRow>
-                  <TableRowColumn style={titleStyles}></TableRowColumn>
-                  <TableRowColumn style={addressStyles}></TableRowColumn>
-                  <TableRowColumn style={nameStyles}></TableRowColumn>
-                  <TableRowColumn style={phoneStyles}></TableRowColumn>
-                  <TableRowColumn style={emailStyles}></TableRowColumn>
-                  <TableRowColumn style={acreageStyles}></TableRowColumn>
-                  <TableRowColumn style={priceStyles}></TableRowColumn>
-                  <TableRowColumn style={cityStyles}>
-                    <SelectField
-                      value={city}
-                      onChange={this.onChangeCity}
-                      maxHeight={200}
-                      autoWidth={false}
-                      style={{width: "180px"}}
-                    >
-                      {citiesAndDistricts.map((data, key) =>
-                        <MenuItem key={key} value={data.city} primaryText={data.city} />
-                      )}
-                    </SelectField>
-                  </TableRowColumn>
-                  <TableRowColumn style={districtStyles}>
-                    <SelectField
-                      value={district}
-                      onChange={this.onChangeDistrict}
-                      maxHeight={200}
-                      autoWidth={false}
-                      style={{width: "180px"}}
-                    >
-                      {districts.map((data, key) =>
-                        <MenuItem key={key} value={data.district} primaryText={data.district} />
-                      )}
-                    </SelectField>
-                  </TableRowColumn>
-                  <TableRowColumn style={publishDateStyles}></TableRowColumn>
-                  <TableRowColumn style={endDateStyles}></TableRowColumn>
-                </TableRow>
-                {posts.map((data, key) => {
-                    let endDate = moment(data.endDate).format("DD-MM-YYYY");
-                    let publishDate = moment(data.publishDate).format("DD-MM-YYYY");
-                    return <TableRow key={key}>
-                      <TableRowColumn style={titleStyles} onMouseOver={() => { ReactTooltip.show(this.refs.foo); }}>
-                        <ReactTooltip place="right" type="dark" effect="float"/>
-                        <a ref="foo" href={data.url} data-tip={data.title}>{data.title}</a>
-                      </TableRowColumn>
-                      <TableRowColumn style={addressStyles}>{data.address}</TableRowColumn>
-                      <TableRowColumn style={nameStyles}>{data.contactName}</TableRowColumn>
-                      <TableRowColumn style={phoneStyles}>{data.contactNumber}</TableRowColumn>
-                      <TableRowColumn style={emailStyles}>{data.contactEmail}</TableRowColumn>
-                      <TableRowColumn style={acreageStyles}>{data.acreage}</TableRowColumn>
-                      <TableRowColumn style={priceStyles}>{data.price}</TableRowColumn>
-                      <TableRowColumn style={cityStyles}>{data.city}</TableRowColumn>
-                      <TableRowColumn style={districtStyles}>{data.district}</TableRowColumn>
-                      <TableRowColumn style={publishDateStyles}>{publishDate}</TableRowColumn>
-                      <TableRowColumn style={endDateStyles}>{endDate}</TableRowColumn>
-                    </TableRow>
+        <div className="table-responsive">
+          <Table
+            selectable={false}
+            fixedHeader={true}
+            height="800px"
+            bodyStyle={{overflow:'visible'}}
+          >
+            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+              <TableRow>
+                <TableHeaderColumn style={titleStyles}>Title</TableHeaderColumn>
+                <TableHeaderColumn style={addressStyles}>Address</TableHeaderColumn>
+                <TableHeaderColumn style={nameStyles}>Name</TableHeaderColumn>
+                <TableHeaderColumn style={phoneStyles}>Number</TableHeaderColumn>
+                <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
+                <TableHeaderColumn style={acreageStyles}>Acreage</TableHeaderColumn>
+                <TableHeaderColumn style={priceStyles}>Price</TableHeaderColumn>
+                <TableHeaderColumn style={cityStyles}>City</TableHeaderColumn>
+                <TableHeaderColumn style={districtStyles}>District</TableHeaderColumn>
+                <TableHeaderColumn style={publishDateStyles}>Publish date</TableHeaderColumn>
+                <TableHeaderColumn style={endDateStyles}>End date</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
+              <TableRow>
+                <TableRowColumn style={titleStyles}></TableRowColumn>
+                <TableRowColumn style={addressStyles}></TableRowColumn>
+                <TableRowColumn style={nameStyles}></TableRowColumn>
+                <TableRowColumn style={phoneStyles}></TableRowColumn>
+                <TableRowColumn style={emailStyles}></TableRowColumn>
+                <TableRowColumn style={acreageStyles}></TableRowColumn>
+                <TableRowColumn style={priceStyles}></TableRowColumn>
+                <TableRowColumn style={cityStyles}>
+                  <SelectField
+                    value={city}
+                    onChange={this.onChangeCity}
+                    maxHeight={200}
+                    autoWidth={false}
+                    style={{width: "180px"}}
+                  >
+                    {citiesAndDistricts.map((data, key) =>
+                      <MenuItem key={key} value={data.city} primaryText={data.city} />
+                    )}
+                  </SelectField>
+                </TableRowColumn>
+                <TableRowColumn style={districtStyles}>
+                  <SelectField
+                    value={district}
+                    onChange={this.onChangeDistrict}
+                    maxHeight={200}
+                    autoWidth={false}
+                    style={{width: "180px"}}
+                  >
+                    {districts.map((data, key) =>
+                      <MenuItem key={key} value={data.district} primaryText={data.district} />
+                    )}
+                  </SelectField>
+                </TableRowColumn>
+                <TableRowColumn style={publishDateStyles}></TableRowColumn>
+                <TableRowColumn style={endDateStyles}></TableRowColumn>
+              </TableRow>
+              {posts.map((data, key) => {
+                  let endDate = moment(data.endDate).format("DD-MM-YYYY");
+                  let publishDate = moment(data.publishDate).format("DD-MM-YYYY");
+                  return <TableRow key={key}>
+                    <TableRowColumn style={titleStyles}><a href={data.url}>{data.title}</a></TableRowColumn>
+                    <TableRowColumn style={addressStyles}>{data.address}</TableRowColumn>
+                    <TableRowColumn style={nameStyles}>{data.contactName}</TableRowColumn>
+                    <TableRowColumn style={phoneStyles}>{data.contactNumber}</TableRowColumn>
+                    <TableRowColumn style={emailStyles}>{data.contactEmail}</TableRowColumn>
+                    <TableRowColumn style={acreageStyles}>{data.acreage}</TableRowColumn>
+                    <TableRowColumn style={priceStyles}>{data.price}</TableRowColumn>
+                    <TableRowColumn style={cityStyles}>{data.city}</TableRowColumn>
+                    <TableRowColumn style={districtStyles}>{data.district}</TableRowColumn>
+                    <TableRowColumn style={publishDateStyles}>{publishDate}</TableRowColumn>
+                    <TableRowColumn style={endDateStyles}>{endDate}</TableRowColumn>
+                  </TableRow>
                     ;
-                  }
-                )}
-              </TableBody>
-            </Table>
+                }
+              )}
+            </TableBody>
+          </Table>
 
-          </div>
+        </div>
       </div>
     );
   }
@@ -221,7 +217,7 @@ const titleStyles = {
 };
 
 const addressStyles = {
-  width: "200px"
+  width: "300px"
 };
 
 const nameStyles = {
