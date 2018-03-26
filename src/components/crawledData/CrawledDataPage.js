@@ -20,6 +20,9 @@ import Divider from 'material-ui/Divider';
 //Import the pagination component
 import Pagination from 'materialui-pagination';
 
+//Demo API to simulate async actions
+import RowApi from './../../api/rows';
+
 import {
   Table,
   TableBody,
@@ -45,6 +48,7 @@ class CrawledDataPage extends React.Component {
     };
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeDistrict = this.onChangeDistrict.bind(this);
+    this.updateRows = this.updateRows.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,6 +67,11 @@ class CrawledDataPage extends React.Component {
       districts: Object.assign([], this.props.districts),
       city: Object.assign(this.props.city)
     });
+
+    RowApi.getRows(this.state)
+      .then((updatedState) => {
+        this.setState(updatedState);
+      });
 
     // this.props.citiesAndDistricts.map(data => {
     //     console.log("city: ");
@@ -94,6 +103,13 @@ class CrawledDataPage extends React.Component {
     this.setState({
       district: value
     });
+  }
+
+  updateRows(state){
+    RowApi.getRows(state)
+      .then((updatedState) => {
+        this.setState(updatedState);
+      });
   }
 
   render() {
