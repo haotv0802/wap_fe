@@ -1,12 +1,24 @@
+//React
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {render} from 'react-dom';
 import {bindActionCreators} from 'redux';
 import * as crawledDataActions from '../../actions/crawledDataActions';
 import moment from "moment";
+
+//Material UI Dependency for touch / tap / click events
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
+//Material UI Components
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import Divider from 'material-ui/Divider';
+
+//Import the pagination component
+import Pagination from 'materialui-pagination';
 
 import {
   Table,
@@ -24,7 +36,12 @@ class CrawledDataPage extends React.Component {
     this.state = {
       districts: Object.assign([], this.props.districts),
       city: Object.assign(this.props.city),
-      district: ""
+      district: "",
+      rowsPerPage: [5,10,15],
+      rows: [],
+      numberOfRows: 5,
+      page: 1,
+      total: undefined
     };
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeDistrict = this.onChangeDistrict.bind(this);
@@ -165,7 +182,14 @@ class CrawledDataPage extends React.Component {
               )}
             </TableBody>
           </Table>
-
+          <Divider />
+          <Pagination
+            total={this.state.total}
+            rowsPerPage={this.state.rowsPerPage}
+            page={this.state.page}
+            numberOfRows={this.state.numberOfRows}
+            updateRows={this.updateRows}
+          />
         </div>
       </div>
     );
