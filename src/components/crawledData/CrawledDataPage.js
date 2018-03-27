@@ -42,7 +42,7 @@ class CrawledDataPage extends React.Component {
       district: "",
       rowsPerPage: [5,10,15],
       rows: [],
-      numberOfRows: 5,
+      numberOfRows: 100,
       page: 1,
       total: undefined
     };
@@ -61,7 +61,7 @@ class CrawledDataPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.getCrawledData(1, 4);
+    this.props.actions.getCrawledData(this.state.page, this.state.numberOfRows);
     this.props.actions.getCitiesAndDistrict();
     this.setState({
       districts: Object.assign([], this.props.districts),
@@ -71,6 +71,7 @@ class CrawledDataPage extends React.Component {
     RowApi.getRows(this.state)
       .then((updatedState) => {
         this.setState(updatedState);
+        this.props.actions.getCrawledData(this.state.page, this.state.numberOfRows);
       });
 
     // this.props.citiesAndDistricts.map(data => {
@@ -109,6 +110,7 @@ class CrawledDataPage extends React.Component {
     RowApi.getRows(state)
       .then((updatedState) => {
         this.setState(updatedState);
+        this.props.actions.getCrawledData(this.state.page, this.state.numberOfRows);
       });
   }
 
@@ -257,7 +259,7 @@ const titleStyles = {
 };
 
 const addressStyles = {
-  width: "300px"
+  width: "200px"
 };
 
 const nameStyles = {

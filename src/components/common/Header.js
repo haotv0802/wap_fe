@@ -13,6 +13,7 @@ import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import Subheader from 'material-ui/Subheader';
 import LinearProgress from 'material-ui/LinearProgress';
+import LoadingDots from './LoadingDots';
 
 const styles = {
   headline: {
@@ -82,7 +83,7 @@ class Header extends React.Component {
     return (
       <div>
         <AppBar
-          title={<span style={styles.title}>.......</span>}
+          title={<span style={styles.title}>{this.props.loading && <LoadingDots interval={100} dots={10}/>}</span>}
           // iconClassNameRight="muidocs-icon-navigation-expand-more"
           onLeftIconButtonClick={this.handleToggle}
           iconElementRight={
