@@ -29,7 +29,7 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
+  TableRowColumn
 } from 'material-ui/Table';
 
 class CrawledDataPage extends React.Component {
@@ -61,7 +61,7 @@ class CrawledDataPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.getCrawledData(this.state.page, this.state.numberOfRows);
+    // this.props.actions.getCrawledData(this.state.page, this.state.numberOfRows);
     this.props.actions.getCitiesAndDistrict();
     this.setState({
       districts: Object.assign([], this.props.districts),
