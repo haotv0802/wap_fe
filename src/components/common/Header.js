@@ -116,6 +116,12 @@ class Header extends React.Component {
               containerElement={<Link to="/crawling" />}
               onClick={this.openOrCloseDrawer}
             />
+            <ListItem
+              key={3}
+              primaryText="Contacts"
+              containerElement={<Link to="/contacts" />}
+              onClick={this.openOrCloseDrawer}
+            />
           </List>
         </Drawer>
       </div>

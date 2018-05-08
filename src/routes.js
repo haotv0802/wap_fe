@@ -9,12 +9,14 @@ import WhyAspirePage from './components/whyAspire/WhyAspirePage';
 import LogInPage from './components/login/LogInPage';
 import SignupPage from './components/createAccount/SignupPage';
 import CrawlingPage from "./components/crawling/CrawlingPage";
+import ContactPage from "./components/contact/ContactPage";
 
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={HomePage}/>
     <Route path="crawledData" component={CrawledDataPage}/>
     <Route path="crawling" component={CrawlingPage}/>
+    <Route path="contacts" component={ContactPage}/>
     <Route path="howItWorks" component={HowItWorksPage}/>
     <Route path="useCases" component={UseCasesPage}/>
     <Route path="whyAspire" component={WhyAspirePage}/>
