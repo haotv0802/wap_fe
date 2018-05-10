@@ -1,9 +1,9 @@
 import HttpClient from "./HttpClient";
-import {GET_CONTACTS_LIST_URL} from "./constants";
+import {GET_CONTACTS_LIST_URL, GET_CRAWLED_DATA_URL} from "./constants";
 
 class ContactApi {
-  static getContacts() {
-    return HttpClient.get(GET_CONTACTS_LIST_URL);
+  static getContacts(pageNumber, pageSize) {
+    return HttpClient.get(GET_CONTACTS_LIST_URL, {params: {"page" : pageNumber, "size" : pageSize}});
   }
 }
 

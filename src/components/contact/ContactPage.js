@@ -4,7 +4,8 @@ import * as contactActions from "../../actions/contactActions";
 import {bindActionCreators} from 'redux';
 import PropTypes from "prop-types";
 import moment from "moment/moment";
-
+import Divider from 'material-ui/Divider';
+import Pagination from 'materialui-pagination';
 import {
   Table,
   TableBody,
@@ -13,14 +14,21 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
+import RowApi from "../../api/rows";
 
 
 class ContactPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      contacts: Object.assign([], this.props.contacts)
+      contacts: Object.assign([], this.props.contacts),
+      rowsPerPage: [5,10,15,25],
+      rows: [],
+      numberOfRows: 100,
+      page: 1,
+      total: undefined
     };
+    this.updateRows = this.updateRows.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,19 +40,29 @@ class ContactPage extends React.Component {
   }
 
   componentWillMount() {
-    // this.props.actions.getCrawledData(this.state.page, this.state.numberOfRows);
-    this.props.actions.getContacts();
+    RowApi.getRows(this.state)
+      .then((updatedState) => {
+        this.setState(updatedState);
+        this.props.actions.getContacts(this.state.page, this.state.numberOfRows);
+      });
+
+  }
+
+  updateRows(state){
+    RowApi.getRows(state)
+      .then((updatedState) => {
+        this.setState(updatedState);
+        this.props.actions.getContacts(this.state.page, this.state.numberOfRows);
+      });
   }
 
   render() {
-    console.log(this.state.contacts);
     return (
       <div className="panel panel-primary">
         <div className="table-responsive">
           <Table
             selectable={false}
             fixedHeader={true}
-            height="800px"
             bodyStyle={{overflow:'visible'}}
           >
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
@@ -63,7 +81,7 @@ class ContactPage extends React.Component {
             <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
               {this.state.contacts.map((data, key) => {
                   return <TableRow key={key}>
-                    <TableRowColumn style={nameStyles}><span>{data.name}</span></TableRowColumn>
+                    <TableRowColumn style={nameStyles}><span></span></TableRowColumn>
                     <TableRowColumn style={phoneStyles}><span>{data.phone}</span></TableRowColumn>
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
@@ -78,11 +96,24 @@ class ContactPage extends React.Component {
               )}
             </TableBody>
           </Table>
+          <Divider />
+          <Pagination
+            total={this.state.total}
+            rowsPerPage={this.state.rowsPerPage}
+            page={this.state.page}
+            numberOfRows={this.state.numberOfRows}
+            updateRows={this.updateRows}
+          />
         </div>
       </div>
     );
   }
 }
+
+ContactPage.defaultProps = {
+  contacts: []
+};
+
 
 ContactPage.propTypes = {
   actions: PropTypes.object.isRequired,
@@ -92,7 +123,7 @@ ContactPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    contacts: state.contact.list
+    contacts: state.contact.list.content
   };
 }
 
