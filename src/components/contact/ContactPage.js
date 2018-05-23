@@ -24,7 +24,7 @@ class ContactPage extends React.Component {
       contacts: Object.assign([], this.props.contacts),
       rowsPerPage: [5,10,15,25],
       rows: [],
-      numberOfRows: 100,
+      numberOfRows: 20,
       page: 1,
       total: undefined
     };
@@ -97,13 +97,18 @@ class ContactPage extends React.Component {
             </TableBody>
           </Table>
           <Divider />
-          <Pagination
-            total={this.state.total}
-            rowsPerPage={this.state.rowsPerPage}
-            page={this.state.page}
-            numberOfRows={this.state.numberOfRows}
-            updateRows={this.updateRows}
-          />
+          <div style={{textAlign:"center"}}>
+            <nav>
+              <ul className="pagination">
+                <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+
+                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                <li className="page-item"><a className="page-link" href="#">2</a></li>
+                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                <li className="page-item"><a className="page-link" href="#">Next</a></li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     );
