@@ -3,8 +3,8 @@ import {ajaxCallError, beginAjaxCall} from "./ajaxStatusActions";
 import toastr from 'toastr';
 import ContactApi from "../api/contactApi";
 
-export function getContactsSuccess(contacts) {
-  return {type: types.GET_CONTACT_LIST_SUCCESS, contacts};
+export function getContactsSuccess(data) {
+  return {type: types.GET_CONTACT_LIST_SUCCESS, data};
 }
 
 export function getContacts(pageNumber, pageSize) {

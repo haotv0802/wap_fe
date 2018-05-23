@@ -128,7 +128,7 @@ ContactPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    contacts: state.contact.list.content
+    contacts: state.contact.data.content
   };
 }
 
