@@ -10,7 +10,6 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import Select from 'material-ui/SelectField';
-import {ContactFilter} from "./Contact";
 
 class ContactPage extends React.Component {
 
@@ -55,12 +54,12 @@ class ContactPage extends React.Component {
   }
 
   handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
+    // console.log(`active page is ${pageNumber}`);
     this.onLoadContacts(pageNumber);
   }
 
   componentWillMount() {
-    this.props.actions.getContacts(this.state.pageNumber, this.state.size);
+    this.props.actions.getContacts(this.state.nameFilter, this.state.pageNumber, this.state.size);
   }
 
   onLoadContacts(pageNumber) {
@@ -68,14 +67,14 @@ class ContactPage extends React.Component {
       pageNumber: pageNumber,
       activePage: pageNumber
     }, () => {
-      this.props.actions.getContacts(this.state.pageNumber, this.state.size);
+      this.props.actions.getContacts(this.state.nameFilter, this.state.pageNumber, this.state.size);
     });
   }
 
   handleFiltersChange (event) {
     this.setState({ [event.target.name]: event.target.value },
       () => {
-        this.props.actions.getContacts(this.state.pageNumber, this.state.size);
+        this.props.actions.getContacts(this.state.nameFilter, this.state.pageNumber, this.state.size);
       }
     );
   }
@@ -180,7 +179,7 @@ class ContactPage extends React.Component {
             <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
               {this.state.contacts.map((data, key) => {
                   return <TableRow key={key}>
-                    <TableRowColumn style={nameStyles}><span></span></TableRowColumn>
+                    <TableRowColumn style={nameStyles}><span>{data.name}</span></TableRowColumn>
                     <TableRowColumn style={phoneStyles}><span>{data.phone}</span></TableRowColumn>
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
