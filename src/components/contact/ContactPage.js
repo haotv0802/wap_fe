@@ -3,18 +3,9 @@ import {connect} from "react-redux";
 import * as contactActions from "../../actions/contactActions";
 import {bindActionCreators} from 'redux';
 import PropTypes from "prop-types";
-import moment from "moment/moment";
 import Divider from 'material-ui/Divider';
-import Pagination from 'materialui-pagination';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table';
-import RowApi from "../../api/rows";
+
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 
 class ContactPage extends React.Component {
@@ -22,38 +13,36 @@ class ContactPage extends React.Component {
     super(props, context);
     this.state = {
       contacts: Object.assign([], this.props.contacts),
-      rowsPerPage: [5,10,15,25],
-      rows: [],
+      pageNumber: this.props.pageNumber,
       numberOfRows: 20,
-      page: 1,
-      total: undefined
+      activePage: 15
     };
-    this.updateRows = this.updateRows.bind(this);
+    this.onLoadContacts = this.onLoadContacts.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
+
     if (this.props.contacts !== nextProps.contacts) {
       this.setState({
         contacts: Object.assign([], nextProps.contacts)
       });
     }
+    if (this.props.pageNumber !== nextProps.pageNumber) {
+      this.setState({
+        pageNumber: nextProps.pageNumber
+      });
+    }
   }
 
   componentWillMount() {
-    RowApi.getRows(this.state)
-      .then((updatedState) => {
-        this.setState(updatedState);
-        this.props.actions.getContacts(this.state.page, this.state.numberOfRows);
-      });
-
+    this.props.actions.getContacts(this.state.pageNumber, this.state.numberOfRows);
   }
 
-  updateRows(state){
-    RowApi.getRows(state)
-      .then((updatedState) => {
-        this.setState(updatedState);
-        this.props.actions.getContacts(this.state.page, this.state.numberOfRows);
-      });
+  onLoadContacts(pageNumber) {
+    this.setState({
+      page: pageNumber
+    });
+    this.props.actions.getContacts(pageNumber, this.state.numberOfRows);
   }
 
   render() {
@@ -74,8 +63,8 @@ class ContactPage extends React.Component {
                 <TableHeaderColumn style={manualStyles}>Manual check</TableHeaderColumn>
                 <TableHeaderColumn style={emailExistsStyles}>Email existing?</TableHeaderColumn>
                 <TableHeaderColumn style={latestItemStyles}>Latest item at</TableHeaderColumn>
-                <TableHeaderColumn style={createdStyles}>Created on</TableHeaderColumn>
-                <TableHeaderColumn style={updatedStyles}>Updated on</TableHeaderColumn>
+                <TableHeaderColumn style={createdStyles}>Created at</TableHeaderColumn>
+                <TableHeaderColumn style={updatedStyles}>Updated at</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
@@ -97,18 +86,6 @@ class ContactPage extends React.Component {
             </TableBody>
           </Table>
           <Divider />
-          <div style={{textAlign:"center"}}>
-            <nav>
-              <ul className="pagination">
-                <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-
-                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                <li className="page-item"><a className="page-link" href="#">2</a></li>
-                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                <li className="page-item"><a className="page-link" href="#">Next</a></li>
-              </ul>
-            </nav>
-          </div>
         </div>
       </div>
     );
@@ -119,16 +96,21 @@ ContactPage.defaultProps = {
   contacts: []
 };
 
-
 ContactPage.propTypes = {
   actions: PropTypes.object.isRequired,
-  contacts: PropTypes.array.isRequired
+  contacts: PropTypes.array.isRequired,
+  pageNumber: PropTypes.number.isRequired
 };
 
+ContactPage.defaultProps = {
+  pageNumber: 0,
+  contacts: []
+};
 
 function mapStateToProps(state, ownProps) {
   return {
-    contacts: state.contact.data.content
+    contacts: state.contact.data.content,
+    pageNumber: state.contact.data.number
   };
 }
 
