@@ -4,9 +4,9 @@ import * as contactActions from "../../actions/contactActions";
 import {bindActionCreators} from 'redux';
 import PropTypes from "prop-types";
 import Divider from 'material-ui/Divider';
+import Pagination from "react-js-pagination";
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-
 
 class ContactPage extends React.Component {
   constructor(props, context) {
@@ -14,10 +14,16 @@ class ContactPage extends React.Component {
     this.state = {
       contacts: Object.assign([], this.props.contacts),
       pageNumber: this.props.pageNumber,
-      numberOfRows: 20,
-      activePage: 15
+      total: this.props.total,
+      size: this.props.size
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+  handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    this.onLoadContacts(pageNumber);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,17 +38,28 @@ class ContactPage extends React.Component {
         pageNumber: nextProps.pageNumber
       });
     }
+
+    if (this.props.total !== nextProps.total) {
+      this.setState({
+        total: nextProps.total
+      });
+    }
+    if (this.props.size !== nextProps.size) {
+      this.setState({
+        size: nextProps.size
+      });
+    }
   }
 
   componentWillMount() {
-    this.props.actions.getContacts(this.state.pageNumber, this.state.numberOfRows);
+    this.props.actions.getContacts(this.state.pageNumber, this.state.size);
   }
 
   onLoadContacts(pageNumber) {
     this.setState({
       page: pageNumber
     });
-    this.props.actions.getContacts(pageNumber, this.state.numberOfRows);
+    this.props.actions.getContacts(pageNumber, this.state.size);
   }
 
   render() {
@@ -86,6 +103,13 @@ class ContactPage extends React.Component {
             </TableBody>
           </Table>
           <Divider />
+          <Pagination
+            activePage={this.state.pageNumber}
+            itemsCountPerPage={this.state.size}
+            totalItemsCount={this.state.total}
+            pageRangeDisplayed={10}
+            onChange={this.handlePageChange}
+          />
         </div>
       </div>
     );
@@ -93,24 +117,26 @@ class ContactPage extends React.Component {
 }
 
 ContactPage.defaultProps = {
-  contacts: []
+  contacts: [],
+  total: 0,
+  size: 10,
+  pageNumber: 0
 };
 
 ContactPage.propTypes = {
   actions: PropTypes.object.isRequired,
   contacts: PropTypes.array.isRequired,
-  pageNumber: PropTypes.number.isRequired
-};
-
-ContactPage.defaultProps = {
-  pageNumber: 0,
-  contacts: []
+  pageNumber: PropTypes.number.isRequired,
+  total: PropTypes.number,
+  size: PropTypes.number
 };
 
 function mapStateToProps(state, ownProps) {
   return {
     contacts: state.contact.data.content,
-    pageNumber: state.contact.data.number
+    pageNumber: state.contact.data.number,
+    total: state.contact.data.total,
+    size: state.contact.data.size
   };
 }
 
