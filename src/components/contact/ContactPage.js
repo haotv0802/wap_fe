@@ -103,13 +103,15 @@ class ContactPage extends React.Component {
             </TableBody>
           </Table>
           <Divider />
+          <center>
           <Pagination
-            activePage={this.state.pageNumber}
+            activePage={this.state.pageNumber + 1}
             itemsCountPerPage={this.state.size}
             totalItemsCount={this.state.total}
             pageRangeDisplayed={10}
             onChange={this.handlePageChange}
           />
+          </center>
         </div>
       </div>
     );
