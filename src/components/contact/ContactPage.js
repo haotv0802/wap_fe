@@ -7,23 +7,26 @@ import Divider from 'material-ui/Divider';
 import Pagination from "react-js-pagination";
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import TextField from 'material-ui/TextField';
+import MenuItem from 'material-ui/MenuItem';
+import Select from 'material-ui/SelectField';
+import {ContactFilter} from "./Contact";
 
 class ContactPage extends React.Component {
+
   constructor(props, context) {
     super(props, context);
     this.state = {
       contacts: Object.assign([], this.props.contacts),
       pageNumber: this.props.pageNumber,
       total: this.props.total,
-      size: this.props.size
+      size: this.props.size,
+      nameFilter: this.props.nameFilter,
+      activePage: 1
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
-  }
-
-  handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
-    this.onLoadContacts(pageNumber);
+    this.handleFiltersChange = this.handleFiltersChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,15 +54,30 @@ class ContactPage extends React.Component {
     }
   }
 
+  handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    this.onLoadContacts(pageNumber);
+  }
+
   componentWillMount() {
     this.props.actions.getContacts(this.state.pageNumber, this.state.size);
   }
 
   onLoadContacts(pageNumber) {
     this.setState({
-      page: pageNumber
+      pageNumber: pageNumber,
+      activePage: pageNumber
+    }, () => {
+      this.props.actions.getContacts(this.state.pageNumber, this.state.size);
     });
-    this.props.actions.getContacts(pageNumber, this.state.size);
+  }
+
+  handleFiltersChange (event) {
+    this.setState({ [event.target.name]: event.target.value },
+      () => {
+        this.props.actions.getContacts(this.state.pageNumber, this.state.size);
+      }
+    );
   }
 
   render() {
@@ -83,6 +101,81 @@ class ContactPage extends React.Component {
                 <TableHeaderColumn style={createdStyles}>Created at</TableHeaderColumn>
                 <TableHeaderColumn style={updatedStyles}>Updated at</TableHeaderColumn>
               </TableRow>
+              <TableRow>
+                <TableHeaderColumn style={nameStyles}>
+                  <TextField
+                    id="name"
+                    label="Name"
+                    name="nameFilter"
+                    value={this.state.nameFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={phoneStyles}>
+                  <TextField
+                    id="phone"
+                    label="Phone"
+                    style={{width: '100px'}}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={emailStyles}>
+                  <TextField
+                    id="email"
+                    label="Email"
+                    style={{width: '170px'}}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={typeStyles}>
+                  <Select
+                    name="existing"
+                    style={{width: '100px'}}
+                  >
+                    <MenuItem value="">
+                    </MenuItem>
+                    <MenuItem value={'OWNER'}>OWNER</MenuItem>
+                    <MenuItem value={'SALE'}>SALE</MenuItem>
+                  </Select>
+                </TableHeaderColumn>
+                <TableHeaderColumn style={manualStyles}>
+                  <TextField
+                    id="check"
+                    label="Check"
+                    style={{width: '70px'}}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={emailExistsStyles}>
+                  <Select
+                    name="existing"
+                    style={{width: '100px'}}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={true}>YES</MenuItem>
+                    <MenuItem value={false}>NO</MenuItem>
+                  </Select>
+                </TableHeaderColumn>
+                <TableHeaderColumn style={latestItemStyles}>
+                  <TextField
+                    id="last"
+                    label="Last"
+                    style={{width: '70px'}}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={createdStyles}>
+                  <TextField
+                    id="create"
+                    label="Create"
+                    style={{width: '70px'}}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={updatedStyles}><TextField
+                  id="update"
+                  label="Update"
+                  style={{width: '70px'}}
+                /></TableHeaderColumn>
+              </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
               {this.state.contacts.map((data, key) => {
@@ -104,13 +197,13 @@ class ContactPage extends React.Component {
           </Table>
           <Divider />
           <center>
-          <Pagination
-            activePage={this.state.pageNumber + 1}
-            itemsCountPerPage={this.state.size}
-            totalItemsCount={this.state.total}
-            pageRangeDisplayed={10}
-            onChange={this.handlePageChange}
-          />
+            <Pagination
+              activePage={this.state.activePage}
+              itemsCountPerPage={this.state.size}
+              totalItemsCount={this.state.total}
+              pageRangeDisplayed={10}
+              onChange={this.handlePageChange}
+            />
           </center>
         </div>
       </div>
@@ -122,7 +215,8 @@ ContactPage.defaultProps = {
   contacts: [],
   total: 0,
   size: 10,
-  pageNumber: 0
+  pageNumber: 1,
+  nameFilter: ''
 };
 
 ContactPage.propTypes = {
@@ -130,7 +224,8 @@ ContactPage.propTypes = {
   contacts: PropTypes.array.isRequired,
   pageNumber: PropTypes.number.isRequired,
   total: PropTypes.number,
-  size: PropTypes.number
+  size: PropTypes.number,
+  nameFilter: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
@@ -173,15 +268,15 @@ const emailExistsStyles = {
 };
 
 const latestItemStyles = {
-  width: "100px"
+  width: "80px"
 };
 
 const createdStyles = {
-  width: "100px"
+  width: "80px"
 };
 
 const updatedStyles = {
-  width: "100px"
+  width: "80px"
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactPage);
