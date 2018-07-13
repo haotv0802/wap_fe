@@ -21,6 +21,11 @@ class ContactPage extends React.Component {
       total: this.props.total,
       size: this.props.size,
       nameFilter: this.props.nameFilter,
+      phoneFilter: this.props.phoneFilter,
+      emailFilter: this.props.emailFilter,
+      typeFilter: this.props.typeFilter,
+      manualCheckFilter: this.props.manualCheckFilter,
+      emailExistingFilter: this.props.emailExistingFilter,
       activePage: 1
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
@@ -59,7 +64,14 @@ class ContactPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.getContacts(this.state.nameFilter, this.state.pageNumber, this.state.size);
+    this.props.actions.getContacts(
+      this.state.nameFilter,
+      this.state.phoneFilter,
+      this.state.emailFilter,
+      this.state.typeFilter,
+      this.state.manualCheckFilter,
+      this.state.emailExistingFilter,
+      this.state.pageNumber, this.state.size);
   }
 
   onLoadContacts(pageNumber) {
@@ -67,14 +79,34 @@ class ContactPage extends React.Component {
       pageNumber: pageNumber,
       activePage: pageNumber
     }, () => {
-      this.props.actions.getContacts(this.state.nameFilter, this.state.pageNumber, this.state.size);
+      this.props.actions.getContacts(
+        this.state.nameFilter,
+        this.state.phoneFilter,
+        this.state.emailFilter,
+        this.state.typeFilter,
+        this.state.manualCheckFilter,
+        this.state.emailExistingFilter,
+        this.state.pageNumber, this.state.size);
     });
   }
 
   handleFiltersChange (event) {
-    this.setState({ [event.target.name]: event.target.value },
+    // console.log(event.target.name);
+    // console.log(event.target.value);
+    this.setState({ [event.target.name]: event.target.value},
       () => {
-        this.props.actions.getContacts(this.state.nameFilter, this.state.pageNumber, this.state.size);
+        // console.log(this.state.emailFilter);
+        // console.log(this.state.phoneFilter);
+        // console.log(this.state.pageNumber);
+        // console.log(this.state.size);
+        this.props.actions.getContacts(
+          this.state.nameFilter,
+          this.state.phoneFilter,
+          this.state.emailFilter,
+          this.state.typeFilter,
+          this.state.manualCheckFilter,
+          this.state.emailExistingFilter,
+          this.state.pageNumber, this.state.size);
       }
     );
   }
@@ -115,20 +147,41 @@ class ContactPage extends React.Component {
                   <TextField
                     id="phone"
                     label="Phone"
+                    name="phoneFilter"
+                    value={this.state.phoneFilter}
                     style={{width: '100px'}}
+                    onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
                 <TableHeaderColumn style={emailStyles}>
                   <TextField
                     id="email"
                     label="Email"
+                    name="emailFilter"
+                    value={this.state.emailFilter}
                     style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
                 <TableHeaderColumn style={typeStyles}>
                   <Select
-                    name="existing"
+                    name="typeFilter"
+                    value={this.state.typeFilter}
                     style={{width: '100px'}}
+                    onChange={this.handleFiltersChange}
+                  >
+                    <MenuItem value="">
+                    </MenuItem>
+                    <MenuItem value="OWNER">OWNER</MenuItem>
+                    <MenuItem value="SALE">SALE</MenuItem>
+                  </Select>
+                </TableHeaderColumn>
+                <TableHeaderColumn style={manualStyles}>
+                  <Select
+                    name="manualCheckFilter"
+                    value={this.state.manualCheckFilter}
+                    style={{width: '100px'}}
+                    onChange={this.handleFiltersChange}
                   >
                     <MenuItem value="">
                     </MenuItem>
@@ -136,20 +189,14 @@ class ContactPage extends React.Component {
                     <MenuItem value={'SALE'}>SALE</MenuItem>
                   </Select>
                 </TableHeaderColumn>
-                <TableHeaderColumn style={manualStyles}>
-                  <TextField
-                    id="check"
-                    label="Check"
-                    style={{width: '70px'}}
-                  />
-                </TableHeaderColumn>
                 <TableHeaderColumn style={emailExistsStyles}>
                   <Select
-                    name="existing"
+                    name="emailExistingFilter"
+                    value={this.state.emailExistingFilter}
                     style={{width: '100px'}}
+                    onChange={this.handleFiltersChange}
                   >
                     <MenuItem value="">
-                      <em>None</em>
                     </MenuItem>
                     <MenuItem value={true}>YES</MenuItem>
                     <MenuItem value={false}>NO</MenuItem>
@@ -215,7 +262,12 @@ ContactPage.defaultProps = {
   total: 0,
   size: 10,
   pageNumber: 1,
-  nameFilter: ''
+  nameFilter: '',
+  phoneFilter: '',
+  emailFilter: '',
+  typeFilter: '',
+  manualCheckFilter: '',
+  emailExistingFilter: ''
 };
 
 ContactPage.propTypes = {
@@ -223,8 +275,13 @@ ContactPage.propTypes = {
   contacts: PropTypes.array.isRequired,
   pageNumber: PropTypes.number.isRequired,
   total: PropTypes.number,
-  size: PropTypes.number,
-  nameFilter: PropTypes.string
+  size: PropTypes.number.isRequired,
+  nameFilter: PropTypes.string,
+  phoneFilter: PropTypes.string,
+  emailFilter: PropTypes.string,
+  typeFilter: PropTypes.string,
+  manualCheckFilter: PropTypes.string,
+  emailExistingFilter: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
