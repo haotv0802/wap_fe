@@ -79,6 +79,8 @@ class ContactPage extends React.Component {
       pageNumber: pageNumber,
       activePage: pageNumber
     }, () => {
+      console.log(this.state.pageNumber);
+      console.log(this.state.size);
       this.props.actions.getContacts(
         this.state.nameFilter,
         this.state.phoneFilter,

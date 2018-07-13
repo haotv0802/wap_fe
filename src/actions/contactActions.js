@@ -7,10 +7,10 @@ export function getContactsSuccess(data) {
   return {type: types.GET_CONTACT_LIST_SUCCESS, data};
 }
 
-export function getContacts(pageNumber, pageSize) {
+export function getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize) {
   return dispatch => {
     dispatch(beginAjaxCall());
-    ContactApi.getContacts(pageNumber, pageSize).then (
+    ContactApi.getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize).then (
       resp => {
         dispatch(getContactsSuccess(resp.data));
         toastr.success("Data loaded successfully!");
