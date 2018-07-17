@@ -93,8 +93,8 @@ class ContactPage extends React.Component {
   }
 
   handleFiltersChange (event) {
-    // console.log(event.target.name);
-    // console.log(event.target.value);
+    console.log(event.target.name);
+    console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value},
       () => {
         // console.log(this.state.emailFilter);
@@ -130,9 +130,7 @@ class ContactPage extends React.Component {
                 <TableHeaderColumn style={typeStyles}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={manualStyles}>Manual check</TableHeaderColumn>
                 <TableHeaderColumn style={emailExistsStyles}>Email existing?</TableHeaderColumn>
-                <TableHeaderColumn style={latestItemStyles}>Latest item at</TableHeaderColumn>
-                <TableHeaderColumn style={createdStyles}>Created at</TableHeaderColumn>
-                <TableHeaderColumn style={updatedStyles}>Updated at</TableHeaderColumn>
+                <TableHeaderColumn style={descriptionStyles}>Description</TableHeaderColumn>
               </TableRow>
               <TableRow>
                 <TableHeaderColumn style={nameStyles}>
@@ -204,25 +202,13 @@ class ContactPage extends React.Component {
                     <MenuItem value={false}>NO</MenuItem>
                   </Select>
                 </TableHeaderColumn>
-                <TableHeaderColumn style={latestItemStyles}>
+                <TableHeaderColumn style={descriptionStyles}>
                   <TextField
-                    id="last"
-                    label="Last"
+                    id="description"
+                    label="Description"
                     style={{width: '70px'}}
                   />
                 </TableHeaderColumn>
-                <TableHeaderColumn style={createdStyles}>
-                  <TextField
-                    id="create"
-                    label="Create"
-                    style={{width: '70px'}}
-                  />
-                </TableHeaderColumn>
-                <TableHeaderColumn style={updatedStyles}><TextField
-                  id="update"
-                  label="Update"
-                  style={{width: '70px'}}
-                /></TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
@@ -234,9 +220,7 @@ class ContactPage extends React.Component {
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
                     <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
                     <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting}</span></TableRowColumn>
-                    <TableRowColumn style={latestItemStyles}><span>{data.latestItemPostedAt}</span></TableRowColumn>
-                    <TableRowColumn style={createdStyles}><span>{data.createdAt}</span></TableRowColumn>
-                    <TableRowColumn style={updatedStyles}><span>{data.updatedAt}</span></TableRowColumn>
+                    <TableRowColumn style={descriptionStyles}><span>{data.description}</span></TableRowColumn>
                   </TableRow>
                     ;
                 }
@@ -325,16 +309,8 @@ const emailExistsStyles = {
   width: "80px"
 };
 
-const latestItemStyles = {
-  width: "80px"
-};
-
-const createdStyles = {
-  width: "80px"
-};
-
-const updatedStyles = {
-  width: "80px"
+const descriptionStyles = {
+  width: "200px"
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactPage);
