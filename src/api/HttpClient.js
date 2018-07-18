@@ -14,6 +14,13 @@ class HttpClient {
       .catch(onError)
       ;
   }
+
+  static put(url, data) {
+    return axios.put(url, data)
+      .then(onSuccess)
+      .catch(onError)
+      ;
+  }
 }
 
 const onSuccess = function (response) {

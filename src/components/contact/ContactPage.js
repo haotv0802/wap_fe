@@ -10,6 +10,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import Select from 'material-ui/SelectField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class ContactPage extends React.Component {
 
@@ -26,11 +27,15 @@ class ContactPage extends React.Component {
       typeFilter: this.props.typeFilter,
       manualCheckFilter: this.props.manualCheckFilter,
       emailExistingFilter: this.props.emailExistingFilter,
-      activePage: 1
+      activePage: 1,
+      editMode: false,
+      hasChanges: false
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleFiltersChange = this.handleFiltersChange.bind(this);
+    this.handleEditContact = this.handleEditContact.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -79,8 +84,6 @@ class ContactPage extends React.Component {
       pageNumber: pageNumber,
       activePage: pageNumber
     }, () => {
-      console.log(this.state.pageNumber);
-      console.log(this.state.size);
       this.props.actions.getContacts(
         this.state.nameFilter,
         this.state.phoneFilter,
@@ -93,14 +96,8 @@ class ContactPage extends React.Component {
   }
 
   handleFiltersChange (event) {
-    console.log(event.target.name);
-    console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value},
       () => {
-        // console.log(this.state.emailFilter);
-        // console.log(this.state.phoneFilter);
-        // console.log(this.state.pageNumber);
-        // console.log(this.state.size);
         this.props.actions.getContacts(
           this.state.nameFilter,
           this.state.phoneFilter,
@@ -113,10 +110,54 @@ class ContactPage extends React.Component {
     );
   }
 
+  handleEditContact() {
+    this.setState({
+      editMode: !this.state.editMode
+    },() => {
+      if (this.state.hasChanges) {
+        console.log("has Changes");
+        let contactsList = Object.assign([], ...this.state.contacts);
+        this.props.actions.updateContacts(contactsList);
+      }
+
+      if (!this.state.editMode) {
+        this.setState({
+          hasChanges: false
+        });
+      }
+    });
+  }
+
+  handleInputChange(event) {
+    console.log(event.target.id);
+    let array = event.target.id;
+    array = array.split("_");
+    let id = array[0];
+    let name = array[1];
+    let contactsList = Object.assign([], this.state.contacts);
+    let data = contactsList.find(contact => {
+      if (contact.id == id) {
+        contact[name] = event.target.value;
+        contact.updated = true;
+        return contact;
+      }
+    });
+    this.setState({
+      hasChanges : true,
+      contacts: contactsList
+    }, () => {
+      console.log("page state: ");
+      console.log(this.state.contacts);
+      console.log("state tree: ");
+      console.log(this.props.contacts);
+    });
+  }
+
   render() {
     return (
       <div className="panel panel-primary">
         <div className="table-responsive">
+          <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary={true} onClick={this.handleEditContact} />
           <Table
             selectable={false}
             fixedHeader={true}
@@ -206,13 +247,13 @@ class ContactPage extends React.Component {
                   <TextField
                     id="description"
                     label="Description"
-                    style={{width: '70px'}}
+                    style={{width: '180px'}}
                   />
                 </TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
-              {this.state.contacts.map((data, key) => {
+              {!this.state.editMode && this.state.contacts.map((data, key) => {
                   return <TableRow key={key}>
                     <TableRowColumn style={nameStyles}><span>{data.name}</span></TableRowColumn>
                     <TableRowColumn style={phoneStyles}><span>{data.phone}</span></TableRowColumn>
@@ -225,6 +266,49 @@ class ContactPage extends React.Component {
                     ;
                 }
               )}
+
+              {this.state.editMode && this.state.contacts.map((data, key) => {
+                  return <TableRow key={key}>
+                    <TableRowColumn style={nameStyles}><span>
+                      <TextField
+                        id={data.id + "_name"}
+                        hintText="Input name"
+                        value={data.name}
+                        onChange={this.handleInputChange}
+                      />
+                    </span></TableRowColumn>
+                    <TableRowColumn style={phoneStyles}><span>
+                      <TextField
+                        id={data.id + "_phone"}
+                        hintText="Input phone"
+                        value={data.phone === null ? "" : data.phone}
+                        onChange={this.handleInputChange}
+                      />
+                    </span></TableRowColumn>
+                    <TableRowColumn style={emailStyles}><span>
+                      <TextField
+                        id={data.id + "_email"}
+                        hintText="Input email"
+                        value={data.email === null ? "" : data.email}
+                        onChange={this.handleInputChange}
+                      />
+                    </span></TableRowColumn>
+                    <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
+                    <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
+                    <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting}</span></TableRowColumn>
+                    <TableRowColumn style={descriptionStyles}><span>
+                      <TextField
+                        id={data.id + "_description"}
+                        hintText="Input description"
+                        value={data.description === null ? "" : data.description}
+                        onChange={this.handleInputChange}
+                      />
+                    </span></TableRowColumn>
+                  </TableRow>
+                    ;
+                }
+              )}
+
             </TableBody>
           </Table>
           <Divider />
