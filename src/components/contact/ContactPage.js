@@ -17,7 +17,7 @@ class ContactPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      contacts: Object.assign([], this.props.contacts),
+      contacts: JSON.parse(JSON.stringify(this.props.contacts)),
       pageNumber: this.props.pageNumber,
       total: this.props.total,
       size: this.props.size,
@@ -42,7 +42,7 @@ class ContactPage extends React.Component {
 
     if (this.props.contacts !== nextProps.contacts) {
       this.setState({
-        contacts: Object.assign([], nextProps.contacts)
+        contacts: JSON.parse(JSON.stringify(nextProps.contacts))
       });
     }
     if (this.props.pageNumber !== nextProps.pageNumber) {
@@ -116,8 +116,7 @@ class ContactPage extends React.Component {
     },() => {
       if (this.state.hasChanges) {
         console.log("has Changes");
-        let contactsList = Object.assign([], ...this.state.contacts);
-        this.props.actions.updateContacts(contactsList);
+        this.props.actions.updateContacts(this.state.contacts);
       }
 
       if (!this.state.editMode) {
@@ -146,10 +145,10 @@ class ContactPage extends React.Component {
       hasChanges : true,
       contacts: contactsList
     }, () => {
-      console.log("page state: ");
-      console.log(this.state.contacts);
-      console.log("state tree: ");
-      console.log(this.props.contacts);
+      // console.log("page state: ");
+      // console.log(this.state.contacts);
+      // console.log("state tree: ");
+      // console.log(this.props.contacts);
     });
   }
 
@@ -355,6 +354,8 @@ ContactPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  console.log("state.contact.data.content");
+  console.log(state.contact.data);
   return {
     contacts: state.contact.data.content,
     pageNumber: state.contact.data.number,

@@ -12,7 +12,6 @@ export function updateContactsSuccess(data) {
 }
 
 export function getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize) {
-  console.log("getContacts");
   return dispatch => {
     dispatch(beginAjaxCall());
     ContactApi.getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize).then (

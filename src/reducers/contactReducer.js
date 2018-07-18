@@ -6,7 +6,7 @@ export default function contactReducer(state = initialState.contact, action) {
     case types.GET_CONTACT_LIST_SUCCESS:
       return Object.assign({}, state, {data: action.data});
     case types.UPDATE_CONTACT_LIST_SUCCESS:
-      return Object.assign({}, state, {data: action.data});
+      return Object.assign({}, state.data, {content: action.data});
     default:
       return state;
   }

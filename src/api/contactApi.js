@@ -11,7 +11,7 @@ class ContactApi {
   }
 
   static updateContacts(contacts) {
-    return HttpClient.put(UPDATE_CONTACTS_LIST_URL, contacts);
+    return HttpClient.post(UPDATE_CONTACTS_LIST_URL, contacts);
   }
 }
 
