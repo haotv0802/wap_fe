@@ -64,7 +64,6 @@ class ContactPage extends React.Component {
   }
 
   handlePageChange(pageNumber) {
-    // console.log(`active page is ${pageNumber}`);
     this.onLoadContacts(pageNumber);
   }
 
@@ -115,7 +114,6 @@ class ContactPage extends React.Component {
       editMode: !this.state.editMode
     },() => {
       if (this.state.hasChanges) {
-        console.log("has Changes");
         this.props.actions.updateContacts(this.state.contacts);
       }
 
@@ -128,7 +126,6 @@ class ContactPage extends React.Component {
   }
 
   handleInputChange(event) {
-    console.log(event.target.id);
     let array = event.target.id;
     array = array.split("_");
     let id = array[0];
@@ -144,11 +141,6 @@ class ContactPage extends React.Component {
     this.setState({
       hasChanges : true,
       contacts: contactsList
-    }, () => {
-      // console.log("page state: ");
-      // console.log(this.state.contacts);
-      // console.log("state tree: ");
-      // console.log(this.props.contacts);
     });
   }
 
@@ -199,7 +191,7 @@ class ContactPage extends React.Component {
                     label="Email"
                     name="emailFilter"
                     value={this.state.emailFilter}
-                    style={{width: '170px'}}
+                    style={{width: '200px'}}
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
@@ -354,8 +346,6 @@ ContactPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log("state.contact.data.content");
-  console.log(state.contact.data);
   return {
     contacts: state.contact.data.content,
     pageNumber: state.contact.data.number,
@@ -379,7 +369,7 @@ const phoneStyles = {
 };
 
 const emailStyles = {
-  width: "150px"
+  width: "200px"
 };
 
 const typeStyles = {
