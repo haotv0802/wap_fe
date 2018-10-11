@@ -36,6 +36,9 @@ class ContactPage extends React.Component {
     this.handleFiltersChange = this.handleFiltersChange.bind(this);
     this.handleEditContact = this.handleEditContact.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handleCheckedTypeChange = this.handleCheckedTypeChange.bind(this);
+    this.handleEmailExistingChange = this.handleEmailExistingChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -96,6 +99,54 @@ class ContactPage extends React.Component {
 
   handleFiltersChange (event) {
     this.setState({ [event.target.name]: event.target.value},
+      () => {
+        this.props.actions.getContacts(
+          this.state.nameFilter,
+          this.state.phoneFilter,
+          this.state.emailFilter,
+          this.state.typeFilter,
+          this.state.manualCheckFilter,
+          this.state.emailExistingFilter,
+          this.state.pageNumber, this.state.size);
+      }
+    );
+  }
+
+  handleTypeChange (event, key, value) {
+    console.log("handleTypeChange");
+    console.log(key);
+    console.log(value);
+    this.setState({ typeFilter: value},
+      () => {
+        this.props.actions.getContacts(
+          this.state.nameFilter,
+          this.state.phoneFilter,
+          this.state.emailFilter,
+          this.state.typeFilter,
+          this.state.manualCheckFilter,
+          this.state.emailExistingFilter,
+          this.state.pageNumber, this.state.size);
+      }
+    );
+  }
+
+  handleEmailExistingChange (event, key, value) {
+    this.setState({ emailExistingFilter: value},
+      () => {
+        this.props.actions.getContacts(
+          this.state.nameFilter,
+          this.state.phoneFilter,
+          this.state.emailFilter,
+          this.state.typeFilter,
+          this.state.manualCheckFilter,
+          this.state.emailExistingFilter,
+          this.state.pageNumber, this.state.size);
+      }
+    );
+  }
+
+  handleCheckedTypeChange (event, key, value) {
+    this.setState({ manualCheckFilter: value},
       () => {
         this.props.actions.getContacts(
           this.state.nameFilter,
@@ -200,10 +251,8 @@ class ContactPage extends React.Component {
                     name="typeFilter"
                     value={this.state.typeFilter}
                     style={{width: '100px'}}
-                    onChange={this.handleFiltersChange}
+                    onChange={this.handleTypeChange}
                   >
-                    <MenuItem value="">
-                    </MenuItem>
                     <MenuItem value="OWNER">OWNER</MenuItem>
                     <MenuItem value="SALE">SALE</MenuItem>
                   </Select>
@@ -213,7 +262,7 @@ class ContactPage extends React.Component {
                     name="manualCheckFilter"
                     value={this.state.manualCheckFilter}
                     style={{width: '100px'}}
-                    onChange={this.handleFiltersChange}
+                    onChange={this.handleCheckedTypeChange}
                   >
                     <MenuItem value="">
                     </MenuItem>
@@ -226,7 +275,7 @@ class ContactPage extends React.Component {
                     name="emailExistingFilter"
                     value={this.state.emailExistingFilter}
                     style={{width: '100px'}}
-                    onChange={this.handleFiltersChange}
+                    onChange={this.handleEmailExistingChange}
                   >
                     <MenuItem value="">
                     </MenuItem>
@@ -251,7 +300,7 @@ class ContactPage extends React.Component {
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
                     <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
-                    <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting}</span></TableRowColumn>
+                    <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting ? "YES" : "NO"}</span></TableRowColumn>
                     <TableRowColumn style={descriptionStyles}><span>{data.description}</span></TableRowColumn>
                   </TableRow>
                     ;
@@ -286,7 +335,7 @@ class ContactPage extends React.Component {
                     </span></TableRowColumn>
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
                     <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
-                    <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting}</span></TableRowColumn>
+                    <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting ? "YES" : "NO"}</span></TableRowColumn>
                     <TableRowColumn style={descriptionStyles}><span>
                       <TextField
                         id={data.id + "_description"}
