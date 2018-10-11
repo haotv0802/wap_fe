@@ -29,7 +29,9 @@ class ContactPage extends React.Component {
       emailExistingFilter: this.props.emailExistingFilter,
       activePage: 1,
       editMode: false,
-      hasChanges: false
+      hasChanges: false,
+      types: this.props.types,
+      isExisting: this.props.isExisting
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -242,7 +244,7 @@ class ContactPage extends React.Component {
                     label="Email"
                     name="emailFilter"
                     value={this.state.emailFilter}
-                    style={{width: '200px'}}
+                    style={{width: '250px'}}
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
@@ -250,24 +252,24 @@ class ContactPage extends React.Component {
                   <Select
                     name="typeFilter"
                     value={this.state.typeFilter}
-                    style={{width: '100px'}}
+                    style={{width: '118px'}}
                     onChange={this.handleTypeChange}
                   >
-                    <MenuItem value="OWNER">OWNER</MenuItem>
-                    <MenuItem value="SALE">SALE</MenuItem>
+                    {this.state.types.map((data, key) =>
+                      <MenuItem key={key} value={data} primaryText={data} />
+                    )}
                   </Select>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={manualStyles}>
                   <Select
                     name="manualCheckFilter"
                     value={this.state.manualCheckFilter}
-                    style={{width: '100px'}}
+                    style={{width: '118px'}}
                     onChange={this.handleCheckedTypeChange}
                   >
-                    <MenuItem value="">
-                    </MenuItem>
-                    <MenuItem value={'OWNER'}>OWNER</MenuItem>
-                    <MenuItem value={'SALE'}>SALE</MenuItem>
+                    {this.state.types.map((data, key) =>
+                      <MenuItem key={key} value={data} primaryText={data} />
+                    )}
                   </Select>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={emailExistsStyles}>
@@ -277,10 +279,9 @@ class ContactPage extends React.Component {
                     style={{width: '100px'}}
                     onChange={this.handleEmailExistingChange}
                   >
-                    <MenuItem value="">
-                    </MenuItem>
-                    <MenuItem value={true}>YES</MenuItem>
-                    <MenuItem value={false}>NO</MenuItem>
+                    {this.state.isExisting.map((data, key) =>
+                    <MenuItem key={key} value={data} primaryText={data} />
+                  )}
                   </Select>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={descriptionStyles}>
@@ -377,7 +378,9 @@ ContactPage.defaultProps = {
   emailFilter: '',
   typeFilter: '',
   manualCheckFilter: '',
-  emailExistingFilter: ''
+  emailExistingFilter: '',
+  types: ["", "OWNER", "SALE"],
+  isExisting: ["", "YES", "NO"]
 };
 
 ContactPage.propTypes = {
@@ -391,7 +394,9 @@ ContactPage.propTypes = {
   emailFilter: PropTypes.string,
   typeFilter: PropTypes.string,
   manualCheckFilter: PropTypes.string,
-  emailExistingFilter: PropTypes.string
+  emailExistingFilter: PropTypes.string,
+  types: PropTypes.array,
+  isExisting: PropTypes.array
 };
 
 function mapStateToProps(state, ownProps) {
@@ -422,7 +427,7 @@ const emailStyles = {
 };
 
 const typeStyles = {
-  width: "80px"
+  width: "100px"
 };
 
 const manualStyles = {
