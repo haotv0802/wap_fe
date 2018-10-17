@@ -115,9 +115,6 @@ class ContactPage extends React.Component {
   }
 
   handleTypeChange (event, key, value) {
-    console.log("handleTypeChange");
-    console.log(key);
-    console.log(value);
     this.setState({ typeFilter: value},
       () => {
         this.props.actions.getContacts(

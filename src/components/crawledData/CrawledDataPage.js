@@ -31,6 +31,7 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
+import TextField from "material-ui/TextField";
 
 class CrawledDataPage extends React.Component {
 
@@ -44,7 +45,14 @@ class CrawledDataPage extends React.Component {
       rows: [],
       numberOfRows: 100,
       page: 1,
-      total: undefined
+      total: undefined,
+      titleFilter: this.props.titleFilter,
+      addressFilter: this.props.addressFilter,
+      nameFilter: this.props.nameFilter,
+      phoneFilter: this.props.phoneFilter,
+      emailFilter: this.props.emailFilter,
+      acreageFilter: this.props.acreageFilter,
+      priceFilter: this.props.priceFilter
     };
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeDistrict = this.onChangeDistrict.bind(this);
@@ -120,6 +128,7 @@ class CrawledDataPage extends React.Component {
     return (
       <div className="panel panel-primary">
         <div className="table-responsive">
+          <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary={true} onClick={this.handleEditContact} />
           <Table
             selectable={false}
             fixedHeader={true}
@@ -143,13 +152,76 @@ class CrawledDataPage extends React.Component {
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
               <TableRow>
-                <TableRowColumn style={titleStyles}></TableRowColumn>
-                <TableRowColumn style={addressStyles}></TableRowColumn>
-                <TableRowColumn style={nameStyles}></TableRowColumn>
-                <TableRowColumn style={phoneStyles}></TableRowColumn>
-                <TableRowColumn style={emailStyles}></TableRowColumn>
-                <TableRowColumn style={acreageStyles}></TableRowColumn>
-                <TableRowColumn style={priceStyles}></TableRowColumn>
+                <TableRowColumn style={titleStyles}>
+                  <TextField
+                    id="title"
+                    label="Title"
+                    name="titleFilter"
+                    value={this.state.titleFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableRowColumn>
+                <TableRowColumn style={addressStyles}>
+                  <TextField
+                    id="address"
+                    label="Address"
+                    name="addressFilter"
+                    value={this.state.addressFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableRowColumn>
+                <TableRowColumn style={nameStyles}>
+                  <TextField
+                    id="name"
+                    label="Name"
+                    name="nameFilter"
+                    value={this.state.nameFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableRowColumn>
+                <TableRowColumn style={phoneStyles}>
+                  <TextField
+                    id="phone"
+                    label="Phone"
+                    name="phoneFilter"
+                    value={this.state.phoneFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableRowColumn>
+                <TableRowColumn style={emailStyles}>
+                  <TextField
+                    id="email"
+                    label="Email"
+                    name="emailFilter"
+                    value={this.state.emailFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableRowColumn>
+                <TableRowColumn style={acreageStyles}>
+                  <TextField
+                    id="acreage"
+                    label="Acreage"
+                    name="acreageFilter"
+                    value={this.state.acreageFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableRowColumn>
+                <TableRowColumn style={priceStyles}>
+                  <TextField
+                    id="price"
+                    label="Price"
+                    name="priceFilter"
+                    value={this.state.priceFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableRowColumn>
                 <TableRowColumn style={cityStyles}>
                   <SelectField
                     value={city}
@@ -220,7 +292,14 @@ CrawledDataPage.propTypes = {
   citiesAndDistricts: PropTypes.array.isRequired,
   districts: PropTypes.array.isRequired,
   city: PropTypes.string.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  titleFilter: PropTypes.string,
+  addressFilter: PropTypes.string,
+  nameFilter: PropTypes.string,
+  phoneFilter: PropTypes.string,
+  emailFilter: PropTypes.string,
+  acreageFilter: PropTypes.string,
+  priceFilter: PropTypes.string
 };
 
 CrawledDataPage.defaultProps = {
