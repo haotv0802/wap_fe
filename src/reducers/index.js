@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import credentials from './loginReducer';
 import crawledData from './crawledDataReducer';
 import contact from './contactReducer';
+import customer from './customerReducer';
 import crawlingInfo from './crawlingReducer';
 import signupUser from './signupReducer';
 import ajaxCallsInProgress from './ajaxStatusReducer';
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   credentials,
   signupUser,
   contact,
+  customer,
   crawledData,
   crawlingInfo,
   ajaxCallsInProgress

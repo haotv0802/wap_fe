@@ -8,14 +8,13 @@ import Pagination from "react-js-pagination";
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 
 class CustomerPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
     this.state = {
-      contacts: JSON.parse(JSON.stringify(this.props.customers)),
+      customers: JSON.parse(JSON.stringify(this.props.customers)),
       pageNumber: this.props.pageNumber,
       total: this.props.total,
       size: this.props.size,
@@ -213,10 +212,10 @@ CustomerPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    customers: state.contact.data.content,
-    pageNumber: state.contact.data.number,
-    total: state.contact.data.total,
-    size: state.contact.data.size
+    customers: state.customer.data.content,
+    pageNumber: state.customer.data.number,
+    total: state.customer.data.total,
+    size: state.customer.data.size
   };
 }
 

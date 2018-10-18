@@ -4,11 +4,11 @@ import toastr from 'toastr';
 import customerApi from "../api/customerApi";
 
 export function getContactsSuccess(data) {
-  return {type: types.GET_CONTACT_LIST_SUCCESS, data};
+  return {type: types.GET_CUSTOMER_LIST_SUCCESS, data};
 }
 
 export function updateContactsSuccess(data) {
-  return {type: types.UPDATE_CONTACT_LIST_SUCCESS, data};
+  return {type: types.UPDATE_CUSTOMER_LIST_SUCCESS, data};
 }
 
 export function getCustomers(name, phone, email, pageNumber, pageSize) {
@@ -22,7 +22,7 @@ export function getCustomers(name, phone, email, pageNumber, pageSize) {
     ).catch(
       error => {
         dispatch(ajaxCallError());
-        toastr.error("Failed loading contacts.");
+        toastr.error("Failed loading customers.");
         throw (error);
       }
     );
