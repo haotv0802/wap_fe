@@ -1,5 +1,5 @@
 import HttpClient from "./HttpClient";
-import {GET_CUSTOMERS_LIST_URL, UPDATE_CUSTOMERS_LIST_URL} from "./constants";
+import {GET_CUSTOMERS_LIST_URL, UPDATE_CUSTOMERS_LIST_URL, ADD_CUSTOMER_URL} from "./constants";
 
 class ContactApi {
   static getCustomers(name, phone, email, pageNumber, pageSize) {
@@ -11,6 +11,10 @@ class ContactApi {
 
   static updateCustomers(customers) {
     return HttpClient.post(UPDATE_CUSTOMERS_LIST_URL, customers);
+  }
+
+  static addCustomer(customer) {
+    return HttpClient.put(ADD_CUSTOMER_URL, customer);
   }
 }
 

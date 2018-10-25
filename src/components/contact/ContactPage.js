@@ -188,6 +188,7 @@ class ContactPage extends React.Component {
         return contact;
       }
     });
+    console.log(contactsList);
     this.setState({
       hasChanges : true,
       contacts: contactsList

@@ -3,12 +3,16 @@ import {ajaxCallError, beginAjaxCall} from "./ajaxStatusActions";
 import toastr from 'toastr';
 import customerApi from "../api/customerApi";
 
-export function getContactsSuccess(data) {
+export function getCustomersSuccess(data) {
   return {type: types.GET_CUSTOMER_LIST_SUCCESS, data};
 }
 
-export function updateContactsSuccess(data) {
+export function updateCustomersSuccess(data) {
   return {type: types.UPDATE_CUSTOMER_LIST_SUCCESS, data};
+}
+
+export function addCustomersSuccess(data) {
+  return {type: types.ADD_CUSTOMER_SUCCESS, data};
 }
 
 export function getCustomers(name, phone, email, pageNumber, pageSize) {
@@ -16,7 +20,7 @@ export function getCustomers(name, phone, email, pageNumber, pageSize) {
     dispatch(beginAjaxCall());
     customerApi.getCustomers(name, phone, email, pageNumber, pageSize).then (
       resp => {
-        dispatch(getContactsSuccess(resp.data));
+        dispatch(getCustomersSuccess(resp.data));
         toastr.success("Data loaded successfully!");
       }
     ).catch(
@@ -29,18 +33,37 @@ export function getCustomers(name, phone, email, pageNumber, pageSize) {
   };
 }
 
-export function updateContacts(customers) {
+export function updateCustomers(customers) {
   return dispatch => {
     dispatch(beginAjaxCall());
     customerApi.updateCustomers(customers).then (
       resp => {
-        dispatch(updateContactsSuccess(customers));
+        dispatch(updateCustomersSuccess(customers));
         toastr.success("Customers updated successfully!");
       }
     ).catch(
       error => {
         dispatch(ajaxCallError());
         toastr.error("Failed updating customers");
+        throw (error);
+      }
+    );
+  };
+}
+
+export function addCustomer(customer) {
+  return dispatch => {
+    dispatch(beginAjaxCall());
+    customerApi.addCustomer(customer).then (
+      resp => {
+        customer.id = resp.data;
+        dispatch(addCustomersSuccess(customer));
+        toastr.success("Data loaded successfully!");
+      }
+    ).catch(
+      error => {
+        dispatch(ajaxCallError());
+        toastr.error("Failed loading customers.");
         throw (error);
       }
     );

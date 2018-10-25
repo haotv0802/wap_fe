@@ -11,6 +11,8 @@ export default function customerReducer(state = initialState.customer, action) {
           content: Object.assign([], state.content, action.data)
         })
       });
+    case types.ADD_CUSTOMER_SUCCESS:
+      return Object.assign([], state, action.data);
     default:
       return state;
   }

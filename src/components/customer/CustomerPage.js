@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
+import RaisedButton from "material-ui/RaisedButton";
 
 class CustomerPage extends React.Component {
 
@@ -21,14 +22,20 @@ class CustomerPage extends React.Component {
       nameFilter: this.props.nameFilter,
       phoneFilter: this.props.phoneFilter,
       emailFilter: this.props.emailFilter,
+      newName: this.props.newName,
+      newPhone: this.props.newPhone,
+      newEmail: this.props.newEmail,
       activePage: 1,
       editMode: false,
+      addMode: false,
       hasChanges: false
     };
     this.onLoadCustomers = this.onLoadCustomers.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleFiltersChange = this.handleFiltersChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleEditCustomer = this.handleEditCustomer.bind(this);
+    this.handleAddCustomer = this.handleAddCustomer.bind(this);
   }
 
   componentWillMount() {
@@ -100,7 +107,7 @@ class CustomerPage extends React.Component {
     let name = array[1];
     let customersList = Object.assign([], this.state.customers);
     let data = customersList.find(customer => {
-      if (customer.id === id) {
+      if (customer.id == id) {
         customer[name] = event.target.value;
         customer.updated = true;
         return customer;
@@ -112,10 +119,44 @@ class CustomerPage extends React.Component {
     });
   }
 
+  handleEditCustomer() {
+    this.setState({
+      editMode: !this.state.editMode
+    },() => {
+      if (this.state.hasChanges) {
+        this.props.actions.updateCustomers(this.state.customers);
+      }
+
+      if (!this.state.editMode) {
+        this.setState({
+          hasChanges: false
+        });
+      }
+    });
+  }
+
+  handleAddCustomer() {
+    this.setState({
+      editMode: !this.state.editMode
+    },() => {
+      if (this.state.hasChanges) {
+        // this.props.actions.addCustomer();
+      }
+
+      if (!this.state.editMode) {
+        this.setState({
+          hasChanges: false
+        });
+      }
+    });
+  }
+
   render() {
     return (
       <div className="panel panel-primary">
         <div className="table-responsive">
+          <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary={true} onClick={this.handleEditCustomer} />
+          <RaisedButton label={this.state.addMode ? "Save" : "Add"} primary={true} onClick={this.handleAddCustomer} />
           <Table
             selectable={false}
             fixedHeader
@@ -128,6 +169,38 @@ class CustomerPage extends React.Component {
                 <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
               </TableRow>
 
+              <TableRow>
+                <TableHeaderColumn style={nameStyles}>
+                  <TextField
+                    id="name"
+                    label="Name"
+                    name="nameFilter"
+                    value={this.state.nameFilter}
+                    style={{width: '170px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={phoneStyles}>
+                  <TextField
+                    id="phone"
+                    label="Phone"
+                    name="phoneFilter"
+                    value={this.state.phoneFilter}
+                    style={{width: '100px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={emailStyles}>
+                  <TextField
+                    id="email"
+                    label="Email"
+                    name="emailFilter"
+                    value={this.state.emailFilter}
+                    style={{width: '250px'}}
+                    onChange={this.handleFiltersChange}
+                  />
+                </TableHeaderColumn>
+              </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover stripedRows={false}>
               {!this.state.editMode && this.state.customers.map((data, key) => {
@@ -196,7 +269,10 @@ CustomerPage.defaultProps = {
   pageNumber: 1,
   nameFilter: '',
   phoneFilter: '',
-  emailFilter: ''
+  emailFilter: '',
+  newName: '',
+  newPhone: '',
+  newEmail: ''
 };
 
 CustomerPage.propTypes = {
@@ -207,7 +283,10 @@ CustomerPage.propTypes = {
   size: PropTypes.number.isRequired,
   nameFilter: PropTypes.string,
   phoneFilter: PropTypes.string,
-  emailFilter: PropTypes.string
+  emailFilter: PropTypes.string,
+  newName: PropTypes.string,
+  newPhone: PropTypes.string,
+  newEmail: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
