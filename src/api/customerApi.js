@@ -14,7 +14,7 @@ class ContactApi {
   }
 
   static addCustomer(customer) {
-    return HttpClient.put(ADD_CUSTOMER_URL, customer);
+    return HttpClient.post(ADD_CUSTOMER_URL, customer);
   }
 }
 

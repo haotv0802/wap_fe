@@ -9,6 +9,7 @@ import Pagination from "react-js-pagination";
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import RaisedButton from "material-ui/RaisedButton";
+import {Customer} from "./Cust";
 
 class CustomerPage extends React.Component {
 
@@ -28,7 +29,8 @@ class CustomerPage extends React.Component {
       activePage: 1,
       editMode: false,
       addMode: false,
-      hasChanges: false
+      hasChanges: false,
+      hasAdded: false
     };
     this.onLoadCustomers = this.onLoadCustomers.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -36,6 +38,7 @@ class CustomerPage extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleEditCustomer = this.handleEditCustomer.bind(this);
     this.handleAddCustomer = this.handleAddCustomer.bind(this);
+    this.handleNewChanges = this.handleNewChanges.bind(this);
   }
 
   componentWillMount() {
@@ -100,6 +103,10 @@ class CustomerPage extends React.Component {
     );
   }
 
+  handleNewChanges (event) {
+    this.setState({ [event.target.name]: event.target.value, hasAdded: true});
+  }
+
   handleInputChange(event) {
     let array = event.target.id;
     array = array.split("_");
@@ -137,15 +144,30 @@ class CustomerPage extends React.Component {
 
   handleAddCustomer() {
     this.setState({
-      editMode: !this.state.editMode
+      addMode: !this.state.addMode
     },() => {
-      if (this.state.hasChanges) {
-        // this.props.actions.addCustomer();
+      if (this.state.hasAdded) {
+        let customer = new Customer();
+        customer.name = this.state.newName;
+        customer.phone = this.state.newPhone;
+        customer.email = this.state.newEmail;
+        let data = JSON.stringify({
+          name: this.state.newName,
+          phone: this.state.newPhone,
+          email: this.state.newEmail
+        });
+        this.props.actions.addCustomer(customer);
+        // console.log(customer);
+        // console.log("saving");
+
       }
 
-      if (!this.state.editMode) {
+      if (!this.state.addMode) {
         this.setState({
-          hasChanges: false
+          hasAdded: false,
+          newName: '',
+          newPhone: '',
+          newEmail: ''
         });
       }
     });
@@ -168,6 +190,42 @@ class CustomerPage extends React.Component {
                 <TableHeaderColumn style={phoneStyles}>Phone</TableHeaderColumn>
                 <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
               </TableRow>
+              {this.state.addMode ?
+              <TableRow>
+                <TableHeaderColumn style={nameStyles}>
+                  <TextField
+                    id="name"
+                    label="Name"
+                    name="newName"
+                    hintText="New name"
+                    value={this.state.newName}
+                    style={{width: '170px'}}
+                    onChange={this.handleNewChanges}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={phoneStyles}>
+                  <TextField
+                    id="phone"
+                    label="Phone"
+                    name="newPhone"
+                    hintText="New phone"
+                    value={this.state.newPhone}
+                    style={{width: '100px'}}
+                    onChange={this.handleNewChanges}
+                  />
+                </TableHeaderColumn>
+                <TableHeaderColumn style={emailStyles}>
+                  <TextField
+                    id="email"
+                    label="Email"
+                    name="newEmail"
+                    hintText="New email"
+                    value={this.state.newEmail}
+                    style={{width: '250px'}}
+                    onChange={this.handleNewChanges}
+                  />
+                </TableHeaderColumn>
+              </TableRow> : ''}
 
               <TableRow>
                 <TableHeaderColumn style={nameStyles}>
@@ -175,6 +233,7 @@ class CustomerPage extends React.Component {
                     id="name"
                     label="Name"
                     name="nameFilter"
+                    hintText="Filter by name"
                     value={this.state.nameFilter}
                     style={{width: '170px'}}
                     onChange={this.handleFiltersChange}
@@ -185,6 +244,7 @@ class CustomerPage extends React.Component {
                     id="phone"
                     label="Phone"
                     name="phoneFilter"
+                    hintText="Filter by phone"
                     value={this.state.phoneFilter}
                     style={{width: '100px'}}
                     onChange={this.handleFiltersChange}
@@ -195,6 +255,7 @@ class CustomerPage extends React.Component {
                     id="email"
                     label="Email"
                     name="emailFilter"
+                    hintText="Filter by email"
                     value={this.state.emailFilter}
                     style={{width: '250px'}}
                     onChange={this.handleFiltersChange}
@@ -290,6 +351,7 @@ CustomerPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  console.log(state.customer);
   return {
     customers: state.customer.data.content,
     pageNumber: state.customer.data.number,

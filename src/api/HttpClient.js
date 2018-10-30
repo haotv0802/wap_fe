@@ -9,14 +9,20 @@ class HttpClient {
   }
 
   static post(url, data) {
-    return axios.post(url, data)
+    return axios.post(url, data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }})
       .then(onSuccess)
       .catch(onError)
       ;
   }
 
   static put(url, data) {
-    return axios.put(url, data)
+    return axios.put(url, data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }})
       .then(onSuccess)
       .catch(onError)
       ;
