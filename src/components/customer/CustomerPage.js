@@ -156,10 +156,14 @@ class CustomerPage extends React.Component {
           phone: this.state.newPhone,
           email: this.state.newEmail
         });
-        this.props.actions.addCustomer(customer);
+        this.props.actions.addCustomer(customer,
+          this.state.nameFilter,
+          this.state.phoneFilter,
+          this.state.emailFilter,
+          this.state.pageNumber,
+          this.state.size);
         // console.log(customer);
         // console.log("saving");
-
       }
 
       if (!this.state.addMode) {

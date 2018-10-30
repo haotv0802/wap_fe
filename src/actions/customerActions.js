@@ -51,14 +51,25 @@ export function updateCustomers(customers) {
   };
 }
 
-export function addCustomer(customer) {
+export function addCustomer(customer, nameFilter, phoneFilter, emailFilter, pageNumber, pageSize) {
   return dispatch => {
     dispatch(beginAjaxCall());
     customerApi.addCustomer(customer).then (
       resp => {
         customer.id = resp.data;
-        dispatch(addCustomersSuccess(customer));
-        toastr.success("Data loaded successfully!");
+        // dispatch(addCustomersSuccess(customer));
+        customerApi.getCustomers(nameFilter, phoneFilter, emailFilter, pageNumber, pageSize).then (
+          resp => {
+            dispatch(getCustomersSuccess(resp.data));
+            toastr.success("Data added successfully!");
+          }
+        ).catch(
+          error => {
+            dispatch(ajaxCallError());
+            toastr.error("Failed loading customers.");
+            throw (error);
+          }
+        );
       }
     ).catch(
       error => {
