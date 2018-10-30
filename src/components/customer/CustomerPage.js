@@ -30,7 +30,8 @@ class CustomerPage extends React.Component {
       editMode: false,
       addMode: false,
       hasChanges: false,
-      hasAdded: false
+      hasAdded: false,
+      inProgress: false
     };
     this.onLoadCustomers = this.onLoadCustomers.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -39,6 +40,7 @@ class CustomerPage extends React.Component {
     this.handleEditCustomer = this.handleEditCustomer.bind(this);
     this.handleAddCustomer = this.handleAddCustomer.bind(this);
     this.handleNewChanges = this.handleNewChanges.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentWillMount() {
@@ -128,7 +130,8 @@ class CustomerPage extends React.Component {
 
   handleEditCustomer() {
     this.setState({
-      editMode: !this.state.editMode
+      editMode: !this.state.editMode,
+      inProgress: true
     },() => {
       if (this.state.hasChanges) {
         this.props.actions.updateCustomers(this.state.customers);
@@ -136,15 +139,30 @@ class CustomerPage extends React.Component {
 
       if (!this.state.editMode) {
         this.setState({
-          hasChanges: false
+          hasChanges: false,
+          inProgress: false
         });
       }
     });
   }
 
+  handleCancel() {
+    this.setState({
+      hasAdded: false,
+      hasChanges: false,
+      newName: '',
+      newPhone: '',
+      newEmail: '',
+      inProgress: false,
+      addMode: false,
+      editMode: false
+    });
+  }
+
   handleAddCustomer() {
     this.setState({
-      addMode: !this.state.addMode
+      addMode: !this.state.addMode,
+      inProgress: true
     },() => {
       if (this.state.hasAdded) {
         let customer = new Customer();
@@ -162,8 +180,6 @@ class CustomerPage extends React.Component {
           this.state.emailFilter,
           this.state.pageNumber,
           this.state.size);
-        // console.log(customer);
-        // console.log("saving");
       }
 
       if (!this.state.addMode) {
@@ -171,7 +187,8 @@ class CustomerPage extends React.Component {
           hasAdded: false,
           newName: '',
           newPhone: '',
-          newEmail: ''
+          newEmail: '',
+          inProgress: false
         });
       }
     });
@@ -181,8 +198,22 @@ class CustomerPage extends React.Component {
     return (
       <div className="panel panel-primary">
         <div className="table-responsive">
-          <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary={true} onClick={this.handleEditCustomer} />
-          <RaisedButton label={this.state.addMode ? "Save" : "Add"} primary={true} onClick={this.handleAddCustomer} />
+          {this.state.inProgress === false ?
+          <span>
+            <RaisedButton label="Edit" primary={true} onClick={this.handleEditCustomer} />
+            &nbsp;
+            <RaisedButton label="Add" primary={true} onClick={this.handleAddCustomer} />
+          </span> :
+            <span>
+              <RaisedButton backgroundColor="#f49842" label="Cancel" onClick={this.handleCancel}/>&nbsp;
+              {this.state.addMode ?
+                <RaisedButton label="Save" primary={true} onClick={this.handleAddCustomer}/>
+                :
+                <RaisedButton label="Save" primary={true} onClick={this.handleEditCustomer}/>
+              }
+            </span>
+
+          }
           <Table
             selectable={false}
             fixedHeader
