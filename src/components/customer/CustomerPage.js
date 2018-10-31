@@ -7,9 +7,19 @@ import Divider from 'material-ui/Divider';
 import Pagination from "react-js-pagination";
 
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import RaisedButton from "material-ui/RaisedButton";
 import {Customer} from "./Cust";
+
+const styles = {
+  block: {
+    maxWidth: 250
+  },
+  checkbox: {
+    marginBottom: 16
+  }
+};
 
 class CustomerPage extends React.Component {
 
@@ -17,6 +27,7 @@ class CustomerPage extends React.Component {
     super(props, context);
     this.state = {
       customers: JSON.parse(JSON.stringify(this.props.customers)),
+      deletedCustomers: this.props.deletedCustomers,
       pageNumber: this.props.pageNumber,
       total: this.props.total,
       size: this.props.size,
@@ -194,6 +205,16 @@ class CustomerPage extends React.Component {
     });
   }
 
+  onCheckForDelete(event) {
+    let item = {id : event.target.value};
+    if (event.target.checked) {
+      this.state.deletedCustomers.push(item);
+    } else {
+      let array = this.state.deletedCustomers.filter((item) => (item.id !== event.target.value));
+      this.state.deletedCustomers = array;
+    }
+  }
+
   render() {
     return (
       <div className="panel panel-primary">
@@ -256,7 +277,7 @@ class CustomerPage extends React.Component {
                     name="newEmail"
                     hintText="New email"
                     value={this.state.newEmail}
-                    style={{width: '250px'}}
+                    style={{width: '200px'}}
                     onChange={this.handleNewChanges}
                   />
                 </TableHeaderColumn>
@@ -292,10 +313,11 @@ class CustomerPage extends React.Component {
                     name="emailFilter"
                     hintText="Filter by email"
                     value={this.state.emailFilter}
-                    style={{width: '250px'}}
+                    style={{width: '200px'}}
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
+                <TableHeaderColumn style={deleteStyles}></TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover stripedRows={false}>
@@ -360,6 +382,7 @@ class CustomerPage extends React.Component {
 
 CustomerPage.defaultProps = {
   customers: [],
+  deletedCustomers: [],
   total: 0,
   size: 10,
   pageNumber: 1,
@@ -374,6 +397,7 @@ CustomerPage.defaultProps = {
 CustomerPage.propTypes = {
   actions: PropTypes.object.isRequired,
   customers: PropTypes.array.isRequired,
+  deletedCustomers: PropTypes.array.isRequired,
   pageNumber: PropTypes.number.isRequired,
   total: PropTypes.number,
   size: PropTypes.number.isRequired,
@@ -386,7 +410,6 @@ CustomerPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log(state.customer);
   return {
     customers: state.customer.data.content,
     pageNumber: state.customer.data.number,
@@ -402,7 +425,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const nameStyles = {
-  width: "150px"
+  width: "200px"
 };
 
 const phoneStyles = {

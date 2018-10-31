@@ -11,6 +11,10 @@ export function updateCustomersSuccess(data) {
   return {type: types.UPDATE_CUSTOMER_LIST_SUCCESS, data};
 }
 
+export function deleteCustomersSuccess(data) {
+  return {type: types.DELETE_CUSTOMERS_LIST_SUCCESS, data};
+}
+
 export function addCustomersSuccess(data) {
   return {type: types.ADD_CUSTOMER_SUCCESS, data};
 }
@@ -45,6 +49,35 @@ export function updateCustomers(customers) {
       error => {
         dispatch(ajaxCallError());
         toastr.error("Failed updating customers");
+        throw (error);
+      }
+    );
+  };
+}
+
+export function deleteCustomers(customers, nameFilter, phoneFilter, emailFilter, pageNumber, pageSize) {
+  return dispatch => {
+    dispatch(beginAjaxCall());
+
+    customerApi.deleteCustomers(customers).then (
+      resp => {
+        customerApi.getCustomers(nameFilter, phoneFilter, emailFilter, pageNumber, pageSize).then (
+          resp => {
+            dispatch(getCustomersSuccess(resp.data));
+            toastr.success("Customers deleted successfully!");
+          }
+        ).catch(
+          error => {
+            dispatch(ajaxCallError());
+            toastr.error("Failed loading customers.");
+            throw (error);
+          }
+        );
+      }
+    ).catch(
+      error => {
+        dispatch(ajaxCallError());
+        toastr.error("Failed deleting customers");
         throw (error);
       }
     );

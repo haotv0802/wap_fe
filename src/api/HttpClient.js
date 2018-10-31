@@ -18,6 +18,16 @@ class HttpClient {
       ;
   }
 
+  static delete(url, data) {
+    return axios.de(url, data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }})
+      .then(onSuccess)
+      .catch(onError)
+      ;
+  }
+
   static put(url, data) {
     return axios.put(url, data, {
       headers: {

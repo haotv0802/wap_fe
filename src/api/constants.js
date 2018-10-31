@@ -6,6 +6,7 @@ export const UPDATE_CONTACTS_LIST_URL = HOST + 'bds/contact/update';
 export const GET_CUSTOMERS_LIST_URL = HOST + 'bds/customer/list';
 export const UPDATE_CUSTOMERS_LIST_URL = HOST + 'bds/customer/update';
 export const ADD_CUSTOMER_URL = HOST + 'bds/customer/add';
+export const DELETE_CUSTOMER_URL = HOST + 'bds/customer/delete';
 export const GET_POSTS_COUNT = HOST + 'bds/posts/count';
 export const CITIES_AND_DISTRICTS = HOST + 'bds/crawler/citiesAndDistricts';
 export const SIGNUP_URL = HOST + 'signup';
