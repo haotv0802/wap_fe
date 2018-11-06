@@ -8,5 +8,6 @@ export class Customer {
     this.updated = false;
     this.updatedAt = null;
     this.createdAt = null;
+    this.deleted = false;
   }
 }

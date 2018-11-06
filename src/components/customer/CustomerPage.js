@@ -52,6 +52,8 @@ class CustomerPage extends React.Component {
     this.handleAddCustomer = this.handleAddCustomer.bind(this);
     this.handleNewChanges = this.handleNewChanges.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.onCheckForDelete = this.onCheckForDelete.bind(this);
   }
 
   componentWillMount() {
@@ -157,6 +159,23 @@ class CustomerPage extends React.Component {
     });
   }
 
+  handleDelete() {
+    let ids = [];
+    this.state.deletedCustomers.map(item => {
+      ids.push(item.id);
+    });
+    this.setState({
+      deletedCustomers: []
+    }, () => {
+      this.props.actions.deleteCustomers(ids,
+        this.state.nameFilter,
+        this.state.phoneFilter,
+        this.state.emailFilter,
+        this.state.pageNumber,
+        this.state.size);
+    });
+  }
+
   handleCancel() {
     this.setState({
       hasAdded: false,
@@ -206,11 +225,22 @@ class CustomerPage extends React.Component {
   }
 
   onCheckForDelete(event) {
-    let item = {id : event.target.value};
+    let customersList = Object.assign([], this.state.customers);
+    let id = customersList.find((item) => {
+    if (item.id == event.target.value) {
+        item.deleted = !item.deleted;
+        return item.id;
+      }
+    });
+
+    this.setState({
+      customers: customersList
+    });
+
     if (event.target.checked) {
-      this.state.deletedCustomers.push(item);
+      this.state.deletedCustomers.push(id);
     } else {
-      let array = this.state.deletedCustomers.filter((item) => (item.id !== event.target.value));
+      let array = this.state.deletedCustomers.filter((item) => (item.id != event.target.value));
       this.state.deletedCustomers = array;
     }
   }
@@ -245,6 +275,9 @@ class CustomerPage extends React.Component {
                 <TableHeaderColumn style={nameStyles}>Name</TableHeaderColumn>
                 <TableHeaderColumn style={phoneStyles}>Phone</TableHeaderColumn>
                 <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
+                <TableHeaderColumn style={deleteStyles}>
+                  <RaisedButton backgroundColor="#f44b42" label="Delete" onClick={this.handleDelete}/>
+                </TableHeaderColumn>
               </TableRow>
               {this.state.addMode ?
               <TableRow>
@@ -281,6 +314,7 @@ class CustomerPage extends React.Component {
                     onChange={this.handleNewChanges}
                   />
                 </TableHeaderColumn>
+                <TableHeaderColumn style={deleteStyles}></TableHeaderColumn>
               </TableRow> : ''}
 
               <TableRow>
@@ -326,6 +360,16 @@ class CustomerPage extends React.Component {
                     <TableRowColumn style={nameStyles}><span>{data.name}</span></TableRowColumn>
                     <TableRowColumn style={phoneStyles}><span>{data.phone}</span></TableRowColumn>
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
+                    <TableHeaderColumn style={deleteStyles}>
+                      <Checkbox
+                        key={key}
+                        label=""
+                        checked={data.deleted}
+                        onCheck={this.onCheckForDelete}
+                        style={styles.checkbox}
+                        value={data.id}
+                      />
+                    </TableHeaderColumn>
                   </TableRow>)
                     ;
                 }
@@ -357,6 +401,7 @@ class CustomerPage extends React.Component {
                         onChange={this.handleInputChange}
                       />
                     </span></TableRowColumn>
+                    <TableHeaderColumn style={deleteStyles}></TableHeaderColumn>
                   </TableRow>)
                     ;
                 }
@@ -434,6 +479,10 @@ const phoneStyles = {
 
 const emailStyles = {
   width: "200px"
+};
+
+const deleteStyles = {
+  width: "100px"
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerPage);

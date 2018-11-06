@@ -19,7 +19,7 @@ class HttpClient {
   }
 
   static delete(url, data) {
-    return axios.de(url, data, {
+    return axios.delete(url, data, {
       headers: {
         'Content-Type': 'application/json'
       }})
