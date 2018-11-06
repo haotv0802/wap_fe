@@ -19,6 +19,10 @@ export function addCustomersSuccess(data) {
   return {type: types.ADD_CUSTOMER_SUCCESS, data};
 }
 
+export function addCustomersError() {
+  return {type: types.ADD_CUSTOMER_ERROR};
+}
+
 export function getCustomers(name, phone, email, pageNumber, pageSize) {
   return dispatch => {
     dispatch(beginAjaxCall());
@@ -86,6 +90,7 @@ export function deleteCustomers(customers, nameFilter, phoneFilter, emailFilter,
 }
 
 export function addCustomer(customer, nameFilter, phoneFilter, emailFilter, pageNumber, pageSize) {
+
   return dispatch => {
     dispatch(beginAjaxCall());
     customerApi.addCustomer(customer).then (

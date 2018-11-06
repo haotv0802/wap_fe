@@ -17,6 +17,8 @@ export default function customerReducer(state = initialState.customer, action) {
           content: Object.assign([], state.data.content, action.data)
         })
       });
+    case types.ADD_CUSTOMER_ERROR:
+      return Object.assign({}, state);
     default:
       return state;
   }

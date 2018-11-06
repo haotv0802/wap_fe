@@ -11,6 +11,7 @@ import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import RaisedButton from "material-ui/RaisedButton";
 import {Customer} from "./Cust";
+import toastr from "toastr";
 
 const styles = {
   block: {
@@ -178,6 +179,7 @@ class CustomerPage extends React.Component {
   }
 
   handleCancel() {
+    let edit = this.state.editMode;
     this.setState({
       hasAdded: false,
       hasChanges: false,
@@ -187,10 +189,39 @@ class CustomerPage extends React.Component {
       inProgress: false,
       addMode: false,
       editMode: false
+    },() => {
+      if (edit) {
+        this.props.actions.getCustomers(
+          this.state.nameFilter,
+          this.state.phoneFilter,
+          this.state.emailFilter,
+          this.state.pageNumber, this.state.size);
+      }
     });
   }
 
   handleAddCustomer() {
+
+    if (this.state.hasAdded) {
+      if (this.state.newName === undefined || this.state.newName === "") {
+        toastr.clear();
+        toastr.error("Name of customer should not be null");
+        return;
+      }
+
+      if (this.state.newPhone === undefined || this.state.newPhone === "") {
+        toastr.clear();
+        toastr.error("Phone of customer should not be null");
+        return;
+      }
+
+      if (this.state.newEmail === undefined || this.state.newEmail === "") {
+        toastr.clear();
+        toastr.error("Email of customer should not be null");
+        return;
+      }
+    }
+
     this.setState({
       addMode: !this.state.addMode,
       inProgress: true
