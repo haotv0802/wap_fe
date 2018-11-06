@@ -25,6 +25,7 @@ export function getCustomers(name, phone, email, pageNumber, pageSize) {
     customerApi.getCustomers(name, phone, email, pageNumber, pageSize).then (
       resp => {
         dispatch(getCustomersSuccess(resp.data));
+        toastr.clear();
         toastr.success("Data loaded successfully!");
       }
     ).catch(

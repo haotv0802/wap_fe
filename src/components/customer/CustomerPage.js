@@ -54,6 +54,7 @@ class CustomerPage extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.onCheckForDelete = this.onCheckForDelete.bind(this);
+    this.handleClearSearch = this.handleClearSearch.bind(this);
   }
 
   componentWillMount() {
@@ -245,6 +246,20 @@ class CustomerPage extends React.Component {
     }
   }
 
+  handleClearSearch() {
+    this.setState({
+      nameFilter: "",
+      phoneFilter: "",
+      emailFilter: ""
+    }, () => {
+      this.props.actions.getCustomers(
+        this.state.nameFilter,
+        this.state.phoneFilter,
+        this.state.emailFilter,
+        this.state.pageNumber, this.state.size);
+    });
+  }
+
   render() {
     return (
       <div className="panel panel-primary">
@@ -254,6 +269,11 @@ class CustomerPage extends React.Component {
             <RaisedButton label="Edit" primary={true} onClick={this.handleEditCustomer} />
             &nbsp;
             <RaisedButton label="Add" primary={true} onClick={this.handleAddCustomer} />
+            &nbsp;
+            {((this.state.nameFilter !== undefined && this.state.nameFilter !== "")
+              || (this.state.phoneFilter !== undefined && this.state.phoneFilter !== "")
+              || (this.state.emailFilter !== undefined) && this.state.emailFilter !== "") ?
+            <RaisedButton label="Clear" backgroundColor="#f49842" onClick={this.handleClearSearch} /> : ""}
           </span> :
             <span>
               <RaisedButton backgroundColor="#f49842" label="Cancel" onClick={this.handleCancel}/>&nbsp;
