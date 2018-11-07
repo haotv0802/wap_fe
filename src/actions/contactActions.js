@@ -17,11 +17,13 @@ export function getContacts(name, phone, email, type, manualCheck, emailExisting
     ContactApi.getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize).then (
       resp => {
         dispatch(getContactsSuccess(resp.data));
+        toastr.clear();
         toastr.success("Data loaded successfully!");
       }
     ).catch(
       error => {
         dispatch(ajaxCallError());
+        toastr.clear();
         toastr.error("Failed loading contacts.");
         throw (error);
       }
@@ -35,11 +37,13 @@ export function updateContacts(contacts) {
     ContactApi.updateContacts(contacts).then (
       resp => {
         dispatch(updateContactsSuccess(contacts));
+        toastr.clear();
         toastr.success("Contacts updated successfully!");
       }
     ).catch(
       error => {
         dispatch(ajaxCallError());
+        toastr.clear();
         toastr.error("Failed updating contacts");
         throw (error);
       }

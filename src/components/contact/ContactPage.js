@@ -41,6 +41,7 @@ class ContactPage extends React.Component {
     this.handleTypeChange = this.handleTypeChange.bind(this);
     this.handleCheckedTypeChange = this.handleCheckedTypeChange.bind(this);
     this.handleEmailExistingChange = this.handleEmailExistingChange.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -188,10 +189,16 @@ class ContactPage extends React.Component {
         return contact;
       }
     });
-    console.log(contactsList);
     this.setState({
       hasChanges : true,
       contacts: contactsList
+    });
+  }
+
+  handleCancel() {
+    this.setState({
+      editMode: false,
+      hasChanges : false
     });
   }
 
@@ -199,6 +206,11 @@ class ContactPage extends React.Component {
     return (
       <div className="panel panel-primary">
         <div className="table-responsive">
+          {this.state.editMode === true ?
+            <span>
+              <RaisedButton backgroundColor="#f49842" label="Cancel" onClick={this.handleCancel}/>&nbsp;
+            </span> : ""
+          }
           <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary={true} onClick={this.handleEditContact} />
           <Table
             selectable={false}
