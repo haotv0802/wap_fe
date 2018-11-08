@@ -165,7 +165,8 @@ class ContactPage extends React.Component {
       editMode: !this.state.editMode
     },() => {
       if (this.state.hasChanges) {
-        this.props.actions.updateContacts(this.state.contacts);
+        console.log(this.state.contacts);
+        // this.props.actions.updateContacts(this.state.contacts);
       }
 
       if (!this.state.editMode) {
@@ -234,7 +235,7 @@ class ContactPage extends React.Component {
                     label="Name"
                     name="nameFilter"
                     value={this.state.nameFilter}
-                    style={{width: '170px'}}
+                    style={nameStyles}
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
@@ -244,7 +245,7 @@ class ContactPage extends React.Component {
                     label="Phone"
                     name="phoneFilter"
                     value={this.state.phoneFilter}
-                    style={{width: '100px'}}
+                    style={phoneStyles}
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
@@ -254,7 +255,7 @@ class ContactPage extends React.Component {
                     label="Email"
                     name="emailFilter"
                     value={this.state.emailFilter}
-                    style={{width: '250px'}}
+                    style={emailStyles}
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
@@ -262,7 +263,7 @@ class ContactPage extends React.Component {
                   <Select
                     name="typeFilter"
                     value={this.state.typeFilter}
-                    style={{width: '118px'}}
+                    style={typeStyles}
                     onChange={this.handleTypeChange}
                   >
                     {this.state.types.map((data, key) =>
@@ -274,7 +275,7 @@ class ContactPage extends React.Component {
                   <Select
                     name="manualCheckFilter"
                     value={this.state.manualCheckFilter}
-                    style={{width: '118px'}}
+                    style={manualStyles}
                     onChange={this.handleCheckedTypeChange}
                   >
                     {this.state.types.map((data, key) =>
@@ -286,7 +287,7 @@ class ContactPage extends React.Component {
                   <Select
                     name="emailExistingFilter"
                     value={this.state.emailExistingFilter}
-                    style={{width: '100px'}}
+                    style={emailExistsStyles}
                     onChange={this.handleEmailExistingChange}
                   >
                     {this.state.isExisting.map((data, key) =>
@@ -298,7 +299,7 @@ class ContactPage extends React.Component {
                   <TextField
                     id="description"
                     label="Description"
-                    style={{width: '180px'}}
+                    style={descriptionStyles}
                   />
                 </TableHeaderColumn>
               </TableRow>
@@ -311,7 +312,7 @@ class ContactPage extends React.Component {
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
                     <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
-                    <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting ? "YES" : "NO"}</span></TableRowColumn>
+                    <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting}</span></TableRowColumn>
                     <TableRowColumn style={descriptionStyles}><span>{data.description}</span></TableRowColumn>
                   </TableRow>
                     ;
@@ -344,9 +345,39 @@ class ContactPage extends React.Component {
                         onChange={this.handleInputChange}
                       />
                     </span></TableRowColumn>
-                    <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
-                    <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
-                    <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting ? "YES" : "NO"}</span></TableRowColumn>
+                    <TableRowColumn style={typeStyles}>
+                      <Select
+                        name="type"
+                        value={data.type}
+                        style={{width: '130px'}}
+                      >
+                        {this.state.types.map((data, key) =>
+                          <MenuItem key={key} value={data} primaryText={data} />
+                        )}
+                      </Select>
+                    </TableRowColumn>
+                    <TableRowColumn style={manualStyles}>
+                      <Select
+                        name="manualCheck"
+                        value={data.manualCheck}
+                        style={{width: '100px'}}
+                      >
+                        {this.state.types.map((data, key) =>
+                          <MenuItem key={key} value={data} primaryText={data} />
+                        )}
+                      </Select>
+                    </TableRowColumn>
+                    <TableRowColumn style={emailExistsStyles}>
+                      <Select
+                        name="emailExisting"
+                        value={data.emailExisting}
+                        style={emailExistsStyles}
+                      >
+                        {this.state.isExisting.map((data, key) =>
+                          <MenuItem key={key} value={data} primaryText={data} />
+                        )}
+                      </Select>
+                    </TableRowColumn>
                     <TableRowColumn style={descriptionStyles}><span>
                       <TextField
                         id={data.id + "_description"}
@@ -389,8 +420,8 @@ ContactPage.defaultProps = {
   typeFilter: '',
   manualCheckFilter: '',
   emailExistingFilter: '',
-  types: ["", "OWNER", "SALE"],
-  isExisting: ["", "YES", "NO"]
+  types: ["", "OWNER", "SALE", "NA"],
+  isExisting: ["", "YES", "NO", "NA"]
 };
 
 ContactPage.propTypes = {
@@ -429,23 +460,23 @@ const nameStyles = {
 };
 
 const phoneStyles = {
-  width: "100px"
+  width: "120px"
 };
 
 const emailStyles = {
-  width: "200px"
+  width: "150px"
 };
 
 const typeStyles = {
-  width: "100px"
+  width: "130px"
 };
 
 const manualStyles = {
-  width: "80px"
+  width: "130px"
 };
 
 const emailExistsStyles = {
-  width: "80px"
+  width: "100px"
 };
 
 const descriptionStyles = {
