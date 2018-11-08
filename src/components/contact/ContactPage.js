@@ -42,6 +42,11 @@ class ContactPage extends React.Component {
     this.handleCheckedTypeChange = this.handleCheckedTypeChange.bind(this);
     this.handleEmailExistingChange = this.handleEmailExistingChange.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleTypeEditChange = this.handleTypeEditChange.bind(this);
+    this.handleEmailExistingEditChange = this.handleEmailExistingEditChange.bind(this);
+    this.handleTypeManualCheckEditChange = this.handleTypeManualCheckEditChange.bind(this);
+    this.handleClearSearch = this.handleClearSearch.bind(this);
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -130,6 +135,57 @@ class ContactPage extends React.Component {
     );
   }
 
+  handleEmailExistingEditChange (event, key, value) {
+    let id = value.split("_")[0];
+    let emailExisting = value.split("_")[1];
+    let contactsList = Object.assign([], this.state.contacts);
+    contactsList.find((item) => {
+      if (item.id == id) {
+        item.emailExisting = emailExisting;
+        item.updated = true;
+        return item;
+      }
+    });
+    this.setState({
+      hasChanges : true,
+      contacts : contactsList
+    });
+  }
+
+  handleTypeManualCheckEditChange (event, key, value) {
+    let id = value.split("_")[0];
+    let type = value.split("_")[1];
+    let contactsList = Object.assign([], this.state.contacts);
+    contactsList.find((item) => {
+      if (item.id == id) {
+        item.manualCheck = type;
+        item.updated = true;
+        return item;
+      }
+    });
+    this.setState({
+      hasChanges : true,
+      contacts : contactsList
+    });
+  }
+
+  handleTypeEditChange (event, key, value) {
+    let id = value.split("_")[0];
+    let type = value.split("_")[1];
+    let contactsList = Object.assign([], this.state.contacts);
+    contactsList.find((item) => {
+      if (item.id == id) {
+        item.type = type;
+        item.updated = true;
+        return item;
+      }
+    });
+    this.setState({
+      hasChanges : true,
+      contacts : contactsList
+    });
+  }
+
   handleEmailExistingChange (event, key, value) {
     this.setState({ emailExistingFilter: value},
       () => {
@@ -166,7 +222,7 @@ class ContactPage extends React.Component {
     },() => {
       if (this.state.hasChanges) {
         console.log(this.state.contacts);
-        // this.props.actions.updateContacts(this.state.contacts);
+        this.props.actions.updateContacts(this.state.contacts);
       }
 
       if (!this.state.editMode) {
@@ -203,6 +259,27 @@ class ContactPage extends React.Component {
     });
   }
 
+
+  handleClearSearch() {
+    this.setState({
+      nameFilter: "",
+      phoneFilter: "",
+      emailFilter: "",
+      typeFilter: "",
+      manualCheckFilter: "",
+      emailExistingFilter: ""
+    }, () => {
+        this.props.actions.getContacts(
+          this.state.nameFilter,
+          this.state.phoneFilter,
+          this.state.emailFilter,
+          this.state.typeFilter,
+          this.state.manualCheckFilter,
+          this.state.emailExistingFilter,
+          this.state.pageNumber, this.state.size);
+      });
+  }
+
   render() {
     return (
       <div className="panel panel-primary">
@@ -213,6 +290,14 @@ class ContactPage extends React.Component {
             </span> : ""
           }
           <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary={true} onClick={this.handleEditContact} />
+          {((this.state.nameFilter !== undefined && this.state.nameFilter !== "")
+            || (this.state.phoneFilter !== undefined && this.state.phoneFilter !== "")
+            || (this.state.emailFilter !== undefined) && this.state.emailFilter !== ""
+            || (this.state.typeFilter !== undefined) && this.state.typeFilter !== ""
+            || (this.state.manualCheckFilter !== undefined) && this.state.manualCheckFilter !== ""
+            || (this.state.emailExistingFilter !== undefined) && this.state.emailExistingFilter !== ""
+          ) ?
+            <RaisedButton label="Clear" backgroundColor="#f49842" onClick={this.handleClearSearch} /> : ""}
           <Table
             selectable={false}
             fixedHeader={true}
@@ -348,33 +433,36 @@ class ContactPage extends React.Component {
                     <TableRowColumn style={typeStyles}>
                       <Select
                         name="type"
-                        value={data.type}
-                        style={{width: '130px'}}
+                        value={data.id + "_" + data.type}
+                        style={typeStyles}
+                        onChange={this.handleTypeEditChange}
                       >
-                        {this.state.types.map((data, key) =>
-                          <MenuItem key={key} value={data} primaryText={data} />
+                        {this.state.types.map((type, key) =>
+                          <MenuItem key={key} value={data.id + "_" + type} primaryText={type} />
                         )}
                       </Select>
                     </TableRowColumn>
                     <TableRowColumn style={manualStyles}>
                       <Select
                         name="manualCheck"
-                        value={data.manualCheck}
-                        style={{width: '100px'}}
+                        value={data.id + "_" + data.manualCheck}
+                        style={manualStyles}
+                        onChange={this.handleTypeManualCheckEditChange}
                       >
-                        {this.state.types.map((data, key) =>
-                          <MenuItem key={key} value={data} primaryText={data} />
+                        {this.state.types.map((manualCheck, key) =>
+                          <MenuItem key={key} value={data.id + "_" + manualCheck} primaryText={manualCheck} />
                         )}
                       </Select>
                     </TableRowColumn>
                     <TableRowColumn style={emailExistsStyles}>
                       <Select
                         name="emailExisting"
-                        value={data.emailExisting}
+                        value={data.id + "_" + data.emailExisting}
                         style={emailExistsStyles}
+                        onChange={this.handleEmailExistingEditChange}
                       >
-                        {this.state.isExisting.map((data, key) =>
-                          <MenuItem key={key} value={data} primaryText={data} />
+                        {this.state.isExisting.map((emailExisting, key) =>
+                          <MenuItem key={key} value={data.id + "_" + emailExisting} primaryText={emailExisting} />
                         )}
                       </Select>
                     </TableRowColumn>
@@ -476,7 +564,7 @@ const manualStyles = {
 };
 
 const emailExistsStyles = {
-  width: "100px"
+  width: "90px"
 };
 
 const descriptionStyles = {
