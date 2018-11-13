@@ -17,8 +17,8 @@ export function getContacts(name, phone, email, type, manualCheck, emailExisting
     ContactApi.getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize).then (
       resp => {
         dispatch(getContactsSuccess(resp.data));
-        toastr.clear();
-        toastr.success("Data loaded successfully!");
+        // toastr.clear();
+        // toastr.success("Data loaded successfully!");
       }
     ).catch(
       error => {

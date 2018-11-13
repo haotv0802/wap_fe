@@ -308,6 +308,7 @@ class ContactPage extends React.Component {
                 <TableHeaderColumn style={nameStyles}>Name</TableHeaderColumn>
                 <TableHeaderColumn style={phoneStyles}>Phone</TableHeaderColumn>
                 <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
+                <TableHeaderColumn style={postsStyles}>Posts</TableHeaderColumn>
                 <TableHeaderColumn style={typeStyles}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={manualStyles}>Manual check</TableHeaderColumn>
                 <TableHeaderColumn style={emailExistsStyles}>Email existing?</TableHeaderColumn>
@@ -344,6 +345,7 @@ class ContactPage extends React.Component {
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
+                <TableHeaderColumn style={postsStyles}>Posts</TableHeaderColumn>
                 <TableHeaderColumn style={typeStyles}>
                   <Select
                     name="typeFilter"
@@ -395,6 +397,7 @@ class ContactPage extends React.Component {
                     <TableRowColumn style={nameStyles}><span>{data.name}</span></TableRowColumn>
                     <TableRowColumn style={phoneStyles}><span>{data.phone}</span></TableRowColumn>
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
+                    <TableRowColumn style={postsStyles}>111</TableRowColumn>
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
                     <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
                     <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting}</span></TableRowColumn>
@@ -430,6 +433,7 @@ class ContactPage extends React.Component {
                         onChange={this.handleInputChange}
                       />
                     </span></TableRowColumn>
+                    <TableRowColumn style={postsStyles}>123</TableRowColumn>
                     <TableRowColumn style={typeStyles}>
                       <Select
                         name="type"
@@ -552,7 +556,7 @@ const phoneStyles = {
 };
 
 const emailStyles = {
-  width: "150px"
+  width: "220px"
 };
 
 const typeStyles = {
@@ -565,6 +569,10 @@ const manualStyles = {
 
 const emailExistsStyles = {
   width: "90px"
+};
+
+const postsStyles = {
+  width: "80px"
 };
 
 const descriptionStyles = {

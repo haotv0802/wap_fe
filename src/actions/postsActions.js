@@ -6,10 +6,10 @@ export function getPostsCountSuccess(count) {
   return {type: types.GET_POSTS_COUNT_SUCCESS, count};
 }
 
-export function getPostsCount() {
+export function getPostsCount(contactId) {
   return dispatch => {
     dispatch(beginAjaxCall());
-    postsApi.getPostsCount().then (
+    postsApi.getPostsCount(contactId).then (
       resp => {
         dispatch(getPostsCountSuccess(resp.data));
       }
