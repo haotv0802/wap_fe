@@ -307,6 +307,7 @@ class ContactPage extends React.Component {
               <TableRow>
                 <TableHeaderColumn style={nameStyles}>Name</TableHeaderColumn>
                 <TableHeaderColumn style={phoneStyles}>Phone</TableHeaderColumn>
+                <TableHeaderColumn style={postsCountStyles}>Posts</TableHeaderColumn>
                 <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
                 <TableHeaderColumn style={postsStyles}>Posts</TableHeaderColumn>
                 <TableHeaderColumn style={typeStyles}>Type</TableHeaderColumn>
@@ -335,6 +336,7 @@ class ContactPage extends React.Component {
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
+                <TableHeaderColumn style={postsStyles}></TableHeaderColumn>
                 <TableHeaderColumn style={emailStyles}>
                   <TextField
                     id="email"
@@ -345,7 +347,6 @@ class ContactPage extends React.Component {
                     onChange={this.handleFiltersChange}
                   />
                 </TableHeaderColumn>
-                <TableHeaderColumn style={postsStyles}>Posts</TableHeaderColumn>
                 <TableHeaderColumn style={typeStyles}>
                   <Select
                     name="typeFilter"
@@ -396,6 +397,9 @@ class ContactPage extends React.Component {
                   return <TableRow key={key}>
                     <TableRowColumn style={nameStyles}><span>{data.name}</span></TableRowColumn>
                     <TableRowColumn style={phoneStyles}><span>{data.phone}</span></TableRowColumn>
+                    <TableRowColumn style={postsCountStyles}>
+                      <a href={"svc/bds/post/list?contactId=" + data.id}>{data.postsCount}</a>
+                    </TableRowColumn>
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
                     <TableRowColumn style={postsStyles}>111</TableRowColumn>
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
@@ -552,11 +556,15 @@ const nameStyles = {
 };
 
 const phoneStyles = {
-  width: "120px"
+  width: "130px"
+};
+
+const postsCountStyles = {
+  width: "30px"
 };
 
 const emailStyles = {
-  width: "220px"
+  width: "200px"
 };
 
 const typeStyles = {
