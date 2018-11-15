@@ -11,6 +11,8 @@ import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import Select from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from "material-ui/Dialog";
+import PostPage from "../dialogs/post/PostPage";
 
 class ContactPage extends React.Component {
 
@@ -31,7 +33,8 @@ class ContactPage extends React.Component {
       editMode: false,
       hasChanges: false,
       types: this.props.types,
-      isExisting: this.props.isExisting
+      isExisting: this.props.isExisting,
+      isOpenPost: this.props.isOpenPost
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -231,6 +234,9 @@ class ContactPage extends React.Component {
         });
       }
     });
+    // this.setState(prevState => ({
+    //   isOpenPost: !prevState.isOpenPost
+    // }));
   }
 
   handleInputChange(event) {
@@ -269,15 +275,15 @@ class ContactPage extends React.Component {
       manualCheckFilter: "",
       emailExistingFilter: ""
     }, () => {
-        this.props.actions.getContacts(
-          this.state.nameFilter,
-          this.state.phoneFilter,
-          this.state.emailFilter,
-          this.state.typeFilter,
-          this.state.manualCheckFilter,
-          this.state.emailExistingFilter,
-          this.state.pageNumber, this.state.size);
-      });
+      this.props.actions.getContacts(
+        this.state.nameFilter,
+        this.state.phoneFilter,
+        this.state.emailFilter,
+        this.state.typeFilter,
+        this.state.manualCheckFilter,
+        this.state.emailExistingFilter,
+        this.state.pageNumber, this.state.size);
+    });
   }
 
   render() {
@@ -289,7 +295,7 @@ class ContactPage extends React.Component {
               <RaisedButton backgroundColor="#f49842" label="Cancel" onClick={this.handleCancel}/>&nbsp;
             </span> : ""
           }
-          <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary={true} onClick={this.handleEditContact} />
+          <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary onClick={this.handleEditContact} />
           {((this.state.nameFilter !== undefined && this.state.nameFilter !== "")
             || (this.state.phoneFilter !== undefined && this.state.phoneFilter !== "")
             || (this.state.emailFilter !== undefined) && this.state.emailFilter !== ""
@@ -300,7 +306,7 @@ class ContactPage extends React.Component {
             <RaisedButton label="Clear" backgroundColor="#f49842" onClick={this.handleClearSearch} /> : ""}
           <Table
             selectable={false}
-            fixedHeader={true}
+            fixedHeader
             bodyStyle={{overflow:'visible'}}
           >
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
@@ -379,8 +385,8 @@ class ContactPage extends React.Component {
                     onChange={this.handleEmailExistingChange}
                   >
                     {this.state.isExisting.map((data, key) =>
-                    <MenuItem key={key} value={data} primaryText={data} />
-                  )}
+                      <MenuItem key={key} value={data} primaryText={data} />
+                    )}
                   </Select>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={descriptionStyles}>
@@ -392,9 +398,9 @@ class ContactPage extends React.Component {
                 </TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody displayRowCheckbox={false} showRowHover={true} stripedRows={false}>
+            <TableBody displayRowCheckbox={false} showRowHover stripedRows={false}>
               {!this.state.editMode && this.state.contacts.map((data, key) => {
-                  return <TableRow key={key}>
+                  return (<TableRow key={key}>
                     <TableRowColumn style={nameStyles}><span>{data.name}</span></TableRowColumn>
                     <TableRowColumn style={phoneStyles}><span>{data.phone}</span></TableRowColumn>
                     <TableRowColumn style={postsCountStyles}>
@@ -406,13 +412,13 @@ class ContactPage extends React.Component {
                     <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
                     <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting}</span></TableRowColumn>
                     <TableRowColumn style={descriptionStyles}><span>{data.description}</span></TableRowColumn>
-                  </TableRow>
+                  </TableRow>)
                     ;
                 }
               )}
 
               {this.state.editMode && this.state.contacts.map((data, key) => {
-                  return <TableRow key={key}>
+                  return (<TableRow key={key}>
                     <TableRowColumn style={nameStyles}><span>
                       <TextField
                         id={data.id + "_name"}
@@ -482,7 +488,7 @@ class ContactPage extends React.Component {
                         onChange={this.handleInputChange}
                       />
                     </span></TableRowColumn>
-                  </TableRow>
+                  </TableRow>)
                     ;
                 }
               )}
@@ -500,7 +506,10 @@ class ContactPage extends React.Component {
             />
           </center>
         </div>
+
+        <PostPage open={this.state.isOpenPost}/>
       </div>
+
     );
   }
 }
@@ -517,7 +526,8 @@ ContactPage.defaultProps = {
   manualCheckFilter: '',
   emailExistingFilter: '',
   types: ["", "OWNER", "SALE", "NA"],
-  isExisting: ["", "YES", "NO", "NA"]
+  isExisting: ["", "YES", "NO", "NA"],
+  isOpenPost: false
 };
 
 ContactPage.propTypes = {
@@ -533,7 +543,8 @@ ContactPage.propTypes = {
   manualCheckFilter: PropTypes.string,
   emailExistingFilter: PropTypes.string,
   types: PropTypes.array,
-  isExisting: PropTypes.array
+  isExisting: PropTypes.array,
+  isOpenPost: PropTypes.bool
 };
 
 function mapStateToProps(state, ownProps) {
