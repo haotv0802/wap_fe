@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import * as contactActions from "../../actions/contactActions";
+import * as postsActions from "../../actions/postsActions";
 import {bindActionCreators} from 'redux';
 import PropTypes from "prop-types";
 import Divider from 'material-ui/Divider';
@@ -11,7 +12,6 @@ import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
 import Select from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from "material-ui/Dialog";
 import PostPage from "../dialogs/post/PostPage";
 
 class ContactPage extends React.Component {
@@ -20,6 +20,7 @@ class ContactPage extends React.Component {
     super(props, context);
     this.state = {
       contacts: JSON.parse(JSON.stringify(this.props.contacts)),
+      posts: JSON.parse(JSON.stringify(this.props.posts)),
       pageNumber: this.props.pageNumber,
       total: this.props.total,
       size: this.props.size,
@@ -49,10 +50,20 @@ class ContactPage extends React.Component {
     this.handleEmailExistingEditChange = this.handleEmailExistingEditChange.bind(this);
     this.handleTypeManualCheckEditChange = this.handleTypeManualCheckEditChange.bind(this);
     this.handleClearSearch = this.handleClearSearch.bind(this);
+    this.handlePostClose = this.handlePostClose.bind(this);
 
   }
 
   componentWillReceiveProps(nextProps) {
+
+    if (this.props.posts !== nextProps.posts) {
+      console.log("posts changed!!!");
+      console.log(this.props.posts);
+      console.log(nextProps.posts);
+      this.setState({
+        posts: JSON.parse(JSON.stringify(nextProps.posts))
+      });
+    }
 
     if (this.props.contacts !== nextProps.contacts) {
       this.setState({
@@ -220,23 +231,25 @@ class ContactPage extends React.Component {
   }
 
   handleEditContact() {
-    this.setState({
-      editMode: !this.state.editMode
-    },() => {
-      if (this.state.hasChanges) {
-        console.log(this.state.contacts);
-        this.props.actions.updateContacts(this.state.contacts);
-      }
-
-      if (!this.state.editMode) {
-        this.setState({
-          hasChanges: false
-        });
-      }
-    });
-    // this.setState(prevState => ({
-    //   isOpenPost: !prevState.isOpenPost
-    // }));
+    // this.setState({
+    //   editMode: !this.state.editMode
+    // },() => {
+    //   if (this.state.hasChanges) {
+    //     console.log(this.state.contacts);
+    //     this.props.actions.updateContacts(this.state.contacts);
+    //   }
+    //
+    //   if (!this.state.editMode) {
+    //     this.setState({
+    //       hasChanges: false
+    //     });
+    //   }
+    // });
+    this.props.postsActions.getPostsByContactId(9999);
+    this.setState(prevState => ({
+      isOpenPost: !prevState.isOpenPost
+    })
+    );
   }
 
   handleInputChange(event) {
@@ -283,6 +296,12 @@ class ContactPage extends React.Component {
         this.state.manualCheckFilter,
         this.state.emailExistingFilter,
         this.state.pageNumber, this.state.size);
+    });
+  }
+
+  handlePostClose() {
+    this.setState({
+      isOpenPost: false
     });
   }
 
@@ -507,7 +526,7 @@ class ContactPage extends React.Component {
           </center>
         </div>
 
-        <PostPage open={this.state.isOpenPost}/>
+        <PostPage open={this.state.isOpenPost} handlePostClose={this.handlePostClose} posts={this.state.posts}/>
       </div>
 
     );
@@ -516,6 +535,7 @@ class ContactPage extends React.Component {
 
 ContactPage.defaultProps = {
   contacts: [],
+  posts: [],
   total: 0,
   size: 10,
   pageNumber: 1,
@@ -532,7 +552,9 @@ ContactPage.defaultProps = {
 
 ContactPage.propTypes = {
   actions: PropTypes.object.isRequired,
+  postsActions: PropTypes.object.isRequired,
   contacts: PropTypes.array.isRequired,
+  posts: PropTypes.array.isRequired,
   pageNumber: PropTypes.number.isRequired,
   total: PropTypes.number,
   size: PropTypes.number.isRequired,
@@ -549,6 +571,7 @@ ContactPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
+    posts: state.post.data.content,
     contacts: state.contact.data.content,
     pageNumber: state.contact.data.number,
     total: state.contact.data.total,
@@ -558,7 +581,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(contactActions, dispatch)
+    actions: bindActionCreators(contactActions, dispatch),
+    postsActions: bindActionCreators(postsActions, dispatch)
   };
 }
 
