@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import Divider from 'material-ui/Divider';
 import Pagination from "react-js-pagination";
 
+import FlatButton from 'material-ui/FlatButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
@@ -51,15 +52,12 @@ class ContactPage extends React.Component {
     this.handleTypeManualCheckEditChange = this.handleTypeManualCheckEditChange.bind(this);
     this.handleClearSearch = this.handleClearSearch.bind(this);
     this.handlePostClose = this.handlePostClose.bind(this);
-
+    this.openPostDialog = this.openPostDialog.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
 
     if (this.props.posts !== nextProps.posts) {
-      console.log("posts changed!!!");
-      console.log(this.props.posts);
-      console.log(nextProps.posts);
       this.setState({
         posts: JSON.parse(JSON.stringify(nextProps.posts))
       });
@@ -231,24 +229,28 @@ class ContactPage extends React.Component {
   }
 
   handleEditContact() {
-    // this.setState({
-    //   editMode: !this.state.editMode
-    // },() => {
-    //   if (this.state.hasChanges) {
-    //     console.log(this.state.contacts);
-    //     this.props.actions.updateContacts(this.state.contacts);
-    //   }
-    //
-    //   if (!this.state.editMode) {
-    //     this.setState({
-    //       hasChanges: false
-    //     });
-    //   }
-    // });
-    this.props.postsActions.getPostsByContactId(9999);
+    this.setState({
+      editMode: !this.state.editMode
+    },() => {
+      if (this.state.hasChanges) {
+        console.log(this.state.contacts);
+        this.props.actions.updateContacts(this.state.contacts);
+      }
+
+      if (!this.state.editMode) {
+        this.setState({
+          hasChanges: false
+        });
+      }
+    });
+
+  }
+
+  openPostDialog(event) {
+    this.props.postsActions.getPostsByContactId(event.target.id);
     this.setState(prevState => ({
-      isOpenPost: !prevState.isOpenPost
-    })
+        isOpenPost: !prevState.isOpenPost
+      })
     );
   }
 
@@ -308,6 +310,7 @@ class ContactPage extends React.Component {
   render() {
     return (
       <div className="panel panel-primary">
+
         <div className="table-responsive">
           {this.state.editMode === true ?
             <span>
@@ -423,7 +426,10 @@ class ContactPage extends React.Component {
                     <TableRowColumn style={nameStyles}><span>{data.name}</span></TableRowColumn>
                     <TableRowColumn style={phoneStyles}><span>{data.phone}</span></TableRowColumn>
                     <TableRowColumn style={postsCountStyles}>
-                      <a href={"svc/bds/post/list?contactId=" + data.id}>{data.postsCount}</a>
+                      <a href="#" id={data.id} onClick={this.openPostDialog}
+                         style={{fontFamily: "Courier New", fontWeight: "bold", fontSize: "18px"}}>
+                        {data.postsCount}
+                      </a>
                     </TableRowColumn>
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
                     <TableRowColumn style={postsStyles}>111</TableRowColumn>
@@ -528,7 +534,6 @@ class ContactPage extends React.Component {
 
         <PostPage open={this.state.isOpenPost} handlePostClose={this.handlePostClose} posts={this.state.posts}/>
       </div>
-
     );
   }
 }
@@ -595,11 +600,11 @@ const phoneStyles = {
 };
 
 const postsCountStyles = {
-  width: "30px"
+  width: "70px"
 };
 
 const emailStyles = {
-  width: "200px"
+  width: "220px"
 };
 
 const typeStyles = {

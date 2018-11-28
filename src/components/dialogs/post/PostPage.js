@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from "material-ui/Table";
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
 
 export default class PostPage extends Component {
 
   render() {
-    console.log(this.props.posts);
     return (
       <Dialog
         open={this.props.open}
@@ -28,35 +27,35 @@ export default class PostPage extends Component {
               <TableHeaderColumn style={postStyles.description}>Description</TableHeaderColumn>
               <TableHeaderColumn style={postStyles.contactName}>Name</TableHeaderColumn>
               <TableHeaderColumn style={postStyles.contactEmail}>Email</TableHeaderColumn>
-              <TableHeaderColumn style={postStyles.acreage}>Acreage</TableHeaderColumn>
-              <TableHeaderColumn style={postStyles.price}>Price</TableHeaderColumn>
+              {/*<TableHeaderColumn style={postStyles.acreage}>Acreage</TableHeaderColumn>*/}
+              {/*<TableHeaderColumn style={postStyles.price}>Price</TableHeaderColumn>*/}
               <TableHeaderColumn style={postStyles.publishDate}>Published</TableHeaderColumn>
               <TableHeaderColumn style={postStyles.endDate}>Ended</TableHeaderColumn>
-              <TableHeaderColumn style={postStyles.url}>URL</TableHeaderColumn>
-              <TableHeaderColumn style={postStyles.locationId}>Location</TableHeaderColumn>
-              <TableHeaderColumn style={postStyles.source}>Source</TableHeaderColumn>
-              <TableHeaderColumn style={postStyles.type}>Type</TableHeaderColumn>
-              <TableHeaderColumn style={postStyles.contactId}>Contact</TableHeaderColumn>
+              {/*<TableHeaderColumn style={postStyles.url}>URL</TableHeaderColumn>*/}
+              {/*<TableHeaderColumn style={postStyles.locationId}>Location</TableHeaderColumn>*/}
+              {/*<TableHeaderColumn style={postStyles.source}>Source</TableHeaderColumn>*/}
+              {/*<TableHeaderColumn style={postStyles.type}>Type</TableHeaderColumn>*/}
+              {/*<TableHeaderColumn style={postStyles.contactId}>Contact</TableHeaderColumn>*/}
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false} showRowHover stripedRows={false}>
           {this.props.posts.map((data, key) => {
               return (
                 <TableRow key={key}>
-                  <TableHeaderColumn style={postStyles.name}>{data.name}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.address}>{data.address}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.description}>{data.description}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.contactName}>{data.contactName}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.contactEmail}>{data.contactEmail}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.acreage}>{data.acreage}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.price}>{data.price}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.publishDate}>{data.publishDate}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.endDate}>{data.endDate}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.url}>{data.url}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.locationId}>{data.locationId}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.source}>{data.source}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.type}>{data.type}</TableHeaderColumn>
-                  <TableHeaderColumn style={postStyles.contactId}>{data.contactId}</TableHeaderColumn>
+                  <TableRowColumn style={postStyles.name}>{data.name}</TableRowColumn>
+                  <TableRowColumn style={postStyles.address}>{data.address}</TableRowColumn>
+                  <TableRowColumn style={postStyles.description}>{data.description}</TableRowColumn>
+                  <TableRowColumn style={postStyles.contactName}>{data.contactName}</TableRowColumn>
+                  <TableRowColumn style={postStyles.contactEmail}>{data.contactEmail}</TableRowColumn>
+                  {/*<TableRowColumn style={postStyles.acreage}>{data.acreage}</TableRowColumn>*/}
+                  {/*<TableRowColumn style={postStyles.price}>{data.price}</TableRowColumn>*/}
+                  <TableRowColumn style={postStyles.publishDate}>{data.publishDate}</TableRowColumn>
+                  <TableRowColumn style={postStyles.endDate}>{data.endDate}</TableRowColumn>
+                  {/*<TableRowColumn style={postStyles.url}>{data.url}</TableRowColumn>*/}
+                  {/*<TableRowColumn style={postStyles.locationId}>{data.locationId}</TableRowColumn>*/}
+                  {/*<TableRowColumn style={postStyles.source}>{data.source}</TableRowColumn>*/}
+                  {/*<TableRowColumn style={postStyles.type}>{data.type}</TableRowColumn>*/}
+                  {/*<TableRowColumn style={postStyles.contactId}>{data.contactId}</TableRowColumn>*/}
 
                 </TableRow>
               );
