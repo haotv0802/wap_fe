@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
+import Popup from 'reactjs-popup';
+import Tooltip from 'rc-tooltip';
 
 export default class PostPage extends Component {
-
   render() {
     return (
       <Dialog
@@ -22,9 +23,10 @@ export default class PostPage extends Component {
         >
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>
-              <TableHeaderColumn style={postStyles.name}>Title</TableHeaderColumn>
+              <TableHeaderColumn style={postStyles.name}>
+                  Title
+              </TableHeaderColumn>
               <TableHeaderColumn style={postStyles.address}>Address</TableHeaderColumn>
-              <TableHeaderColumn style={postStyles.description}>Description</TableHeaderColumn>
               <TableHeaderColumn style={postStyles.contactName}>Name</TableHeaderColumn>
               <TableHeaderColumn style={postStyles.contactEmail}>Email</TableHeaderColumn>
               {/*<TableHeaderColumn style={postStyles.acreage}>Acreage</TableHeaderColumn>*/}
@@ -42,9 +44,12 @@ export default class PostPage extends Component {
           {this.props.posts.map((data, key) => {
               return (
                 <TableRow key={key}>
-                  <TableRowColumn style={postStyles.name}>{data.name}</TableRowColumn>
+                  <TableRowColumn style={postStyles.name}>
+                    <a href={data.url} target="_blank">
+                      {data.name}
+                    </a>
+                  </TableRowColumn>
                   <TableRowColumn style={postStyles.address}>{data.address}</TableRowColumn>
-                  <TableRowColumn style={postStyles.description}>{data.description}</TableRowColumn>
                   <TableRowColumn style={postStyles.contactName}>{data.contactName}</TableRowColumn>
                   <TableRowColumn style={postStyles.contactEmail}>{data.contactEmail}</TableRowColumn>
                   {/*<TableRowColumn style={postStyles.acreage}>{data.acreage}</TableRowColumn>*/}
@@ -79,45 +84,57 @@ PostPage.propTypes = {
 
 const postStyles = {
   name: {
-    width: "80px"
+    width: "130px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   address: {
-    width: "80px"
+    width: "130px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   description: {
     width: "80px"
   },
   contactName: {
-    width: "80px"
+    width: "120px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   contactEmail: {
-    width: "80px"
+    width: "150px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   acreage: {
-    width: "80px"
+    width: "80px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   price: {
-    width: "80px"
+    width: "80px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   publishDate: {
-    width: "80px"
+    width: "80px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   endDate: {
-    width: "80px"
+    width: "80px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   url: {
     width: "80px"
   },
   locationId: {
-    width: "80px"
+    width: "80px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   source: {
-    width: "80px"
+    width: "80px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   type: {
-    width: "80px"
+    width: "80px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   },
   contactId: {
-    width: "80px"
+    width: "80px",
+    wordWrap: 'break-word', whiteSpace: 'normal'
   }
 };
