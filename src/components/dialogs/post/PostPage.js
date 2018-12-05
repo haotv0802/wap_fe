@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
-import Popup from 'reactjs-popup';
-import Tooltip from 'rc-tooltip';
 
 export default class PostPage extends Component {
   render() {

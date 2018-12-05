@@ -11,10 +11,10 @@ export function updateContactsSuccess(data) {
   return {type: types.UPDATE_CONTACT_LIST_SUCCESS, data};
 }
 
-export function getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize) {
+export function getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize, nameSorting, phoneSorting) {
   return dispatch => {
     dispatch(beginAjaxCall());
-    ContactApi.getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize).then (
+    ContactApi.getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize, nameSorting, phoneSorting).then (
       resp => {
         dispatch(getContactsSuccess(resp.data));
         // toastr.clear();

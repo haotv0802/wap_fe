@@ -30,7 +30,7 @@ export function getCustomers(name, phone, email, pageNumber, pageSize) {
       resp => {
         dispatch(getCustomersSuccess(resp.data));
         toastr.clear();
-        toastr.success("Data loaded successfully!");
+        // toastr.success("Data loaded successfully!");
       }
     ).catch(
       error => {

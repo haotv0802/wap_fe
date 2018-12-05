@@ -36,7 +36,9 @@ class ContactPage extends React.Component {
       hasChanges: false,
       types: this.props.types,
       isExisting: this.props.isExisting,
-      isOpenPost: this.props.isOpenPost
+      isOpenPost: this.props.isOpenPost,
+      name_sorting_asc: true,
+      phone_sorting_asc: true
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -53,6 +55,7 @@ class ContactPage extends React.Component {
     this.handleClearSearch = this.handleClearSearch.bind(this);
     this.handlePostClose = this.handlePostClose.bind(this);
     this.openPostDialog = this.openPostDialog.bind(this);
+    this.sortingContacts = this.sortingContacts.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -98,7 +101,10 @@ class ContactPage extends React.Component {
       this.state.typeFilter,
       this.state.manualCheckFilter,
       this.state.emailExistingFilter,
-      this.state.pageNumber, this.state.size);
+      this.state.pageNumber, this.state.size,
+      null,
+      null
+    );
   }
 
   onLoadContacts(pageNumber) {
@@ -113,7 +119,9 @@ class ContactPage extends React.Component {
         this.state.typeFilter,
         this.state.manualCheckFilter,
         this.state.emailExistingFilter,
-        this.state.pageNumber, this.state.size);
+        this.state.pageNumber, this.state.size,
+        null,
+        null);
     });
   }
 
@@ -127,7 +135,9 @@ class ContactPage extends React.Component {
           this.state.typeFilter,
           this.state.manualCheckFilter,
           this.state.emailExistingFilter,
-          this.state.pageNumber, this.state.size);
+          this.state.pageNumber, this.state.size,
+          null,
+          null);
       }
     );
   }
@@ -142,7 +152,9 @@ class ContactPage extends React.Component {
           this.state.typeFilter,
           this.state.manualCheckFilter,
           this.state.emailExistingFilter,
-          this.state.pageNumber, this.state.size);
+          this.state.pageNumber, this.state.size,
+          null,
+          null);
       }
     );
   }
@@ -208,7 +220,9 @@ class ContactPage extends React.Component {
           this.state.typeFilter,
           this.state.manualCheckFilter,
           this.state.emailExistingFilter,
-          this.state.pageNumber, this.state.size);
+          this.state.pageNumber, this.state.size,
+          null,
+          null);
       }
     );
   }
@@ -223,7 +237,9 @@ class ContactPage extends React.Component {
           this.state.typeFilter,
           this.state.manualCheckFilter,
           this.state.emailExistingFilter,
-          this.state.pageNumber, this.state.size);
+          this.state.pageNumber, this.state.size,
+          null,
+          null);
       }
     );
   }
@@ -297,13 +313,34 @@ class ContactPage extends React.Component {
         this.state.typeFilter,
         this.state.manualCheckFilter,
         this.state.emailExistingFilter,
-        this.state.pageNumber, this.state.size);
+        this.state.pageNumber, this.state.size,
+        null,
+        null);
     });
   }
 
   handlePostClose() {
     this.setState({
       isOpenPost: false
+    });
+  }
+
+  sortingContacts(event) {
+    console.log(event.target.id);
+    console.log(this.state[event.target.id]);
+    this.setState({
+      [event.target.id] : !this.state[event.target.id]
+    }, () => {
+        this.props.actions.getContacts(
+        this.state.nameFilter,
+        this.state.phoneFilter,
+        this.state.emailFilter,
+        this.state.typeFilter,
+        this.state.manualCheckFilter,
+        this.state.emailExistingFilter,
+        this.state.pageNumber, this.state.size,
+        this.state.name_sorting_asc,
+        this.state.phone_sorting_asc);
     });
   }
 
@@ -333,9 +370,21 @@ class ContactPage extends React.Component {
           >
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
-                <TableHeaderColumn style={nameStyles}>Name</TableHeaderColumn>
-                <TableHeaderColumn style={phoneStyles}>Phone</TableHeaderColumn>
-                <TableHeaderColumn style={postsCountStyles}>Posts</TableHeaderColumn>
+                <TableHeaderColumn style={nameStyles}>
+                  <a href="#" onClick={this.sortingContacts} id="name_sorting_asc">
+                    Name
+                  </a>
+                </TableHeaderColumn>
+                <TableHeaderColumn style={phoneStyles}>
+                  <a href="#" onClick={this.sortingContacts} id="phone_sorting_asc">
+                    Phone
+                  </a>
+                </TableHeaderColumn>
+                <TableHeaderColumn style={postsCountStyles}>
+                  <a href="#" onClick={this.sortingContacts} id="post_sorting_asc">
+                    Posts
+                  </a>
+                </TableHeaderColumn>
                 <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
                 <TableHeaderColumn style={postsStyles}>Posts</TableHeaderColumn>
                 <TableHeaderColumn style={typeStyles}>Type</TableHeaderColumn>
