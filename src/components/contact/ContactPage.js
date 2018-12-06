@@ -37,8 +37,7 @@ class ContactPage extends React.Component {
       types: this.props.types,
       isExisting: this.props.isExisting,
       isOpenPost: this.props.isOpenPost,
-      name_sorting_asc: true,
-      phone_sorting_asc: true
+      sortingMap : new Map()
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -102,8 +101,7 @@ class ContactPage extends React.Component {
       this.state.manualCheckFilter,
       this.state.emailExistingFilter,
       this.state.pageNumber, this.state.size,
-      null,
-      null
+      this.state.sortingMap
     );
   }
 
@@ -120,8 +118,7 @@ class ContactPage extends React.Component {
         this.state.manualCheckFilter,
         this.state.emailExistingFilter,
         this.state.pageNumber, this.state.size,
-        null,
-        null);
+        this.state.sortingMap);
     });
   }
 
@@ -136,8 +133,7 @@ class ContactPage extends React.Component {
           this.state.manualCheckFilter,
           this.state.emailExistingFilter,
           this.state.pageNumber, this.state.size,
-          null,
-          null);
+          this.state.sortingMap);
       }
     );
   }
@@ -153,8 +149,7 @@ class ContactPage extends React.Component {
           this.state.manualCheckFilter,
           this.state.emailExistingFilter,
           this.state.pageNumber, this.state.size,
-          null,
-          null);
+          this.state.sortingMap);
       }
     );
   }
@@ -221,8 +216,7 @@ class ContactPage extends React.Component {
           this.state.manualCheckFilter,
           this.state.emailExistingFilter,
           this.state.pageNumber, this.state.size,
-          null,
-          null);
+          this.state.sortingMap);
       }
     );
   }
@@ -238,8 +232,7 @@ class ContactPage extends React.Component {
           this.state.manualCheckFilter,
           this.state.emailExistingFilter,
           this.state.pageNumber, this.state.size,
-          null,
-          null);
+          this.state.sortingMap);
       }
     );
   }
@@ -304,7 +297,8 @@ class ContactPage extends React.Component {
       emailFilter: "",
       typeFilter: "",
       manualCheckFilter: "",
-      emailExistingFilter: ""
+      emailExistingFilter: "",
+      sortingMap: new Map()
     }, () => {
       this.props.actions.getContacts(
         this.state.nameFilter,
@@ -314,8 +308,7 @@ class ContactPage extends React.Component {
         this.state.manualCheckFilter,
         this.state.emailExistingFilter,
         this.state.pageNumber, this.state.size,
-        null,
-        null);
+        this.state.sortingMap);
     });
   }
 
@@ -326,10 +319,19 @@ class ContactPage extends React.Component {
   }
 
   sortingContacts(event) {
-    console.log(event.target.id);
-    console.log(this.state[event.target.id]);
+    let key = event.target.id;
+
+    let map = this.state.sortingMap;
+    let value = map.get(key);
+    if (value === undefined) {
+      value = 0;
+    }
+
+    value += 1;
+    map.set(key, value);
+
     this.setState({
-      [event.target.id] : !this.state[event.target.id]
+      sortingMap: map
     }, () => {
         this.props.actions.getContacts(
         this.state.nameFilter,
@@ -339,8 +341,8 @@ class ContactPage extends React.Component {
         this.state.manualCheckFilter,
         this.state.emailExistingFilter,
         this.state.pageNumber, this.state.size,
-        this.state.name_sorting_asc,
-        this.state.phone_sorting_asc);
+        this.state.sortingMap
+        );
     });
   }
 
@@ -362,7 +364,11 @@ class ContactPage extends React.Component {
             || (this.state.manualCheckFilter !== undefined) && this.state.manualCheckFilter !== ""
             || (this.state.emailExistingFilter !== undefined) && this.state.emailExistingFilter !== ""
           ) ?
-            <RaisedButton label="Clear" backgroundColor="#f49842" onClick={this.handleClearSearch} /> : ""}
+            <RaisedButton label="Clear filtering" backgroundColor="#f49842" onClick={this.handleClearSearch} /> : ""}
+
+          {this.state.sortingMap.size > 0
+           ?
+            <RaisedButton label="Clear sorting" backgroundColor="#f49842" onClick={this.handleClearSearch} /> : ""}
           <Table
             selectable={false}
             fixedHeader
@@ -371,17 +377,17 @@ class ContactPage extends React.Component {
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn style={nameStyles}>
-                  <a href="#" onClick={this.sortingContacts} id="name_sorting_asc">
+                  <a href="#" onClick={this.sortingContacts} id="name_sortingId">
                     Name
                   </a>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={phoneStyles}>
-                  <a href="#" onClick={this.sortingContacts} id="phone_sorting_asc">
+                  <a href="#" onClick={this.sortingContacts} id="phone_sortingId">
                     Phone
                   </a>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={postsCountStyles}>
-                  <a href="#" onClick={this.sortingContacts} id="post_sorting_asc">
+                  <a href="#" onClick={this.sortingContacts} id="post_sortingId">
                     Posts
                   </a>
                 </TableHeaderColumn>
