@@ -6,7 +6,7 @@ class ContactApi {
     let keys = sortingMap.keys();
     let sorting = "";
     for (let key of keys) {
-      let name = key.split("_")[0];
+      let name = key.split("-")[0];
       sorting += "&sort=" + name + "," + (sortingMap.get(key) % 2 === 0 ? "asc" : "desc");
     }
     sorting = "?" + sorting.substr(1, sorting.length);

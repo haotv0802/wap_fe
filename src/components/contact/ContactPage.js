@@ -377,17 +377,17 @@ class ContactPage extends React.Component {
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn style={nameStyles}>
-                  <a href="#" onClick={this.sortingContacts} id="name_sortingId">
+                  <a href="#" onClick={this.sortingContacts} id="name-sortingId">
                     Name
                   </a>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={phoneStyles}>
-                  <a href="#" onClick={this.sortingContacts} id="phone_sortingId">
+                  <a href="#" onClick={this.sortingContacts} id="phone-sortingId">
                     Phone
                   </a>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={postsCountStyles}>
-                  <a href="#" onClick={this.sortingContacts} id="post_sortingId">
+                  <a href="#" onClick={this.sortingContacts} id="posts_count-sortingId">
                     Posts
                   </a>
                 </TableHeaderColumn>
@@ -655,7 +655,7 @@ const phoneStyles = {
 };
 
 const postsCountStyles = {
-  width: "70px"
+  width: "93px"
 };
 
 const emailStyles = {
