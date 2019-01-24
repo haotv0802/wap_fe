@@ -27,6 +27,8 @@
         "mui-icons": "^1.2.1",
         "prop-types": "^15.6.1",
         "react": "^15.6.1",
+        "react-bootstrap": "^0.32.4",
+        "react-bootstrap-date-picker": "^5.1.0",
         "react-chartjs-2": "^2.7.4",
         "react-dom": "^15.6.1",
         "react-favicon": "0.0.11",
