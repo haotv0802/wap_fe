@@ -12,13 +12,15 @@ class PostsReportPage extends React.Component {
     this.state = {
       formInputs: Object.assign({}, this.props.formInputs),
       startDate: "",
-      data: {labels: ["January", "February", "March", "April", "May", "June", "July"],
+      data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
           label: "My First dataset",
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
           data: [0, 10, 5, 2, 20, 30, 45]
-        }]}
+        }]
+      }
     };
 
     this.handleTextInputChange = this.handleTextInputChange.bind(this);
@@ -44,25 +46,26 @@ class PostsReportPage extends React.Component {
     return (
       <div className="panel panel-primary">
         <form style={{height: "auto"}}>
-          <TextInputWithLabel
-            name="from"
-            placeholder="Input link here"
-            label="From"
-            width="320px"
-            onChange={this.handleTextInputChange}
-          />
-          <TextInputWithLabel
-            name="to"
-            placeholder="Input link here"
-            label="To"
-            width="320px"
-            onChange={this.handleTextInputChange}
-          />
+          <div style={{display: "inline-block", width: "auto"}}>
+            <div style={{width: "50px"}} className="col-sm-1">
+              <label>From</label>
+            </div>
+            <div style={{width: "200px"}} className="col-sm-4">
+              <DatePicker id="startDate" value={this.state.startDate} onChange={this.handleChange}
+                          style={{"width": "140px"}}/>
+            </div>
 
-          <DatePicker id="example-datepicker" value={this.state.startDate} onChange={this.handleChange} />
+            <div style={{width: "50px"}} className="col-sm-1">
+              <label>To</label>
+            </div>
+            <div style={{width: "200px"}} className="col-sm-4">
+              <DatePicker id="endDate" value={this.state.startDate} onChange={this.handleChange}
+                          style={{"width": "140px"}}/>
+            </div>
+          </div>
         </form>
-        <div style={{"width" : "1024px"}}>
-          < Bar data={this.state.data} />
+        <div style={{"width": "1024px"}}>
+          < Bar data={this.state.data}/>
         </div>
       </div>
     );
@@ -78,13 +81,11 @@ PostsReportPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  return {
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-  };
+  return {};
 }
 
 
