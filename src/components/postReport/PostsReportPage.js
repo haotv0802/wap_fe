@@ -12,6 +12,7 @@ class PostsReportPage extends React.Component {
     this.state = {
       formInputs: Object.assign({}, this.props.formInputs),
       startDate: "",
+      endDate: "",
       data: {
         labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
@@ -24,7 +25,8 @@ class PostsReportPage extends React.Component {
     };
 
     this.handleTextInputChange = this.handleTextInputChange.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleStartDateChange = this.handleStartDateChange.bind(this);
+    this.handleEndDateChange = this.handleEndDateChange.bind(this);
 
   }
 
@@ -35,9 +37,16 @@ class PostsReportPage extends React.Component {
     return this.setState({formInputs: formInputs});
   }
 
-  handleChange(startDate, formattedValue) {
+  handleStartDateChange(startDate, formattedValue) {
     this.setState({
       startDate: startDate, // ISO String, ex: "2016-11-19T12:00:00.000Z"
+      formattedValue: formattedValue // Formatted String, ex: "11/19/2016"
+    });
+  }
+
+  handleEndDateChange(startDate, formattedValue) {
+    this.setState({
+      endDate: startDate, // ISO String, ex: "2016-11-19T12:00:00.000Z"
       formattedValue: formattedValue // Formatted String, ex: "11/19/2016"
     });
   }
@@ -51,7 +60,7 @@ class PostsReportPage extends React.Component {
               <label>From</label>
             </div>
             <div style={{width: "200px"}} className="col-sm-4">
-              <DatePicker id="startDate" value={this.state.startDate} onChange={this.handleChange}
+              <DatePicker id="startDate" value={this.state.startDate} onChange={this.handleStartDateChange}
                           style={{"width": "140px"}}/>
             </div>
 
@@ -59,7 +68,7 @@ class PostsReportPage extends React.Component {
               <label>To</label>
             </div>
             <div style={{width: "200px"}} className="col-sm-4">
-              <DatePicker id="endDate" value={this.state.startDate} onChange={this.handleChange}
+              <DatePicker id="endDate" value={this.state.endDate} onChange={this.handleEndDateChange}
                           style={{"width": "140px"}}/>
             </div>
           </div>
