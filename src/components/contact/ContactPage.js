@@ -6,8 +6,6 @@ import {bindActionCreators} from 'redux';
 import PropTypes from "prop-types";
 import Divider from 'material-ui/Divider';
 import Pagination from "react-js-pagination";
-
-import FlatButton from 'material-ui/FlatButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
@@ -392,10 +390,10 @@ class ContactPage extends React.Component {
                   </a>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
-                <TableHeaderColumn style={postsStyles}>Posts</TableHeaderColumn>
                 <TableHeaderColumn style={typeStyles}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={manualStyles}>Manual check</TableHeaderColumn>
                 <TableHeaderColumn style={emailExistsStyles}>Email existing?</TableHeaderColumn>
+                <TableHeaderColumn style={emailExistsStyles}>Location</TableHeaderColumn>
                 <TableHeaderColumn style={descriptionStyles}>Description</TableHeaderColumn>
               </TableRow>
               <TableRow>
@@ -466,6 +464,17 @@ class ContactPage extends React.Component {
                     )}
                   </Select>
                 </TableHeaderColumn>
+                <TableHeaderColumn style={emailExistsStyles}>
+                  <Select
+                    name="emailExistingFilter"
+                    value={this.state.emailExistingFilter}
+                    style={emailExistsStyles}
+                  >
+                    {this.state.isExisting.map((data, key) =>
+                      <MenuItem key={key} value={data} primaryText={data} />
+                    )}
+                  </Select>
+                </TableHeaderColumn>
                 <TableHeaderColumn style={descriptionStyles}>
                   <TextField
                     id="description"
@@ -487,10 +496,10 @@ class ContactPage extends React.Component {
                       </a>
                     </TableRowColumn>
                     <TableRowColumn style={emailStyles}><span>{data.email}</span></TableRowColumn>
-                    <TableRowColumn style={postsStyles}>111</TableRowColumn>
                     <TableRowColumn style={typeStyles}><span>{data.type}</span></TableRowColumn>
                     <TableRowColumn style={manualStyles}><span>{data.manualCheck}</span></TableRowColumn>
                     <TableRowColumn style={emailExistsStyles}><span>{data.emailExisting}</span></TableRowColumn>
+                    <TableRowColumn style={emailExistsStyles}><span></span></TableRowColumn>
                     <TableRowColumn style={descriptionStyles}><span>{data.description}</span></TableRowColumn>
                   </TableRow>)
                     ;
@@ -559,6 +568,8 @@ class ContactPage extends React.Component {
                           <MenuItem key={key} value={data.id + "_" + emailExisting} primaryText={emailExisting} />
                         )}
                       </Select>
+                    </TableRowColumn>
+                    <TableRowColumn style={emailExistsStyles}>
                     </TableRowColumn>
                     <TableRowColumn style={descriptionStyles}><span>
                       <TextField
