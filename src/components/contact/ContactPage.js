@@ -12,7 +12,6 @@ import MenuItem from 'material-ui/MenuItem';
 import Select from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import PostPage from "../dialogs/post/PostPage";
-import {Bar} from 'react-chartjs-2';
 
 
 class ContactPage extends React.Component {
@@ -37,14 +36,7 @@ class ContactPage extends React.Component {
       types: this.props.types,
       isExisting: this.props.isExisting,
       isOpenPost: this.props.isOpenPost,
-      sortingMap : new Map(),
-      data: {labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [{
-          label: "My First dataset",
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: [0, 10, 5, 2, 20, 30, 45],
-        }]}
+      sortingMap : new Map()
     };
     this.onLoadContacts = this.onLoadContacts.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -358,8 +350,6 @@ class ContactPage extends React.Component {
   render() {
     return (
       <div className="panel panel-primary">
-
-        < Bar data={this.state.data} />
 
         <div className="table-responsive">
           {this.state.editMode === true ?

@@ -128,6 +128,12 @@ class Header extends React.Component {
               containerElement={<Link to="/customers" />}
               onClick={this.openOrCloseDrawer}
             />
+            <ListItem
+              key={5}
+              primaryText="Posts report"
+              containerElement={<Link to="/postsreport" />}
+              onClick={this.openOrCloseDrawer}
+            />
           </List>
         </Drawer>
       </div>
