@@ -130,8 +130,8 @@ class Header extends React.Component {
             />
             <ListItem
               key={5}
-              primaryText="Posts report"
-              containerElement={<Link to="/postsreport" />}
+              primaryText="Posts report by Date"
+              containerElement={<Link to="/postsreportbydate" />}
               onClick={this.openOrCloseDrawer}
             />
           </List>

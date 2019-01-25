@@ -7,7 +7,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import {bindActionCreators} from "redux";
 import * as postsActions from "../../actions/postsActions";
 
-class PostsReportPage extends React.Component {
+class PostsReportByDatePage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -22,12 +22,12 @@ class PostsReportPage extends React.Component {
       endDate: now.toISOString(),
       formattedEndDate: now.getUTCDate() + "/" + (now.getUTCMonth() + 1) + "/" + now.getFullYear(),
       data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: [],
         datasets: [{
           label: "posts",
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
-          data: [0, 10, 5, 2, 20, 30, 45]
+          data: []
         }]
       }
     };
@@ -40,21 +40,13 @@ class PostsReportPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("====== componentWillReceiveProps");
     if (this.props.report !== nextProps.report) {
-      console.log("this: ");
-      console.log(this.props.report);
-      console.log("next: ");
-      console.log(nextProps.report);
       let data = this.state.data;
       data.labels = nextProps.report.periods;
       data.datasets[0].data = nextProps.report.figures;
       this.setState({
         data: data
       });
-
-      console.log(this.state.data);
-      console.log("====== componentWillReceiveProps");
     }
   }
 
@@ -118,18 +110,17 @@ class PostsReportPage extends React.Component {
   }
 }
 
-PostsReportPage.defaultProps = {
+PostsReportByDatePage.defaultProps = {
   formInputs: {"from": "123", "to": "456"}
 };
 
-PostsReportPage.propTypes = {
+PostsReportByDatePage.propTypes = {
   formInputs: PropTypes.object,
   postsActions: PropTypes.object.isRequired,
   report: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log(state.post);
   return {
     report: state.post.reportByDate
   };
@@ -142,4 +133,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsReportPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PostsReportByDatePage);
