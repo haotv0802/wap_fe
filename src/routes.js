@@ -9,6 +9,7 @@ import CrawlingPage from "./components/crawling/CrawlingPage";
 import ContactPage from "./components/contact/ContactPage";
 import CustomerPage from "./components/customer/CustomerPage";
 import PostsReportByDatePage from "./components/postReport/PostsReportByDatePage";
+import PostsReportByMonthPage from "./components/postReport/PostsReportByMonthPage";
 
 export default (
   <Route path="/" component={App}>
@@ -20,5 +21,6 @@ export default (
     <Route path="login" component={LogInPage}/>
     <Route path="signup" component={SignupPage}/>
     <Route path="postsreportbydate" component={PostsReportByDatePage}/>
+    <Route path="postsreportbymonth" component={PostsReportByMonthPage}/>
   </Route>
 );

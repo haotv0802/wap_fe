@@ -2,8 +2,12 @@ import * as types from './actionTypes';
 import {ajaxCallError, beginAjaxCall} from "./ajaxStatusActions";
 import postsApi from "../api/postsApi";
 
-export function getPostsReportByDateSuccess(report) {
-  return {type: types.GET_POSTS_REPORT_BY_DATE_SUCCESS, report};
+export function getPostsReportByMonthSuccess(reportByMonth) {
+  return {type: types.GET_POSTS_REPORT_BY_MONTH_SUCCESS, reportByMonth};
+}
+
+export function getPostsReportByDateSuccess(reportByDate) {
+  return {type: types.GET_POSTS_REPORT_BY_DATE_SUCCESS, reportByDate};
 }
 
 export function getPostsCountSuccess(count) {
@@ -12,6 +16,25 @@ export function getPostsCountSuccess(count) {
 
 export function getPostsByContactIdSuccess(data) {
   return {type: types.GET_POSTS_BY_CONTACT_ID_SUCCESS, data};
+}
+
+export function getPostsReportByMonth(startMonth, startYear, endMonth, endYear) {
+  return dispatch => {
+    dispatch(beginAjaxCall());
+    postsApi.getPostsReportByMonth(startMonth, startYear, endMonth, endYear).then (
+      resp => {
+        console.log("=========== resp");
+        console.log(resp);
+        console.log("=========== resp <<<<<<<<< ");
+        dispatch(getPostsReportByMonthSuccess(resp.data));
+      }
+    ).catch(
+      error => {
+        dispatch(ajaxCallError());
+        throw (error);
+      }
+    );
+  };
 }
 
 export function getPostsReportByDate(startDate, endDate) {

@@ -4,7 +4,7 @@ export default {
   crawledData: {posts : [], citiesAndDistricts: []},
   contact: {data: {}},
   customer: {data: {}},
-  post: {count : 0, data: {}, reportByDate: {}},
+  post: {count : 0, data: {}, reportByDate: {}, reportByMonth: {}},
   crawlingInfo: {sites: ['https://batdongsan.com.vn/ban-nha-rieng', 'https://batdongsan.com.vn/ban-can-ho-chung-cu']},
   ajaxCallsInProgress: 0
 };
