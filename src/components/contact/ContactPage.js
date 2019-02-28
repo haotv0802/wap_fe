@@ -244,28 +244,79 @@ class ContactPage extends React.Component {
     },() => {
       if (this.state.hasChanges) {
         let hasError = false;
-        this.state.contacts.find((contact) => {
+        for (let i = 0; i < this.state.contacts.length; i++) {
+          let contact = this.state.contacts[i];
           if (contact.updated === true) {
             if (contact.name === undefined || contact.name === "") {
               toastr.clear();
               toastr.error("Name of customer should not be null");
               hasError = true;
-              return contact;
+              console.log("Name of customer should not be null");
+              break;
             }
             if (contact.phone === undefined || contact.phone === "") {
               toastr.clear();
               toastr.error("Phone of customer should not be null");
               hasError = true;
-              return contact;
+              console.log("Phone of customer should not be null");
+              break;
             }
             if (contact.email === undefined || contact.email === "") {
               toastr.clear();
               toastr.error("Email of customer should not be null");
               hasError = true;
-              return contact;
+              console.log("Email of customer should not be null");
+              break;
             }
           }
-        });
+        }
+        // this.state.contacts.forEach((contact) => {
+        //   if (contact.updated === true) {
+        //     if (contact.name === undefined || contact.name === "") {
+        //       toastr.clear();
+        //       toastr.error("Name of customer should not be null");
+        //       hasError = true;
+        //       console.log("Name of customer should not be null");
+        //       return false;
+        //     }
+        //     if (contact.phone === undefined || contact.phone === "") {
+        //       toastr.clear();
+        //       toastr.error("Phone of customer should not be null");
+        //       hasError = true;
+        //       console.log("Phone of customer should not be null");
+        //       return false;
+        //     }
+        //     if (contact.email === undefined || contact.email === "") {
+        //       toastr.clear();
+        //       toastr.error("Email of customer should not be null");
+        //       hasError = true;
+        //       console.log("Email of customer should not be null");
+        //       return false;
+        //     }
+        //   }
+        // });
+        // this.state.contacts.find((contact) => {
+        //   if (contact.updated === true) {
+        //     if (contact.name === undefined || contact.name === "") {
+        //       toastr.clear();
+        //       toastr.error("Name of customer should not be null");
+        //       hasError = true;
+        //       return contact;
+        //     }
+        //     if (contact.phone === undefined || contact.phone === "") {
+        //       toastr.clear();
+        //       toastr.error("Phone of customer should not be null");
+        //       hasError = true;
+        //       return contact;
+        //     }
+        //     if (contact.email === undefined || contact.email === "") {
+        //       toastr.clear();
+        //       toastr.error("Email of customer should not be null");
+        //       hasError = true;
+        //       return contact;
+        //     }
+        //   }
+        // });
 
         if (!hasError) {
           console.log(this.state.contacts);
