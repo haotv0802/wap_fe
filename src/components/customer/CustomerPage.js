@@ -144,21 +144,79 @@ class CustomerPage extends React.Component {
   }
 
   handleEditCustomer() {
-    this.setState({
-      editMode: !this.state.editMode,
-      inProgress: true
-    },() => {
-      if (this.state.hasChanges) {
-        this.props.actions.updateCustomers(this.state.customers);
-      }
+    let hasError = false;
 
-      if (!this.state.editMode) {
-        this.setState({
-          hasChanges: false,
-          inProgress: false
-        });
+    if (this.state.hasChanges) {
+      for (let i = 0; i < this.state.customers.length; i++) {
+        let customer = this.state.customers[i];
+        if (customer.updated === true) {
+          if (customer.name === undefined || customer.name === "") {
+            toastr.clear();
+            toastr.error("Name of customer should not be null");
+            hasError = true;
+            break;
+          } else if (customer.name.length > 30) {
+            toastr.clear();
+            toastr.error("Name length should not be greater than 30");
+            hasError = true;
+            break;
+          }
+
+          if (customer.phone === undefined || customer.phone === "") {
+            toastr.clear();
+            toastr.error("Phone of customer should not be null");
+            hasError = true;
+            break;
+          } else if (customer.phone.length > 15) {
+            toastr.clear();
+            toastr.error("Phone length should not be greater than 15");
+            hasError = true;
+            break;
+          }
+
+          if (customer.email === undefined || customer.email === "") {
+            toastr.clear();
+            toastr.error("Email of customer should not be null");
+            hasError = true;
+            break;
+          } else {
+            if (customer.email.length > 30) {
+              toastr.clear();
+              toastr.error("Email length should not be greater than 30");
+              hasError = true;
+              break;
+            }
+            let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let valid = re.test(customer.email);
+
+            if (!valid) {
+              toastr.clear();
+              toastr.error("Email is invalid");
+            }
+
+            hasError = !valid;
+          }
+        }
       }
-    });
+    }
+
+    if (!hasError) {
+      this.setState({
+        editMode: !this.state.editMode,
+        inProgress: true
+      },() => {
+        if (this.state.hasChanges) {
+          this.props.actions.updateCustomers(this.state.customers);
+        }
+
+        if (!this.state.editMode) {
+          this.setState({
+            hasChanges: false,
+            inProgress: false
+          });
+        }
+      });
+    }
   }
 
   handleDelete() {
@@ -207,11 +265,19 @@ class CustomerPage extends React.Component {
         toastr.clear();
         toastr.error("Name of customer should not be null");
         return;
+      } else if (this.state.newName.length > 30) {
+        toastr.clear();
+        toastr.error("Name length should not be greater than 30");
+        return;
       }
 
       if (this.state.newPhone === undefined || this.state.newPhone === "") {
         toastr.clear();
         toastr.error("Phone of customer should not be null");
+        return;
+      } else if (this.state.newPhone.length > 15) {
+        toastr.clear();
+        toastr.error("Phone length should not be greater than 15");
         return;
       }
 
@@ -219,6 +285,20 @@ class CustomerPage extends React.Component {
         toastr.clear();
         toastr.error("Email of customer should not be null");
         return;
+      } else {
+        if (this.state.newEmail.length > 30) {
+          toastr.clear();
+          toastr.error("Email length should not be greater than 30");
+          return;
+        }
+        let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let valid = re.test(this.state.newEmail);
+
+        if (!valid) {
+          toastr.clear();
+          toastr.error("Email is invalid");
+          return;
+        }
       }
     }
 
