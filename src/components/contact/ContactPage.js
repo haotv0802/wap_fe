@@ -12,6 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Select from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import PostPage from "../dialogs/post/PostPage";
+import toastr from "toastr";
 
 
 class ContactPage extends React.Component {
@@ -237,12 +238,39 @@ class ContactPage extends React.Component {
   }
 
   handleEditContact() {
+
     this.setState({
       editMode: !this.state.editMode
     },() => {
       if (this.state.hasChanges) {
-        console.log(this.state.contacts);
-        this.props.actions.updateContacts(this.state.contacts);
+        let hasError = false;
+        this.state.contacts.find((contact) => {
+          if (contact.updated === true) {
+            if (contact.name === undefined || contact.name === "") {
+              toastr.clear();
+              toastr.error("Name of customer should not be null");
+              hasError = true;
+              return contact;
+            }
+            if (contact.phone === undefined || contact.phone === "") {
+              toastr.clear();
+              toastr.error("Phone of customer should not be null");
+              hasError = true;
+              return contact;
+            }
+            if (contact.email === undefined || contact.email === "") {
+              toastr.clear();
+              toastr.error("Email of customer should not be null");
+              hasError = true;
+              return contact;
+            }
+          }
+        });
+
+        if (!hasError) {
+          console.log(this.state.contacts);
+          this.props.actions.updateContacts(this.state.contacts);
+        }
       }
 
       if (!this.state.editMode) {
@@ -392,7 +420,11 @@ class ContactPage extends React.Component {
                     Posts
                   </a>
                 </TableHeaderColumn>
-                <TableHeaderColumn style={emailStyles}>Email</TableHeaderColumn>
+                <TableHeaderColumn style={emailStyles}>
+                  <a href="#" onClick={this.sortingContacts} id="email-sortingId">
+                    Email
+                  </a>
+                </TableHeaderColumn>
                 <TableHeaderColumn style={typeStyles}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={manualStyles}>Manual check</TableHeaderColumn>
                 <TableHeaderColumn style={emailExistsStyles}>Email existing?</TableHeaderColumn>

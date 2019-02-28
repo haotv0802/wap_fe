@@ -20,6 +20,7 @@ class ContactApi {
   }
 
   static updateContacts(contacts) {
+    console.log("updateContacts");
     return HttpClient.post(UPDATE_CONTACTS_LIST_URL, contacts);
   }
 }
