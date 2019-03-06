@@ -206,7 +206,12 @@ class CustomerPage extends React.Component {
         inProgress: true
       },() => {
         if (this.state.hasChanges) {
-          this.props.actions.updateCustomers(this.state.customers);
+          this.props.actions.updateCustomers(this.state.customers,
+            this.state.nameFilter,
+            this.state.phoneFilter,
+            this.state.emailFilter,
+            this.state.pageNumber,
+            this.state.size);
         }
 
         if (!this.state.editMode) {
@@ -285,7 +290,8 @@ class CustomerPage extends React.Component {
         toastr.clear();
         toastr.error("Email of customer should not be null");
         return;
-      } else {
+      }
+      else {
         if (this.state.newEmail.length > 30) {
           toastr.clear();
           toastr.error("Email length should not be greater than 30");

@@ -42,7 +42,7 @@ export function getCustomers(name, phone, email, pageNumber, pageSize) {
   };
 }
 
-export function updateCustomers(customers) {
+export function updateCustomers(customers, nameFilter, phoneFilter, emailFilter, pageNumber, pageSize) {
   return dispatch => {
     dispatch(beginAjaxCall());
     customerApi.updateCustomers(customers).then (
@@ -53,7 +53,19 @@ export function updateCustomers(customers) {
     ).catch(
       error => {
         dispatch(ajaxCallError());
-        toastr.error("Failed updating customers");
+        // toastr.error("Failed updating customers");
+        toastr.error(error.data.faultMessage);
+        customerApi.getCustomers(nameFilter, phoneFilter, emailFilter, pageNumber, pageSize).then (
+          resp => {
+            dispatch(getCustomersSuccess(resp.data));
+          }
+        ).catch(
+          error => {
+            dispatch(ajaxCallError());
+            toastr.error("Failed loading customers.");
+            throw (error);
+          }
+        );
         throw (error);
       }
     );
@@ -82,7 +94,8 @@ export function deleteCustomers(customers, nameFilter, phoneFilter, emailFilter,
     ).catch(
       error => {
         dispatch(ajaxCallError());
-        toastr.error("Failed deleting customers");
+        // toastr.error("Failed deleting customers");
+        toastr.error(error.data.faultMessage);
         throw (error);
       }
     );
@@ -113,7 +126,8 @@ export function addCustomer(customer, nameFilter, phoneFilter, emailFilter, page
     ).catch(
       error => {
         dispatch(ajaxCallError());
-        toastr.error("Failed loading customers.");
+        // toastr.error("Failed adding new customers.");
+        toastr.error(error.data.faultMessage);
         throw (error);
       }
     );
