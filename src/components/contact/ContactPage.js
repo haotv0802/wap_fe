@@ -261,6 +261,22 @@ class ContactPage extends React.Component {
             toastr.error("Email of customer should not be null");
             hasError = true;
             break;
+          } else {
+            if (contact.email.length > 30) {
+              toastr.clear();
+              toastr.error("Email length should not be greater than 30");
+              hasError = true;
+              break;
+            }
+            let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let valid = re.test(contact.email);
+
+            if (!valid) {
+              toastr.clear();
+              toastr.error("Email is invalid");
+            }
+
+            hasError = !valid;
           }
         }
       }
