@@ -238,48 +238,48 @@ class ContactPage extends React.Component {
   }
 
   handleEditContact() {
+    let hasError = false;
 
-    this.setState({
-      editMode: !this.state.editMode
-    },() => {
-      if (this.state.hasChanges) {
-        let hasError = false;
-        for (let i = 0; i < this.state.contacts.length; i++) {
-          let contact = this.state.contacts[i];
-          if (contact.updated === true) {
-            if (contact.name === undefined || contact.name === "") {
-              toastr.clear();
-              toastr.error("Name of customer should not be null");
-              hasError = true;
-              break;
-            }
-            if (contact.phone === undefined || contact.phone === "") {
-              toastr.clear();
-              toastr.error("Phone of customer should not be null");
-              hasError = true;
-              break;
-            }
-            if (contact.email === undefined || contact.email === "") {
-              toastr.clear();
-              toastr.error("Email of customer should not be null");
-              hasError = true;
-              break;
-            }
+    if (this.state.hasChanges) {
+      for (let i = 0; i < this.state.contacts.length; i++) {
+        let contact = this.state.contacts[i];
+        if (contact.updated === true) {
+          if (contact.name === undefined || contact.name === "") {
+            toastr.clear();
+            toastr.error("Name of customer should not be null");
+            hasError = true;
+            break;
+          }
+          if (contact.phone === undefined || contact.phone === "") {
+            toastr.clear();
+            toastr.error("Phone of customer should not be null");
+            hasError = true;
+            break;
+          }
+          if (contact.email === undefined || contact.email === "") {
+            toastr.clear();
+            toastr.error("Email of customer should not be null");
+            hasError = true;
+            break;
           }
         }
+      }
+    }
 
-        if (!hasError) {
-          console.log(this.state.contacts);
+    if (!hasError) {
+      this.setState({
+        editMode: !this.state.editMode
+      }, () => {
+        if (this.state.hasChanges) {
           this.props.actions.updateContacts(this.state.contacts);
         }
-      }
-
-      if (!this.state.editMode) {
-        this.setState({
-          hasChanges: false
-        });
-      }
-    });
+        if (!this.state.editMode) {
+          this.setState({
+            hasChanges: false
+          });
+        }
+      });
+    }
 
   }
 

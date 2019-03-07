@@ -145,7 +145,6 @@ class CustomerPage extends React.Component {
 
   handleEditCustomer() {
     let hasError = false;
-
     if (this.state.hasChanges) {
       for (let i = 0; i < this.state.customers.length; i++) {
         let customer = this.state.customers[i];
