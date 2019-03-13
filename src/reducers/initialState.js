@@ -3,7 +3,7 @@ export default {
   signupUser: {username: '', password: '', serverError: null},
   crawledData: {posts : [], citiesAndDistricts: []},
   contact: {data: {}},
-  customer: {data: {}},
+  customer: {data: {}, editMode: false, addMode: false},
   post: {count : 0, data: {}, reportByDate: {}, reportByMonth: {}},
   crawlingInfo: {sites: ['https://batdongsan.com.vn/ban-nha-rieng', 'https://batdongsan.com.vn/ban-can-ho-chung-cu']},
   ajaxCallsInProgress: 0

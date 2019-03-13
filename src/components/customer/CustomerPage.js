@@ -56,6 +56,8 @@ class CustomerPage extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.onCheckForDelete = this.onCheckForDelete.bind(this);
     this.handleClearSearch = this.handleClearSearch.bind(this);
+    this.onClickEditCustomer = this.onClickEditCustomer.bind(this);
+    this.onClickAddCustomer = this.onClickAddCustomer.bind(this);
   }
 
   componentWillMount() {
@@ -143,6 +145,13 @@ class CustomerPage extends React.Component {
     });
   }
 
+  onClickEditCustomer() {
+    this.setState({
+      editMode: true,
+      inProgress: true
+    });
+  }
+
   handleEditCustomer() {
     let hasError = false;
     if (this.state.hasChanges) {
@@ -201,7 +210,7 @@ class CustomerPage extends React.Component {
 
     if (!hasError) {
       this.setState({
-        editMode: !this.state.editMode,
+        editMode: false,
         inProgress: true
       },() => {
         if (this.state.hasChanges) {
@@ -262,6 +271,13 @@ class CustomerPage extends React.Component {
     });
   }
 
+  onClickAddCustomer() {
+    this.setState({
+      addMode: true,
+      inProgress: true
+    });
+  }
+
   handleAddCustomer() {
 
     if (this.state.hasAdded) {
@@ -308,7 +324,7 @@ class CustomerPage extends React.Component {
     }
 
     this.setState({
-      addMode: !this.state.addMode,
+      addMode: false,
       inProgress: true
     },() => {
       if (this.state.hasAdded) {
@@ -382,9 +398,9 @@ class CustomerPage extends React.Component {
         <div className="table-responsive">
           {this.state.inProgress === false ?
           <span>
-            <RaisedButton label="Edit" primary={true} onClick={this.handleEditCustomer} />
+            <RaisedButton label="Edit" primary={true} onClick={this.onClickEditCustomer} />
             &nbsp;
-            <RaisedButton label="Add" primary={true} onClick={this.handleAddCustomer} />
+            <RaisedButton label="Add" primary={true} onClick={this.onClickAddCustomer} />
             &nbsp;
             {((this.state.nameFilter !== undefined && this.state.nameFilter !== "")
               || (this.state.phoneFilter !== undefined && this.state.phoneFilter !== "")
