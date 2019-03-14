@@ -70,10 +70,10 @@ class CustomerPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
     if (this.props.customers !== nextProps.customers) {
       this.setState({
-        customers: JSON.parse(JSON.stringify(nextProps.customers))
+        customers: JSON.parse(JSON.stringify(nextProps.customers)),
+        editMode: nextProps.editMode
       });
     }
     if (this.props.pageNumber !== nextProps.pageNumber) {
@@ -222,7 +222,6 @@ class CustomerPage extends React.Component {
 
     if (!hasError) {
       this.setState({
-        editMode: false,
         inProgress: true
       },() => {
         if (this.state.hasChanges) {
@@ -231,7 +230,6 @@ class CustomerPage extends React.Component {
 
         if (!this.state.editMode) {
           this.setState({
-            hasChanges: false,
             inProgress: false
           });
         }

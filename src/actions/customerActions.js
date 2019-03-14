@@ -56,6 +56,7 @@ export function updateCustomers(customers) {
       }
     ).catch(
       error => {
+        dispatch(updateCustomersFailure());
         dispatch(ajaxCallError());
         toastr.error(error.data.faultMessage);
         throw (error);

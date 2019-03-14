@@ -11,7 +11,7 @@ export default function customerReducer(state = initialState.customer, action) {
         content: Object.assign([],
           state.data.content.map((customer) =>
             Object.assign({}, customer, action.data.find((updatedCustomer) => updatedCustomer.id == customer.id))))
-      })
+      }), editMode: false
     });
     case types.UPDATE_CUSTOMER_LIST_FAILURE:
       return Object.assign({}, state, {
