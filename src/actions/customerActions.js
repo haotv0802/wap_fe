@@ -23,8 +23,8 @@ export function addCustomersSuccess(data) {
   return {type: types.ADD_CUSTOMER_SUCCESS, data};
 }
 
-export function addCustomersError() {
-  return {type: types.ADD_CUSTOMER_ERROR};
+export function addCustomersFailure() {
+  return {type: types.ADD_CUSTOMER_FAILURE};
 }
 
 export function getCustomers(name, phone, email, pageNumber, pageSize) {
@@ -106,6 +106,7 @@ export function addCustomer(customer, nameFilter, phoneFilter, emailFilter, page
       }
     ).catch(
       error => {
+        dispatch(addCustomersFailure());
         dispatch(ajaxCallError());
         toastr.error(error.data.faultMessage);
         throw (error);

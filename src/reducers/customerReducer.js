@@ -21,10 +21,10 @@ export default function customerReducer(state = initialState.customer, action) {
       return Object.assign({}, state, {
         data: Object.assign({}, state.data, {
           content: Object.assign([], state.data.content.concat(action.data))
-        })
+        }), addMode: false
       });
-    case types.ADD_CUSTOMER_ERROR:
-      return Object.assign({}, state);
+    case types.ADD_CUSTOMER_FAILURE:
+      return Object.assign({}, state, {addMode: true});
     default:
       return state;
   }
