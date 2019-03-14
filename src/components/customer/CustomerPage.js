@@ -72,10 +72,6 @@ class CustomerPage extends React.Component {
   componentWillReceiveProps(nextProps) {
 
     if (this.props.customers !== nextProps.customers) {
-      console.log("componentWillReceiveProps------");
-      console.log(this.props.customers);
-      console.log(nextProps.customers);
-      console.log("------componentWillReceiveProps");
       this.setState({
         customers: JSON.parse(JSON.stringify(nextProps.customers))
       });
@@ -137,14 +133,7 @@ class CustomerPage extends React.Component {
     let id = array[0];
     let name = array[1];
     let customersList = Object.assign([], this.state.customers);
-    // let data = customersList.find(customer => {
-    //   if (customer.id == id) {
-    //     // customer[name] = event.target.value;
-    //     // customer.updated = true;
-    //     return customer;
-    //   }
-    // });
-    // console.log("handleInputChange--------");
+
     let updatedCustomers = this.state.updatedCustomers;
     let updatedCustomer = updatedCustomers.find(customer => {
       if (customer.id == id) {
@@ -160,17 +149,12 @@ class CustomerPage extends React.Component {
       updatedCustomers.push(updatedCustomer);
     }
     updatedCustomer[name] = event.target.value;
-    // console.log(tempCustomer);
-    // console.log(customersList);
-    // console.log(tempArray);
 
     this.setState({
       hasChanges : true,
       customers: customersList,
       updatedCustomers: updatedCustomers
     });
-    // console.log(this.state);
-    // console.log("--------handleInputChange");
   }
 
   onClickEditCustomer() {
@@ -242,12 +226,7 @@ class CustomerPage extends React.Component {
         inProgress: true
       },() => {
         if (this.state.hasChanges) {
-          this.props.actions.updateCustomers(this.state.updatedCustomers,
-            this.state.nameFilter,
-            this.state.phoneFilter,
-            this.state.emailFilter,
-            this.state.pageNumber,
-            this.state.size);
+          this.props.actions.updateCustomers(this.state.updatedCustomers);
         }
 
         if (!this.state.editMode) {
@@ -639,11 +618,6 @@ CustomerPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  console.log("---------mapStateToProps customer page:");
-  console.log("edit mode: " + state.customer.editMode);
-  console.log("add mode: " + state.customer.addMode);
-  console.log(state.customer.data);
-  console.log("mapStateToProps customer page---------");
   return {
     customers: state.customer.data.content,
     editMode: state.customer.editMode,
