@@ -11,6 +11,10 @@ export function updateCustomersSuccess(data) {
   return {type: types.UPDATE_CUSTOMER_LIST_SUCCESS, data};
 }
 
+export function updateCustomersFailure() {
+  return {type: types.UPDATE_CUSTOMER_LIST_FAILURE};
+}
+
 export function deleteCustomersSuccess(data) {
   return {type: types.DELETE_CUSTOMERS_LIST_SUCCESS, data};
 }
@@ -47,6 +51,9 @@ export function updateCustomers(customers, nameFilter, phoneFilter, emailFilter,
     dispatch(beginAjaxCall());
     customerApi.updateCustomers(customers).then (
       resp => {
+        console.log("updateCustomers-------");
+        console.log(customers);
+        console.log("-------updateCustomers");
         dispatch(updateCustomersSuccess(customers));
         toastr.success("Customers updated successfully!");
       }
@@ -55,17 +62,17 @@ export function updateCustomers(customers, nameFilter, phoneFilter, emailFilter,
         dispatch(ajaxCallError());
         // toastr.error("Failed updating customers");
         toastr.error(error.data.faultMessage);
-        customerApi.getCustomers(nameFilter, phoneFilter, emailFilter, pageNumber, pageSize).then (
-          resp => {
-            dispatch(getCustomersSuccess(resp.data));
-          }
-        ).catch(
-          error => {
-            dispatch(ajaxCallError());
-            toastr.error("Failed loading customers.");
-            throw (error);
-          }
-        );
+        // customerApi.getCustomers(nameFilter, phoneFilter, emailFilter, pageNumber, pageSize).then (
+        //   resp => {
+        //     dispatch(getCustomersSuccess(resp.data));
+        //   }
+        // ).catch(
+        //   error => {
+        //     dispatch(ajaxCallError());
+        //     toastr.error("Failed loading customers.");
+        //     throw (error);
+        //   }
+        // );
         throw (error);
       }
     );
@@ -109,19 +116,20 @@ export function addCustomer(customer, nameFilter, phoneFilter, emailFilter, page
     customerApi.addCustomer(customer).then (
       resp => {
         customer.id = resp.data;
-        // dispatch(addCustomersSuccess(customer));
-        customerApi.getCustomers(nameFilter, phoneFilter, emailFilter, pageNumber, pageSize).then (
-          resp => {
-            dispatch(getCustomersSuccess(resp.data));
-            toastr.success("Data added successfully!");
-          }
-        ).catch(
-          error => {
-            dispatch(ajaxCallError());
-            toastr.error("Failed loading customers.");
-            throw (error);
-          }
-        );
+        dispatch(addCustomersSuccess(customer));
+        toastr.success("Data added successfully!");
+        // customerApi.getCustomers(nameFilter, phoneFilter, emailFilter, pageNumber, pageSize).then (
+        //   resp => {
+        //     dispatch(getCustomersSuccess(resp.data));
+        //     toastr.success("Data added successfully!");
+        //   }
+        // ).catch(
+        //   error => {
+        //     dispatch(ajaxCallError());
+        //     toastr.error("Failed loading customers.");
+        //     throw (error);
+        //   }
+        // );
       }
     ).catch(
       error => {
