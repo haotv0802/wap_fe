@@ -8,8 +8,18 @@ export default function contactReducer(state = initialState.contact, action) {
     case types.UPDATE_CONTACT_LIST_SUCCESS:
       return Object.assign({}, state, {
         data: Object.assign({}, state.data, {
-          content: Object.assign([], state.content, action.data)
-        })
+          content: Object.assign([], state.data.content.map((contact) =>
+            Object.assign({}, contact, action.data.map((updatedContact) => updatedContact.id == contact.id))))
+        }), editMode: false
+      });
+    case types.UPDATE_CONTACT_LIST_FAILURE:
+      return Object.assign({}, state, {
+        editMode: true
+        }
+      );
+    case types.CHANGE_CONTACT_EDIT_MODE:
+      return Object.assign({}, state, {
+        editMode: !state.editMode
       });
     default:
       return state;

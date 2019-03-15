@@ -21,6 +21,7 @@ class ContactPage extends React.Component {
     super(props, context);
     this.state = {
       contacts: JSON.parse(JSON.stringify(this.props.contacts)),
+      updatedContacts: [],
       posts: JSON.parse(JSON.stringify(this.props.posts)),
       pageNumber: this.props.pageNumber,
       total: this.props.total,
@@ -55,6 +56,7 @@ class ContactPage extends React.Component {
     this.handlePostClose = this.handlePostClose.bind(this);
     this.openPostDialog = this.openPostDialog.bind(this);
     this.sortingContacts = this.sortingContacts.bind(this);
+    this.onClickEditContact = this.onClickEditContact.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,6 +64,30 @@ class ContactPage extends React.Component {
     if (this.props.posts !== nextProps.posts) {
       this.setState({
         posts: JSON.parse(JSON.stringify(nextProps.posts))
+      });
+    }
+
+    console.log("componentWillReceiveProps-------");
+    console.log("props editmode: ");
+    console.log(this.props.editMode);
+    console.log("next prop: ");
+    console.log(nextProps.editMode);
+    console.log("contacts:");
+    console.log(this.props.contacts);
+    console.log("next contacts:");
+    console.log(nextProps.contacts);
+    console.log("-------componentWillReceiveProps");
+
+    if (this.props.editMode !== nextProps.editMode) {
+
+      // if (!nextProps.editMode) {
+      //   this.setState({
+      //     updatedContacts: []
+      //   });
+      // }
+      this.setState({
+        editMode: nextProps.editMode,
+        hasChanges: nextProps.editMode
       });
     }
 
@@ -237,6 +263,13 @@ class ContactPage extends React.Component {
     );
   }
 
+  onClickEditContact() {
+    // this.setState({
+    //   editMode: true
+    // });
+    this.props.actions.changeEditMode();
+  }
+
   handleEditContact() {
     let hasError = false;
 
@@ -283,19 +316,25 @@ class ContactPage extends React.Component {
     }
 
     if (!hasError) {
-      this.setState({
-        editMode: !this.state.editMode
-      }, () => {
-        if (this.state.hasChanges) {
-          this.props.actions.updateContacts(this.state.contacts);
-        }
-        if (!this.state.editMode) {
-          this.setState({
-            hasChanges: false
-          });
-        }
-      });
+      if (this.state.hasChanges) {
+        this.props.actions.updateContacts(this.state.updatedContacts);
+      }
     }
+
+    // if (!hasError) {
+    //   this.setState({
+    //     editMode: !this.state.editMode
+    //   }, () => {
+    //     if (this.state.hasChanges) {
+    //       this.props.actions.updateContacts(this.state.contacts);
+    //     }
+    //     if (!this.state.editMode) {
+    //       this.setState({
+    //         hasChanges: false
+    //       });
+    //     }
+    //   });
+    // }
 
   }
 
@@ -313,24 +352,35 @@ class ContactPage extends React.Component {
     let id = array[0];
     let name = array[1];
     let contactsList = Object.assign([], this.state.contacts);
-    let data = contactsList.find(contact => {
-      if (contact.id == id) {
-        contact[name] = event.target.value;
-        contact.updated = true;
-        return contact;
+
+    let updatedContacts = this.state.updatedContacts;
+    let updatedContact = updatedContacts.find(customer => {
+      if (customer.id == id) {
+        return customer;
       }
     });
+    if (!updatedContact) {
+      updatedContact = contactsList.find(contact => {
+        if (contact.id == id) {
+          return contact;
+        }
+      });
+      updatedContacts.push(updatedContact);
+    }
+    updatedContact[name] = event.target.value;
+
     this.setState({
       hasChanges : true,
-      contacts: contactsList
+      contacts: contactsList,
+      updateContacts: updatedContacts
     });
   }
 
   handleCancel() {
     this.setState({
-      editMode: false,
       hasChanges : false
     });
+    this.props.actions.changeEditMode();
   }
 
 
@@ -390,8 +440,6 @@ class ContactPage extends React.Component {
     });
   }
 
-
-
   render() {
     return (
       <div className="panel panel-primary">
@@ -402,7 +450,10 @@ class ContactPage extends React.Component {
               <RaisedButton backgroundColor="#f49842" label="Cancel" onClick={this.handleCancel}/>&nbsp;
             </span> : ""
           }
-          <RaisedButton label={this.state.editMode ? "Save" : "Edit"} primary onClick={this.handleEditContact} />
+          {this.state.editMode ?
+            <RaisedButton label={"Save"} primary onClick={this.handleEditContact} />
+            :<RaisedButton label={"Edit"} primary onClick={this.onClickEditContact} />}
+
           {((this.state.nameFilter !== undefined && this.state.nameFilter !== "")
             || (this.state.phoneFilter !== undefined && this.state.phoneFilter !== "")
             || (this.state.emailFilter !== undefined) && this.state.emailFilter !== ""
@@ -670,7 +721,8 @@ ContactPage.defaultProps = {
   emailExistingFilter: '',
   types: ["", "OWNER", "SALE", "NA"],
   isExisting: ["", "YES", "NO", "NA"],
-  isOpenPost: false
+  isOpenPost: false,
+  editMode: false
 };
 
 ContactPage.propTypes = {
@@ -689,11 +741,13 @@ ContactPage.propTypes = {
   emailExistingFilter: PropTypes.string,
   types: PropTypes.array,
   isExisting: PropTypes.array,
-  isOpenPost: PropTypes.bool
+  isOpenPost: PropTypes.bool,
+  editMode: PropTypes.bool
 };
 
 function mapStateToProps(state, ownProps) {
   return {
+    editMode: state.contact.editMode,
     posts: state.post.data.content,
     contacts: state.contact.data.content,
     pageNumber: state.contact.data.number,

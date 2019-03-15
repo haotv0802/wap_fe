@@ -11,6 +11,14 @@ export function updateContactsSuccess(data) {
   return {type: types.UPDATE_CONTACT_LIST_SUCCESS, data};
 }
 
+export function updateContactsFailure() {
+  return {type: types.UPDATE_CONTACT_LIST_FAILURE};
+}
+
+export function changeEditMode() {
+  return {type: types.CHANGE_CONTACT_EDIT_MODE};
+}
+
 export function getContacts(name, phone, email, type, manualCheck, emailExisting, pageNumber, pageSize, sortingMap) {
   return dispatch => {
     dispatch(beginAjaxCall());
@@ -42,9 +50,10 @@ export function updateContacts(contacts) {
       }
     ).catch(
       error => {
+        dispatch(updateContactsFailure());
         dispatch(ajaxCallError());
         toastr.clear();
-        toastr.error("Failed updating contacts");
+        toastr.error(error.data.faultMessage);
         throw (error);
       }
     );
